@@ -163,6 +163,9 @@ boolean switch_conn_pin(CONN_PIN_T conn_pin, byte level)
 }
 
 
+String experimenta_log = "";
+
+
 void setup() {
     init_card();
     pinMode(3, OUTPUT);
@@ -313,18 +316,21 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
      {
       switch_conn_pin(BASEBD_J10_PIN2, LOW); //Experiment 1 valveA
       Serial.println("move from e_buffer");
+      experimenta_log = experimenta_log + now() + "_move from e_buffer,";
       }
 
      if (experiment == 1 && origin == 1)
      {
       switch_conn_pin(BASEBD_J10_PIN2, HIGH); //Experiment 1 valveA
       Serial.println("move from enzyme");
+      experimenta_log = experimenta_log + now() + "_move from enzyme,";
       }
 
      if (experiment == 1 && target == 2)
      {
       int move_pulse = liquid_volume / 25; //1ml = 1000uL and the pump moves 25uL at a time
       Serial.println("move to chamberA");
+      experimenta_log = experimenta_log + now() + "_move to chamberA,";
       for (int i = 0; i <= move_pulse; i++){
       switch_conn_pin(BASEBD_J10_PIN4, HIGH); //Experiment 1 pumpA
       digitalWrite(LED, HIGH);
@@ -341,16 +347,19 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
      {
       switch_conn_pin(BASEBD_J9_PIN2, LOW); //Experiment 1 valveB
       Serial.println("move from media");
+      experimenta_log = experimenta_log + now() + "_move from media,";
       }
      if (experiment == 1 && origin == 2) // chamberA going out
      {
       switch_conn_pin(BASEBD_J9_PIN2, HIGH); //Experiment 1 valveB
       Serial.println("move from chamberA");
+      experimenta_log = experimenta_log + now() + "_move from chamberA,";
       }
      if (experiment == 1 && target == 4) 
      {
       int move_pulse = liquid_volume / 25; //1ml = 1000uL and the pump moves 35uL at a time
       Serial.println("move to chamberB");
+      experimenta_log = experimenta_log + now() + "_move from chamberB,";
       for (int i = 0; i <= move_pulse; i++){
       switch_conn_pin(BASEBD_J9_PIN4, HIGH); //Experiment 1 pumpB
       digitalWrite(LED, HIGH);
@@ -369,12 +378,14 @@ void switchCollection(int experiment, int bag)
    if (experiment == 1 && bag == 5)
      {
       switch_conn_pin(BASEBD_J5_PIN4, LOW); //Experiment 1 waste
-      Serial.println("opem waste bag");
+      Serial.println("open waste bag");
+      experimenta_log = experimenta_log + now() + "_opem waste bag,";
       }
    if (experiment == 1 && bag == 6)
      {
       switch_conn_pin(BASEBD_J5_PIN4, HIGH); //Experiment 1 preservativeOne
-      Serial.println("opem preservativeOne bag");
+      Serial.println("open preservativeOne bag");
+      experimenta_log = experimenta_log + now() + "_open preservativeOne bag,";
       }
    
   }
@@ -519,7 +530,10 @@ void get_data() {
                     
                     //Spectral_Red
                     myFile.print(sensorValues[AS726x_RED]);
+                    myFile.print(',');
 
+                    //EXP Log
+                    myFile.print(experimenta_log);
                     
                     myFile.println();
                     myFile.close();
@@ -556,7 +570,7 @@ void init_card(){
     delay(1000);                  // wait for a second
 
     //Content
-    myFile.println("DT, Temp, Pressure, Attitude, Humidity, Temp2, Spectral_Violet, Spectral_Blue, Spectral_Green, Spectral_Yellow, Spectral_Orange, Spectral_Red");
+    myFile.println("DT, Temp, Pressure, Attitude, Humidity, Temp2, Spectral_Violet, Spectral_Blue, Spectral_Green, Spectral_Yellow, Spectral_Orange, Spectral_Red, Experimental_Log");
     myFile.close();
     Serial.println("done.");
   } else {
