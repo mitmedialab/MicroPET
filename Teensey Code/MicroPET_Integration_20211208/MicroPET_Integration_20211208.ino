@@ -324,7 +324,7 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
      if (experiment == 1 && target == 2)
      {
       int move_pulse = liquid_volume / 25; //1ml = 1000uL and the pump moves 25uL at a time
-
+      Serial.println("move to chamberA");
       for (int i = 0; i <= move_pulse; i++){
       switch_conn_pin(BASEBD_J10_PIN4, HIGH); //Experiment 1 pumpA
       digitalWrite(LED, HIGH);
@@ -332,23 +332,25 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
       switch_conn_pin(BASEBD_J10_PIN4, LOW); //Experiment 1 pumpA
       digitalWrite(LED, LOW);
       delay(200);
-       Serial.println( i * 25);
+       Serial.println( i * 25); //print out the moving volume
       }
-      switch_conn_pin(BASEBD_J10_PIN2, LOW); //Reset xperiment 1 valveA so enzyme is blocked
+      switch_conn_pin(BASEBD_J10_PIN2, LOW); //Reset eperiment 1 valveA so enzyme is blocked
      }
 
      if (experiment == 1 && origin == 3) // media going out
      {
       switch_conn_pin(BASEBD_J9_PIN2, LOW); //Experiment 1 valveB
+      Serial.println("move from media");
       }
      if (experiment == 1 && origin == 2) // chamberA going out
      {
       switch_conn_pin(BASEBD_J9_PIN2, HIGH); //Experiment 1 valveB
+      Serial.println("move from chamberA");
       }
      if (experiment == 1 && target == 4) 
      {
       int move_pulse = liquid_volume / 25; //1ml = 1000uL and the pump moves 35uL at a time
-
+      Serial.println("move to chamberB");
       for (int i = 0; i <= move_pulse; i++){
       switch_conn_pin(BASEBD_J9_PIN4, HIGH); //Experiment 1 pumpB
       digitalWrite(LED, HIGH);
@@ -356,7 +358,7 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
       switch_conn_pin(BASEBD_J9_PIN4, LOW); //Experiment 1 pumpB
       digitalWrite(LED, LOW);
       delay(200);
-      Serial.println( i * 25);
+      Serial.println( i * 25); //print out the moving volume
       } 
       switch_conn_pin(BASEBD_J9_PIN2, LOW); //Reset experiment 1 valveB so chamberA is blocked  
      }
@@ -367,10 +369,12 @@ void switchCollection(int experiment, int bag)
    if (experiment == 1 && bag == 5)
      {
       switch_conn_pin(BASEBD_J5_PIN4, LOW); //Experiment 1 waste
+      Serial.println("opem waste bag");
       }
    if (experiment == 1 && bag == 6)
      {
       switch_conn_pin(BASEBD_J5_PIN4, HIGH); //Experiment 1 preservativeOne
+      Serial.println("opem preservativeOne bag");
       }
    
   }
