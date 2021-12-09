@@ -257,8 +257,6 @@ void setup() {
 
     Serial.println();
 
-
-
     // EXPERIMENTAL SETUP
       
     //STARTING DATE
@@ -297,17 +295,85 @@ moveLiquid (experimentOne, e_buffer, chamberA, 2925);
 Serial.println("finished moving liquid");
 }
 
-void day_2(){
-  }
-
 void day_3(){
-  }
+/*
+#move chamber A to Chamber B - 2ml 
+#move medium to chamber B - 2ml
+#move chamber B to preservative A1(RNA) - 4ml
+#move buffer to chamber A -  1.95ml
+#move enzyme to chamber A - 0.05ml
 
-void day_4(){
+*/
+
+Serial.println("start moving liquid");
+switchCollection(experimentOne, preservativeOne);
+moveLiquid (experimentOne, chamberA, chamberB, 2000);
+moveLiquid (experimentOne, media, chamberB, 2000);
+moveLiquid (experimentOne, e_buffer, chamberA, 1950);
+moveLiquid (experimentOne, enzyme, chamberA, 50);
+Serial.println("finished moving liquid");
+
   }
 
 void day_5(){
+/*
+#move chamber A to chamber B - 2ml
+#move medium to chamber B - 2ml
+#move buffer to chamber A -  1.95ml
+#move enzyme to chamber A - 0.05ml
+#move chamber B to preservative A1(RNA) - 4ml
+*/
+
+Serial.println("start moving liquid");
+switchCollection(experimentOne, preservativeOne);
+moveLiquid (experimentOne, chamberA, chamberB, 2000);
+moveLiquid (experimentOne, media, chamberB, 2000);
+moveLiquid (experimentOne, e_buffer, chamberA, 1950);
+moveLiquid (experimentOne, enzyme, chamberA, 50);
+Serial.println("finished moving liquid");
+
   }
+
+void day_7(){
+
+/*
+#move chamber A to chamber B - 2ml
+#move medium to chamber B - 2ml
+#move buffer to chamber A -  1.95ml
+#move enzyme to chamber A - 0.05ml
+#move chamber B to preservative A1(RNA) - 4ml
+*/
+
+Serial.println("start moving liquid");
+switchCollection(experimentOne, preservativeOne);
+moveLiquid (experimentOne, chamberA, chamberB, 2000);
+moveLiquid (experimentOne, media, chamberB, 2000);
+moveLiquid (experimentOne, e_buffer, chamberA, 1950);
+moveLiquid (experimentOne, enzyme, chamberA, 50);
+Serial.println("finished moving liquid");
+
+  }
+
+void day_9(){
+
+/*
+#move chamber A to chamber B - 2ml
+#move medium to chamber B - 2ml
+#move buffer to chamber A -  1.95ml
+#move enzyme to chamber A - 0.05ml
+#move chamber B to preservative A1(RNA) - 4ml
+*/
+
+Serial.println("start moving liquid");
+switchCollection(experimentOne, preservativeOne);
+moveLiquid (experimentOne, chamberA, chamberB, 2000);
+moveLiquid (experimentOne, media, chamberB, 2000);
+moveLiquid (experimentOne, e_buffer, chamberA, 1950);
+moveLiquid (experimentOne, enzyme, chamberA, 50);
+Serial.println("finished moving liquid");
+
+  }
+
 
 
 void moveLiquid(int experiment, int origin, int target, float liquid_volume) 
