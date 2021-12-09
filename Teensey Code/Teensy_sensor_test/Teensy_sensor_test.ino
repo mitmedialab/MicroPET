@@ -41,13 +41,13 @@ uint16_t sensorValues[AS726x_NUM_CHANNELS];
 
 
 void setup() {
-
+    delayTime = 6000;
     pinMode(3, OUTPUT);
     pinMode(4, OUTPUT);
     
-    Serial.begin(9600);
-    while(!Serial);    // time to get serial running
-    Serial.println(F("Begin Serial"));
+    //Serial.begin(9600);
+    //while(!Serial);    // time to get serial running
+    //Serial.println(F("Begin Serial"));
 
     unsigned bme_status;
     unsigned ams_status;
@@ -66,14 +66,35 @@ void setup() {
         while (1) delay(10);
     }
     
-    Serial.println("-- Default Test --");
+    //Serial.println("-- Default Test --");
     delayTime = 1000;
 
-    Serial.println();
+    //Serial.println();
 }
 
 
 void loop() { 
+     unsigned bme_status;
+    unsigned ams_status;
+bme_status = bme.begin();  
+    ams_status = ams.begin();  
+    // You can also pass in a Wire library object like &Wire2
+
+    if(!ams_status){
+        Serial.println("could not connect to sensor! Please check your wiring.");
+        while(1); delay(10);
+    }
+    
+    if (!bme_status) {
+        Serial.println("Could not find a valid BME280 sensor, check wiring, address, sensor ID!");
+        while (1) delay(10);
+    }
+    
+    //Serial.println("-- Default Test --");
+    delayTime = 1000;
+
+
+  
   AMSprintValues();
   BMEprintValues();
   analogWrite(3, 200);  // LED on

@@ -185,9 +185,9 @@ void loop() {
 
  // moveLiquid (experimentOne, e_buffer, chamberA, 1000);
 //  moveLiquid (experimentOne, enzyme, chamberA, 1000);
- // switchCollection(experimentOne, preservativeOne);
+  switchCollection(experimentOne, waste);
  //switch_conn_pin(BASEBD_J5_PIN4, HIGH);
-  moveLiquid (experimentOne, media, chamberB, 5000);
+//  moveLiquid (experimentOne, media, chamberB, 5000);
   stop_move = 1;
   
 

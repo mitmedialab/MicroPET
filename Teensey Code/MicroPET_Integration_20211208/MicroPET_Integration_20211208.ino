@@ -260,32 +260,30 @@ void setup() {
     // EXPERIMENTAL SETUP
       
     //STARTING DATE
-    setTime(8,29,0,8,12,2021);  // hr,min,sec,day,mnth,yr
+    setTime(11,0,0,8,12,2021);  // hr,min,sec,day,mnth,yr
 
     //DAY1
-    Alarm.triggerOnce(tmConvert_t(2021,12,8,8,29,5), day_1); //  YYYY,  MM,  DD,  hh,  mm,  ss
+    Alarm.triggerOnce(tmConvert_t(2021,12,8,11,5,0), day_1); //  YYYY,  MM,  DD,  hh,  mm,  ss
     //DAY2
-    Alarm.triggerOnce(tmConvert_t(2021,12,8,8,30,5), day_2); //  YYYY,  MM,  DD,  hh,  mm,  ss
+    Alarm.triggerOnce(tmConvert_t(2021,12,9,11,0,5), day_2); //  YYYY,  MM,  DD,  hh,  mm,  ss
     //DAY3
-    Alarm.triggerOnce(tmConvert_t(2021,12,8,8,31,5), day_3); //  YYYY,  MM,  DD,  hh,  mm,  ss
+    Alarm.triggerOnce(tmConvert_t(2021,12,10,11,0,5), day_3); //  YYYY,  MM,  DD,  hh,  mm,  ss
     //DAY4
-    Alarm.triggerOnce(tmConvert_t(2021,12,8,8,32,5), day_4); //  YYYY,  MM,  DD,  hh,  mm,  ss
+    Alarm.triggerOnce(tmConvert_t(2021,12,11,11,0,5), day_4); //  YYYY,  MM,  DD,  hh,  mm,  ss
     //DAY5
-    Alarm.triggerOnce(tmConvert_t(2021,12,8,8,33,5), day_5); //  YYYY,  MM,  DD,  hh,  mm,  ss
+    Alarm.triggerOnce(tmConvert_t(2021,12,12,11,0,5), day_5); //  YYYY,  MM,  DD,  hh,  mm,  ss
     //DAY6
-    Alarm.triggerOnce(tmConvert_t(2021,12,8,8,34,5), day_6); //  YYYY,  MM,  DD,  hh,  mm,  ss
+    Alarm.triggerOnce(tmConvert_t(2021,12,13,11,0,5), day_6); //  YYYY,  MM,  DD,  hh,  mm,  ss
     //DAY7
-    Alarm.triggerOnce(tmConvert_t(2021,12,8,8,35,5), day_7); //  YYYY,  MM,  DD,  hh,  mm,  ss
+    Alarm.triggerOnce(tmConvert_t(2021,12,14,11,0,5), day_7); //  YYYY,  MM,  DD,  hh,  mm,  ss
     //DAY8
-    Alarm.triggerOnce(tmConvert_t(2021,12,8,8,36,5), day_8); //  YYYY,  MM,  DD,  hh,  mm,  ss
+    Alarm.triggerOnce(tmConvert_t(2021,12,15,11,0,5), day_8); //  YYYY,  MM,  DD,  hh,  mm,  ss
     //DAY9
-    Alarm.triggerOnce(tmConvert_t(2021,12,8,8,37,5), day_9); //  YYYY,  MM,  DD,  hh,  mm,  ss
+    Alarm.triggerOnce(tmConvert_t(2021,12,16,11,0,5), day_9); //  YYYY,  MM,  DD,  hh,  mm,  ss
    
-  
     // EVERYDAY TASK
     Alarm.timerRepeat(60, Taking_Sensor_Data);   
 
-    
 }
 
 
