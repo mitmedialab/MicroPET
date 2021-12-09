@@ -178,13 +178,18 @@ void setup() {
 */
 
 int stop_move = 0;
+switch_conn_pin(BASEBD_J5_PIN4, HIGH);
 }
 
 void loop() {
 
-  moveLiquid (experimentOne, e_buffer, chamberA, 1000);
-
-//switch_collection(experimentOne, waste);
+ // moveLiquid (experimentOne, e_buffer, chamberA, 1000);
+//  moveLiquid (experimentOne, enzyme, chamberA, 1000);
+ // switchCollection(experimentOne, preservativeOne);
+ switch_conn_pin(BASEBD_J5_PIN4, HIGH);
+  moveLiquid (experimentOne, media, chamberB, 5000);
+  stop_move = 1;
+  
 
 }
 
@@ -210,10 +215,10 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
       for (int i = 0; i <= move_pulse; i++){
       switch_conn_pin(BASEBD_J10_PIN4, HIGH); //Experiment 1 pumpA
       digitalWrite(LED, HIGH);
-      delay(100);
+      delay(200);
       switch_conn_pin(BASEBD_J10_PIN4, LOW); //Experiment 1 pumpA
       digitalWrite(LED, LOW);
-      delay(100);
+      delay(200);
        Serial.println( i * 25);
       }
       switch_conn_pin(BASEBD_J10_PIN2, LOW); //Reset xperiment 1 valveA so enzyme is blocked
@@ -229,15 +234,16 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
       }
      if (experiment == 1 && target == 4) 
      {
-      int move_pulse = (int) liquid_volume * 40; //1ml = 1000uL and the pump moves 35uL at a time
+      int move_pulse = liquid_volume / 25; //1ml = 1000uL and the pump moves 35uL at a time
 
       for (int i = 0; i <= move_pulse; i++){
       switch_conn_pin(BASEBD_J9_PIN4, HIGH); //Experiment 1 pumpB
       digitalWrite(LED, HIGH);
-      delay(100);
+      delay(200);
       switch_conn_pin(BASEBD_J9_PIN4, LOW); //Experiment 1 pumpB
       digitalWrite(LED, LOW);
-      delay(100);
+      delay(200);
+      Serial.println( i * 25);
       } 
       switch_conn_pin(BASEBD_J9_PIN2, LOW); //Reset experiment 1 valveB so chamberA is blocked  
      }
@@ -248,15 +254,11 @@ void switchCollection(int experiment, int bag)
 {
    if (experiment == 1 && bag == 5)
      {
-      switch_conn_pin(BASEBD_J11_PIN4, LOW); //Experiment 1 waste
+      switch_conn_pin(BASEBD_J5_PIN4, LOW); //Experiment 1 waste
       }
    if (experiment == 1 && bag == 6)
      {
-      switch_conn_pin(BASEBD_J11_PIN4, HIGH); //Experiment 1 preserveOne
+      switch_conn_pin(BASEBD_J5_PIN4, HIGH); //Experiment 1 preservativeOne
       }
    
-  }
-
- void stopMove() {
-  stop_move = 1;
   }
