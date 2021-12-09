@@ -3,7 +3,6 @@
 #include <TimeLib.h>
 #include <TimeAlarms.h>
 
-int experimental_date = 0;
 void setup()
 {
   setTime(8,29,0,8,12,2021);  // hr,min,sec,day,mnth,yr
