@@ -264,10 +264,26 @@ void setup() {
 
     //DAY1
     Alarm.triggerOnce(tmConvert_t(2021,12,8,8,29,5), day_1); //  YYYY,  MM,  DD,  hh,  mm,  ss
+    //DAY2
+    Alarm.triggerOnce(tmConvert_t(2021,12,8,8,30,5), day_2); //  YYYY,  MM,  DD,  hh,  mm,  ss
+    //DAY3
+    Alarm.triggerOnce(tmConvert_t(2021,12,8,8,31,5), day_3); //  YYYY,  MM,  DD,  hh,  mm,  ss
+    //DAY4
+    Alarm.triggerOnce(tmConvert_t(2021,12,8,8,32,5), day_4); //  YYYY,  MM,  DD,  hh,  mm,  ss
+    //DAY5
+    Alarm.triggerOnce(tmConvert_t(2021,12,8,8,33,5), day_5); //  YYYY,  MM,  DD,  hh,  mm,  ss
+    //DAY6
+    Alarm.triggerOnce(tmConvert_t(2021,12,8,8,34,5), day_6); //  YYYY,  MM,  DD,  hh,  mm,  ss
+    //DAY7
+    Alarm.triggerOnce(tmConvert_t(2021,12,8,8,35,5), day_7); //  YYYY,  MM,  DD,  hh,  mm,  ss
+    //DAY8
+    Alarm.triggerOnce(tmConvert_t(2021,12,8,8,36,5), day_8); //  YYYY,  MM,  DD,  hh,  mm,  ss
+    //DAY9
+    Alarm.triggerOnce(tmConvert_t(2021,12,8,8,37,5), day_9); //  YYYY,  MM,  DD,  hh,  mm,  ss
+   
   
-
     // EVERYDAY TASK
-    Alarm.timerRepeat(10, Taking_Sensor_Data);   
+    Alarm.timerRepeat(60, Taking_Sensor_Data);   
 
     
 }
@@ -280,6 +296,7 @@ void loop() {
 
 
 void day_1(){ 
+Serial.println("EXECUTING DAY_1 EXP");
 /*####Day1 (Dec 9)
 #Revival Chamber to Chamber B - ?ml (done manually)
 #Start chamber A
@@ -295,7 +312,12 @@ moveLiquid (experimentOne, e_buffer, chamberA, 2925);
 Serial.println("finished moving liquid");
 }
 
+void day_2(){ 
+Serial.println("EXECUTING DAY_2 EXP");
+}
+
 void day_3(){
+Serial.println("EXECUTING DAY_3 EXP");
 /*
 #move chamber A to Chamber B - 2ml 
 #move medium to chamber B - 2ml
@@ -315,7 +337,13 @@ Serial.println("finished moving liquid");
 
   }
 
+void day_4(){ 
+Serial.println("EXECUTING DAY_4 EXP");
+}
+
+
 void day_5(){
+Serial.println("EXECUTING DAY_5 EXP");
 /*
 #move chamber A to chamber B - 2ml
 #move medium to chamber B - 2ml
@@ -333,8 +361,13 @@ moveLiquid (experimentOne, enzyme, chamberA, 50);
 Serial.println("finished moving liquid");
 
   }
+  
+void day_6(){ 
+Serial.println("EXECUTING DAY_6 EXP");
+}
 
 void day_7(){
+Serial.println("EXECUTING DAY_7 EXP");
 
 /*
 #move chamber A to chamber B - 2ml
@@ -354,7 +387,13 @@ Serial.println("finished moving liquid");
 
   }
 
+void day_8(){ 
+Serial.println("EXECUTING DAY_8 EXP");
+}
+
+
 void day_9(){
+Serial.println("EXECUTING DAY_9 EXP");
 
 /*
 #move chamber A to chamber B - 2ml
