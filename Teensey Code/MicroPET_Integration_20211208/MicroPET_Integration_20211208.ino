@@ -165,6 +165,9 @@ boolean switch_conn_pin(CONN_PIN_T conn_pin, byte level)
 
 String experimenta_log = "";
 
+#define SERIAL_TIMEOUT 2000 //milliseconds
+
+const int serialActive = 1;
 
 void setup() {
     init_card();
@@ -173,7 +176,18 @@ void setup() {
     pinMode(ledPin, OUTPUT);
     
     Serial.begin(9600);
-    while(!Serial);    // time to get serial running
+    
+    long unsigned startup_time = millis();
+    // the below code waits for a serial monitor session to be opened 
+    // but times out in SERIAL_TIMEOUT milliseconds if none exist
+    while(!Serial){
+
+      // timeout check
+      if( (millis()-startup_time) > SERIAL_TIMEOUT){
+        break; 
+      }
+    }
+    
     Serial.println(F("Begin Serial"));
 
     pinMode(LED, OUTPUT);
