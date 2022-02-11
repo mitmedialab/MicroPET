@@ -166,7 +166,10 @@ boolean switch_conn_pin(CONN_PIN_T conn_pin, byte level)
 String experimenta_log = "";
 
 #define SECONDS_IN_DAY 86400
-#define SERIAL_TIMEOUT 2000 //milliseconds
+#define SERIAL_TIMEOUT 10000 //milliseconds
+
+const unsigned int MAX_MESSAGE_LENGTH = 12;
+bool systemState = 0;
 
 AlarmID_t Alarm_Day1_ID;
 AlarmID_t Alarm_Day2_ID;
@@ -203,7 +206,6 @@ void setup() {
     pinMode(LED, OUTPUT);
 // uncomment appropriate mcp.begin
 
-  long unsigned sensor_check_time = millis();
   if (!mcp0.begin_I2C(MCP_ADDR0)) {
     Serial.println("Error initializing chip 0.");
 //    while (1); // PC: removed so as to not stall the entire system if sensor experiences error
@@ -331,15 +333,15 @@ void loop() {
 
 
 void shutOffDateTimers(){
-  disable(Alarm_Day1_ID);
-  disable(Alarm_Day2_ID);
-  disable(Alarm_Day3_ID);
-  disable(Alarm_Day4_ID);
-  disable(Alarm_Day5_ID);
-  disable(Alarm_Day6_ID);
-  disable(Alarm_Day7_ID);
-  disable(Alarm_Day8_ID);
-  disable(Alarm_Day9_ID);
+  Alarm.disable(Alarm_Day1_ID);
+  Alarm.disable(Alarm_Day2_ID);
+  Alarm.disable(Alarm_Day3_ID);
+  Alarm.disable(Alarm_Day4_ID);
+  Alarm.disable(Alarm_Day5_ID);
+  Alarm.disable(Alarm_Day6_ID);
+  Alarm.disable(Alarm_Day7_ID);
+  Alarm.disable(Alarm_Day8_ID);
+  Alarm.disable(Alarm_Day9_ID);
 }
 
 void forceSystemStart(){
@@ -360,18 +362,16 @@ void forceSystemStart(){
   day_1();
 }
 
-const unsigned int MAX_MESSAGE_LENGTH = 12;
-const bool systemState = 0;
 bool checkForStartSerialCommand(){
+  
+  bool startCondition = false;
   while (Serial.available() > 0) {
    //Create a place to hold the incoming message
    static char message[MAX_MESSAGE_LENGTH];
    static unsigned int message_pos = 0;
-   bool startCondition = false;
 
    //Read the next available byte in the serial receive buffer
    char inByte = Serial.read();
-
    //Message coming in (check not terminating character) and guard for over message size
    if ( inByte != '\n' && (message_pos < MAX_MESSAGE_LENGTH - 1) )
    {
@@ -385,7 +385,7 @@ bool checkForStartSerialCommand(){
      //Add null character to string
      message[message_pos] = '\0';
 
-     if(strcmp(message, "START")){
+     if(strcmp(message, "START") == 0){
        startCondition = true;
        
        //Print the message (or do other things)
