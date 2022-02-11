@@ -34,13 +34,13 @@
 #define chamberA 2
 #define media 3
 #define chamberB 4
-#define waste 5
-#define preservativeOne 6  
-#define preservativeTwo 7
-#define preservativeThree 8
-#define preservativeFour 9
-#define preservativeFive 10
-#define preservativeSix 11
+
+#define waste 0
+#define preservativeOne 1  
+#define preservativeTwo 2
+#define preservativeThree 3
+#define preservativeFour 4
+#define preservativeFive 5
 
 
 Adafruit_MCP23X17 mcp0;
@@ -183,13 +183,20 @@ int stop_move = 0;
 
 void loop() {
 
- // moveLiquid (experimentOne, e_buffer, chamberA, 1000);
-//  moveLiquid (experimentOne, enzyme, chamberA, 1000);
-  switchCollection(experimentOne, waste);
- //switch_conn_pin(BASEBD_J5_PIN4, HIGH);
-//  moveLiquid (experimentOne, media, chamberB, 5000);
+  moveLiquid (experimentTwo, e_buffer, chamberA, 100);
+  moveLiquid (experimentTwo, enzyme, chamberA, 200);
+   moveLiquid (experimentTwo, media, chamberB, 200);
+  moveLiquid (experimentTwo, chamberA, chamberB, 200);
+
+ /* 
+  switchCollection(experimentTwo, waste);
+  delay(5000);
+  switchCollection(experimentTwo, preservativeOne);
+  delay(5000);
+  switchCollection(experimentTwo, preservativeTwo);
+   */
   stop_move = 1;
-  
+ 
 
 }
 
@@ -247,18 +254,105 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
       } 
       switch_conn_pin(BASEBD_J9_PIN2, LOW); //Reset experiment 1 valveB so chamberA is blocked  
      }
+ //experiment 2, stage A
+  if (experiment == 2 && origin == 0)
+     {
+      switch_conn_pin(BASEBD_J12_PIN2, LOW); //Experiment 1 valveA
+      Serial.println("move from e_buffer");
+      }
+
+     if (experiment == 2 && origin == 1)
+     {
+      switch_conn_pin(BASEBD_J12_PIN2, HIGH); //Experiment 1 valveA
+      }
+
+     if (experiment == 2 && target == 2)
+     {
+      int move_pulse = liquid_volume / 25; //1ml = 1000uL and the pump moves 25uL at a time
+
+      for (int i = 0; i <= move_pulse; i++){
+      switch_conn_pin(BASEBD_J12_PIN4, HIGH); //Experiment 1 pumpA
+      digitalWrite(LED, HIGH);
+      delay(200);
+      switch_conn_pin(BASEBD_J12_PIN4, LOW); //Experiment 1 pumpA
+      digitalWrite(LED, LOW);
+      delay(200);
+       Serial.println( i * 25);
+      }
+      switch_conn_pin(BASEBD_J12_PIN2, LOW); //Reset xperiment 1 valveA so enzyme is blocked
+     }
+
+     if (experiment == 2 && origin == 3) // media going out
+     {
+      switch_conn_pin(BASEBD_J11_PIN2, LOW); //Experiment 1 valveB
+      }
+     if (experiment == 2 && origin == 2) // chamberA going out
+     {
+      switch_conn_pin(BASEBD_J11_PIN2, HIGH); //Experiment 1 valveB
+      }
+     if (experiment == 2 && target == 4) 
+     {
+      int move_pulse = liquid_volume / 25; //1ml = 1000uL and the pump moves 35uL at a time
+
+      for (int i = 0; i <= move_pulse; i++){
+      switch_conn_pin(BASEBD_J11_PIN4, HIGH); //Experiment 1 pumpB
+      digitalWrite(LED, HIGH);
+      delay(200);
+      switch_conn_pin(BASEBD_J11_PIN4, LOW); //Experiment 1 pumpB
+      digitalWrite(LED, LOW);
+      delay(200);
+      Serial.println( i * 25);
+      } 
+      switch_conn_pin(BASEBD_J11_PIN2, LOW); //Reset experiment 1 valveB so chamberA is blocked  
+     }
+
+     
   }
 }
 
 void switchCollection(int experiment, int bag)
 {
-   if (experiment == 1 && bag == 5)
+  if (stop_move == 0){
+   if (experiment == 1 && bag == 0)
      {
-      switch_conn_pin(BASEBD_J5_PIN4, LOW); //Experiment 1 waste
+      switch_conn_pin(BASEBD_J4_PIN2, LOW); //Experiment 1 waste
+      Serial.println("open waste bag");
+   //   experimenta_log = experimenta_log + now() + "_opem waste bag,";
       }
-   if (experiment == 1 && bag == 6)
+   if (experiment == 1 && bag == 1)
      {
-      switch_conn_pin(BASEBD_J5_PIN4, HIGH); //Experiment 1 preservativeOne
+      switch_conn_pin(BASEBD_J4_PIN2, HIGH); //NOT waste
+      switch_conn_pin(BASEBD_J2_PIN4, LOW); //Experiment 1 preservativeOne
+      Serial.println("open preservativeOne bag");
+  //    experimenta_log = experimenta_log + now() + "_open preservativeOne bag,";
       }
-   
+   if (experiment == 1 && bag == 2)
+     {
+      switch_conn_pin(BASEBD_J4_PIN2, HIGH); //NOT waste
+      switch_conn_pin(BASEBD_J2_PIN4, HIGH); ////Experiment 1 preservativeTwo
+      Serial.println("open preservativeTwo bag");
+    //  experimenta_log = experimenta_log + now() + "_open preservativeTwo bag,";
+      }
+   if (experiment == 2 && bag == 0)
+     {
+   //   switch_conn_pin(BASEBD_J3_PIN2, LOW); //Experiment 2 waste
+      switch_conn_pin(BASEBD_J3_PIN4, LOW); //Experiment 2 waste
+      Serial.println("open waste bag");
+      }
+     
+   if (experiment == 2 && bag == 1)
+     {
+      switch_conn_pin(BASEBD_J3_PIN4, HIGH); //NOT waste
+      switch_conn_pin(BASEBD_J5_PIN2, LOW); //Experiment 2 preservativeOne
+      Serial.println("open preservativeOne bag");
+  //    experimenta_log = experimenta_log + now() + "_open preservativeFour bag,";
+      }
+   if (experiment == 2 && bag == 2)
+     {
+      switch_conn_pin(BASEBD_J3_PIN4, HIGH); //NOT waste
+      switch_conn_pin(BASEBD_J5_PIN2, HIGH); ////Experiment 1 preservativeTwo
+      Serial.println("open preservativeTwo bag");
+      //experimenta_log = experimenta_log + now() + "_open preservativeFive bag,";
+      }  
+  }   
   }
