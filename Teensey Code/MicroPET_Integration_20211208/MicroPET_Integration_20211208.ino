@@ -192,14 +192,16 @@ void setup() {
 
     pinMode(LED, OUTPUT);
 // uncomment appropriate mcp.begin
+
+  long unsigned sensor_check_time = millis();
   if (!mcp0.begin_I2C(MCP_ADDR0)) {
     Serial.println("Error initializing chip 0.");
-    while (1);
+//    while (1); // PC: removed so as to not stall the entire system if sensor experiences error
   }
 
   if (!mcp1.begin_I2C(MCP_ADDR1)) {
     Serial.println("Error initializing chip 1.");
-    while (1);
+//    while (1); // PC: removed so as to not stall the entire system if sensor experiences error
   }
 
   // IC5 on base board
@@ -258,12 +260,12 @@ void setup() {
 
     if(!ams_status){
         Serial.println("could not connect to sensor! Please check your wiring.");
-        while(1); delay(10);
+//        while(1); delay(10); // PC: removed so as to not stall the entire system if sensor experiences error
     }
     
     if (!bme_status) {
         Serial.println("Could not find a valid BME280 sensor, check wiring, address, sensor ID!");
-        while (1) delay(10);
+//      while (1) delay(10); // PC: removed so as to not stall the entire system if sensor experiences error
     }
     
     Serial.println("-- Default Test --");
