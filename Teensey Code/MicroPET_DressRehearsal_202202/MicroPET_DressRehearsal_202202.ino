@@ -182,12 +182,12 @@ void setup() {
 // uncomment appropriate mcp.begin
   if (!mcp0.begin_I2C(MCP_ADDR0)) {
     Serial.println("Error initializing chip 0.");
-    while (1);
+   // while (1);
   }
 
   if (!mcp1.begin_I2C(MCP_ADDR1)) {
     Serial.println("Error initializing chip 1.");
-    while (1);
+   // while (1);
   }
 
   // IC5 on base board
@@ -246,12 +246,12 @@ void setup() {
 
     if(!ams_status){
         Serial.println("could not connect to sensor! Please check your wiring.");
-        while(1); delay(10);
+     //   while(1); delay(10);
     }
     
     if (!bme_status) {
         Serial.println("Could not find a valid BME280 sensor, check wiring, address, sensor ID!");
-        while (1) delay(10);
+     //   while (1) delay(10);
     }
     
     Serial.println("-- Default Test --");
@@ -262,22 +262,22 @@ void setup() {
     // EXPERIMENTAL SETUP
       
     //STARTING DATE
-    setTime(11,0,0,8,1,2022);  // hr,min,sec,day,mnth,yr
+    setTime(11,0,0,12,2,2022);  // hr,min,sec,day,mnth,yr
 
     //DAY1
-    Alarm.triggerOnce(tmConvert_t(2022,1,8,11,2,5), day_1); //  YYYY,  MM,  DD,  hh,  mm,  ss
+    Alarm.triggerOnce(tmConvert_t(2022,2,12,11,1,5), day_1); //  YYYY,  MM,  DD,  hh,  mm,  ss
     //DAY2
-    Alarm.triggerOnce(tmConvert_t(2022,1,8,11,10,5), day_2); //  YYYY,  MM,  DD,  hh,  mm,  ss
+    Alarm.triggerOnce(tmConvert_t(2022,2,12,11,3,5), day_2); //  YYYY,  MM,  DD,  hh,  mm,  ss
     //DAY3
-    Alarm.triggerOnce(tmConvert_t(2022,1,8,11,30,5), day_3); //  YYYY,  MM,  DD,  hh,  mm,  ss
+    Alarm.triggerOnce(tmConvert_t(2022,2,12,11,5,5), day_3); //  YYYY,  MM,  DD,  hh,  mm,  ss
     //DAY4
-    Alarm.triggerOnce(tmConvert_t(2022,1,8,12,0,5), day_4); //  YYYY,  MM,  DD,  hh,  mm,  ss
+    Alarm.triggerOnce(tmConvert_t(2022,2,12,11,7,5), day_4); //  YYYY,  MM,  DD,  hh,  mm,  ss
     //DAY5
-    Alarm.triggerOnce(tmConvert_t(2022,1,8,13,0,5), day_5); //  YYYY,  MM,  DD,  hh,  mm,  ss
+    Alarm.triggerOnce(tmConvert_t(2022,2,12,11,9,5), day_5); //  YYYY,  MM,  DD,  hh,  mm,  ss
     //DAY6
-    Alarm.triggerOnce(tmConvert_t(2022,1,8,14,0,5), day_6); //  YYYY,  MM,  DD,  hh,  mm,  ss
+    Alarm.triggerOnce(tmConvert_t(2022,2,12,11,11,5), day_6); //  YYYY,  MM,  DD,  hh,  mm,  ss
     //DAY7
-    Alarm.triggerOnce(tmConvert_t(2022,1,8,15,0,5), day_7); //  YYYY,  MM,  DD,  hh,  mm,  ss
+    Alarm.triggerOnce(tmConvert_t(2022,2,12,11,13,5), day_7); //  YYYY,  MM,  DD,  hh,  mm,  ss
  
     // EVERYDAY TASK
     Alarm.timerRepeat(60, Taking_Sensor_Data);   
