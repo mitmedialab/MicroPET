@@ -169,6 +169,7 @@ String experimenta_log = "";
 
 #define SECONDS_IN_DAY 86400
 #define DELAY_SECONDS_PER_EXPERIMENT SECONDS_IN_DAY
+//#define DELAY_SECONDS_PER_EXPERIMENT 60
 #define SERIAL_TIMEOUT 10000 //milliseconds
 
 const unsigned int MAX_MESSAGE_LENGTH = 12;
@@ -265,6 +266,7 @@ void setup() {
 
   Serial.println("Looping...");
 */
+
     unsigned bme_status;
     unsigned ams_status;
     // default settings
@@ -314,7 +316,7 @@ void setup() {
 
 
 void loop() { 
-  digitalClockDisplay();
+//  digitalClockDisplay();
   Alarm.delay(1000);
 
     // if system has not already started, check for start condition via serial
@@ -874,6 +876,10 @@ void get_data() {
 
                     //DT
                     myFile.print(now());
+                    myFile.print(',');
+
+                    //millis
+                    myFile.print(millis());
                     myFile.print(',');
 
 
