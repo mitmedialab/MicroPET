@@ -167,6 +167,23 @@ boolean switch_conn_pin(CONN_PIN_T conn_pin, byte level)
 
 String experimenta_log = "";
 
+#define SECONDS_IN_DAY 86400
+#define DELAY_SECONDS_PER_EXPERIMENT SECONDS_IN_DAY
+#define SERIAL_TIMEOUT 10000 //milliseconds
+
+const unsigned int MAX_MESSAGE_LENGTH = 12;
+bool systemState = 0;
+
+AlarmID_t Alarm_Day1_ID;
+AlarmID_t Alarm_Day2_ID;
+AlarmID_t Alarm_Day3_ID;
+AlarmID_t Alarm_Day4_ID;
+AlarmID_t Alarm_Day5_ID;
+AlarmID_t Alarm_Day6_ID;
+AlarmID_t Alarm_Day7_ID;
+AlarmID_t Alarm_Day8_ID;
+AlarmID_t Alarm_Day9_ID;
+
 
 void setup() {
     pinMode(3, OUTPUT);
@@ -174,7 +191,18 @@ void setup() {
     pinMode(ledPin, OUTPUT);
     
     Serial.begin(9600);
-    while(!Serial);    // time to get serial running
+
+    long unsigned startup_time = millis();
+    // the below code waits for a serial monitor session to be opened 
+    // but times out in SERIAL_TIMEOUT milliseconds if none exist
+    while(!Serial){
+
+      // timeout check
+      if( (millis()-startup_time) > SERIAL_TIMEOUT){
+        break; 
+      }
+    }
+
     Serial.println(F("Begin Serial"));
     init_card();
 
@@ -264,20 +292,20 @@ void setup() {
     //STARTING DATE
     setTime(11,0,0,12,2,2022);  // hr,min,sec,day,mnth,yr
 
-    //DAY1
-    Alarm.triggerOnce(tmConvert_t(2022,2,12,11,1,5), day_1); //  YYYY,  MM,  DD,  hh,  mm,  ss
-    //DAY2
-    Alarm.triggerOnce(tmConvert_t(2022,2,12,11,3,5), day_2); //  YYYY,  MM,  DD,  hh,  mm,  ss
-    //DAY3
-    Alarm.triggerOnce(tmConvert_t(2022,2,12,11,5,5), day_3); //  YYYY,  MM,  DD,  hh,  mm,  ss
-    //DAY4
-    Alarm.triggerOnce(tmConvert_t(2022,2,12,11,7,5), day_4); //  YYYY,  MM,  DD,  hh,  mm,  ss
-    //DAY5
-    Alarm.triggerOnce(tmConvert_t(2022,2,12,11,9,5), day_5); //  YYYY,  MM,  DD,  hh,  mm,  ss
-    //DAY6
-    Alarm.triggerOnce(tmConvert_t(2022,2,12,11,11,5), day_6); //  YYYY,  MM,  DD,  hh,  mm,  ss
-    //DAY7
-    Alarm.triggerOnce(tmConvert_t(2022,2,12,11,13,5), day_7); //  YYYY,  MM,  DD,  hh,  mm,  ss
+//    //DAY1
+//    Alarm_Day1_ID = Alarm.triggerOnce(tmConvert_t(2022,2,18,11,1,5), day_1); //  YYYY,  MM,  DD,  hh,  mm,  ss
+//    //DAY2
+//    Alarm_Day2_ID = Alarm.triggerOnce(tmConvert_t(2022,2,18,11,3,5), day_2); //  YYYY,  MM,  DD,  hh,  mm,  ss
+//    //DAY3
+//    Alarm_Day3_ID = Alarm.triggerOnce(tmConvert_t(2022,2,18,11,5,5), day_3); //  YYYY,  MM,  DD,  hh,  mm,  ss
+//    //DAY4
+//    Alarm_Day4_ID = Alarm.triggerOnce(tmConvert_t(2022,2,18,11,7,5), day_4); //  YYYY,  MM,  DD,  hh,  mm,  ss
+//    //DAY5
+//    Alarm_Day5_ID = Alarm.triggerOnce(tmConvert_t(2022,2,18,11,9,5), day_5); //  YYYY,  MM,  DD,  hh,  mm,  ss
+//    //DAY6
+//    Alarm_Day6_ID = Alarm.triggerOnce(tmConvert_t(2022,2,18,11,11,5), day_6); //  YYYY,  MM,  DD,  hh,  mm,  ss
+//    //DAY7
+//    Alarm_Day7_ID = Alarm.triggerOnce(tmConvert_t(2022,2,18,11,13,5), day_7); //  YYYY,  MM,  DD,  hh,  mm,  ss
  
     // EVERYDAY TASK
     Alarm.timerRepeat(60, Taking_Sensor_Data);   
@@ -288,10 +316,89 @@ void setup() {
 void loop() { 
   digitalClockDisplay();
   Alarm.delay(1000);
+
+    // if system has not already started, check for start condition via serial
+  if(!systemState && checkForStartSerialCommand()) {
+    
+    // system has been commanded to start
+    forceSystemStart();
+
+    // set system state
+    systemState = true;
+  }
+}
+
+void shutOffDateTimers(){
+//  Alarm.disable(Alarm_Day1_ID);
+//  Alarm.disable(Alarm_Day2_ID);
+//  Alarm.disable(Alarm_Day3_ID);
+//  Alarm.disable(Alarm_Day4_ID);
+//  Alarm.disable(Alarm_Day5_ID);
+//  Alarm.disable(Alarm_Day6_ID);
+//  Alarm.disable(Alarm_Day7_ID);
+//  Alarm.disable(Alarm_Day8_ID);
+//  Alarm.disable(Alarm_Day9_ID);
+}
+
+void forceSystemStart(){
+  //disable existing timers
+  shutOffDateTimers();
+
+  // start new timers for days 2-9
+  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT,day_2);
+  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT*2,day_3);
+  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT*3,day_4);
+  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT*4,day_5);
+  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT*5,day_6);
+  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT*6,day_7);
+//  Alarm.timerOnce(SECONDS_IN_DAY*7,day_8);
+//  Alarm.timerOnce(SECONDS_IN_DAY*8,day_9);
+
+  // start first day
+  day_1();
+}
+
+bool checkForStartSerialCommand(){
+  
+  bool startCondition = false;
+  while (Serial.available() > 0) {
+   //Create a place to hold the incoming message
+   static char message[MAX_MESSAGE_LENGTH];
+   static unsigned int message_pos = 0;
+
+   //Read the next available byte in the serial receive buffer
+   char inByte = Serial.read();
+   //Message coming in (check not terminating character) and guard for over message size
+   if ( inByte != '\n' && (message_pos < MAX_MESSAGE_LENGTH - 1) )
+   {
+     //Add the incoming byte to our message
+     message[message_pos] = inByte;
+     message_pos++;
+   }
+   //Full message received...
+   else
+   {
+     //Add null character to string
+     message[message_pos] = '\0';
+
+     if(strcmp(message, "START") == 0){
+       startCondition = true;
+       
+       //Print the message (or do other things)
+       Serial.println("Start Message Received");
+     }
+     //Reset for the next message
+     message_pos = 0;
+   }
+ }
+
+ return startCondition;
 }
 
 
 void day_1(){ 
+  systemState = 1;
+  
 Serial.println("EXECUTING DAY_1 EXP");
 experimenta_log = experimenta_log + now() + "Day1,";
 
