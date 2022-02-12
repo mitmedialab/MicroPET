@@ -182,19 +182,26 @@ int stop_move = 0;
 }
 
 void loop() {
-
+  moveLiquid (experimentTwo, media, chamberB, 5000);
+ /* 
   moveLiquid (experimentTwo, e_buffer, chamberA, 100);
   moveLiquid (experimentTwo, enzyme, chamberA, 200);
    moveLiquid (experimentTwo, media, chamberB, 200);
   moveLiquid (experimentTwo, chamberA, chamberB, 200);
-
- /* 
-  switchCollection(experimentTwo, waste);
-  delay(5000);
-  switchCollection(experimentTwo, preservativeOne);
-  delay(5000);
-  switchCollection(experimentTwo, preservativeTwo);
    */
+ 
+  //switchCollection(experimentOne, waste);
+  //switchCollection(experimentOne, preservativeOne);
+  //switchCollection(experimentOne, preservativeTwo);
+  
+  //switchCollection(experimentTwo, waste);
+  //switchCollection(experimentTwo, preservativeOne);
+  //switchCollection(experimentTwo, preservativeTwo);
+  //delay(5000);
+  ///switchCollection(experimentTwo, preservativeOne);
+  //delay(5000);
+  ///switchCollection(experimentTwo, preservativeTwo);
+
   stop_move = 1;
  
 
@@ -257,24 +264,24 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
  //experiment 2, stage A
   if (experiment == 2 && origin == 0)
      {
-      switch_conn_pin(BASEBD_J12_PIN2, LOW); //Experiment 1 valveA
+      switch_conn_pin(BASEBD_J12_PIN2, LOW); //Experiment 2 valveA
       Serial.println("move from e_buffer");
       }
 
      if (experiment == 2 && origin == 1)
      {
-      switch_conn_pin(BASEBD_J12_PIN2, HIGH); //Experiment 1 valveA
+      switch_conn_pin(BASEBD_J12_PIN2, HIGH); //Experiment 2 valveA
       }
 
      if (experiment == 2 && target == 2)
      {
+      switch_conn_pin(BASEBD_J11_PIN2, LOW); //Experiment 2 valveB low, keep in the chamber A
       int move_pulse = liquid_volume / 25; //1ml = 1000uL and the pump moves 25uL at a time
-
       for (int i = 0; i <= move_pulse; i++){
-      switch_conn_pin(BASEBD_J12_PIN4, HIGH); //Experiment 1 pumpA
+      switch_conn_pin(BASEBD_J12_PIN4, HIGH); //Experiment 2 pumpA
       digitalWrite(LED, HIGH);
       delay(200);
-      switch_conn_pin(BASEBD_J12_PIN4, LOW); //Experiment 1 pumpA
+      switch_conn_pin(BASEBD_J12_PIN4, LOW); //Experiment 2 pumpA
       digitalWrite(LED, LOW);
       delay(200);
        Serial.println( i * 25);
@@ -282,28 +289,34 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
       switch_conn_pin(BASEBD_J12_PIN2, LOW); //Reset xperiment 1 valveA so enzyme is blocked
      }
 
-     if (experiment == 2 && origin == 3) // media going out
+      if (experiment == 2 && target == 0)
      {
-      switch_conn_pin(BASEBD_J11_PIN2, LOW); //Experiment 1 valveB
-      }
-     if (experiment == 2 && origin == 2) // chamberA going out
-     {
-      switch_conn_pin(BASEBD_J11_PIN2, HIGH); //Experiment 1 valveB
-      }
-     if (experiment == 2 && target == 4) 
-     {
-      int move_pulse = liquid_volume / 25; //1ml = 1000uL and the pump moves 35uL at a time
-
+      switch_conn_pin(BASEBD_J11_PIN2, HIGH); //Experiment 2 valveB high, go to waste
+      int move_pulse = liquid_volume / 25; //1ml = 1000uL and the pump moves 25uL at a time
       for (int i = 0; i <= move_pulse; i++){
-      switch_conn_pin(BASEBD_J11_PIN4, HIGH); //Experiment 1 pumpB
+      switch_conn_pin(BASEBD_J12_PIN4, HIGH); //Experiment 2 pumpA
       digitalWrite(LED, HIGH);
       delay(200);
-      switch_conn_pin(BASEBD_J11_PIN4, LOW); //Experiment 1 pumpB
+      switch_conn_pin(BASEBD_J12_PIN4, LOW); //Experiment 2 pumpA
+      digitalWrite(LED, LOW);
+      delay(200);
+       Serial.println( i * 25);
+      }
+      switch_conn_pin(BASEBD_J12_PIN2, LOW); //Reset xperiment 1 valveA so enzyme is blocked
+     }
+     
+     if (experiment == 2 && origin == 3 && target == 4) 
+     {
+      int move_pulse = liquid_volume / 25; //1ml = 1000uL and the pump moves 35uL at a time
+      for (int i = 0; i <= move_pulse; i++){
+      switch_conn_pin(BASEBD_J11_PIN4, HIGH); //Experiment 2 pumpB
+      digitalWrite(LED, HIGH);
+      delay(200);
+      switch_conn_pin(BASEBD_J11_PIN4, LOW); //Experiment 2 pumpB
       digitalWrite(LED, LOW);
       delay(200);
       Serial.println( i * 25);
       } 
-      switch_conn_pin(BASEBD_J11_PIN2, LOW); //Reset experiment 1 valveB so chamberA is blocked  
      }
 
      

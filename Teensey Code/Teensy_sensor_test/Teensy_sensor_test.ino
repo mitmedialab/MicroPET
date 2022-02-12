@@ -45,9 +45,9 @@ void setup() {
     pinMode(3, OUTPUT);
     pinMode(4, OUTPUT);
     
-    //Serial.begin(9600);
-    //while(!Serial);    // time to get serial running
-    //Serial.println(F("Begin Serial"));
+    Serial.begin(9600);
+    while(!Serial);    // time to get serial running
+    Serial.println(F("Begin Serial"));
 
     unsigned bme_status;
     unsigned ams_status;
@@ -74,9 +74,9 @@ void setup() {
 
 
 void loop() { 
-     unsigned bme_status;
+    unsigned bme_status;
     unsigned ams_status;
-bme_status = bme.begin();  
+    bme_status = bme.begin();  
     ams_status = ams.begin();  
     // You can also pass in a Wire library object like &Wire2
 
