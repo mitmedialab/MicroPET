@@ -97,6 +97,7 @@ const int ledPin = 5;
 #define preservativeFour 4
 #define preservativeFive 5
 
+
 Adafruit_MCP23X17 mcp0;
 Adafruit_MCP23X17 mcp1;
 Adafruit_MCP23X17 mcp2;
@@ -277,11 +278,7 @@ void setup() {
     Alarm.triggerOnce(tmConvert_t(2022,1,8,14,0,5), day_6); //  YYYY,  MM,  DD,  hh,  mm,  ss
     //DAY7
     Alarm.triggerOnce(tmConvert_t(2022,1,8,15,0,5), day_7); //  YYYY,  MM,  DD,  hh,  mm,  ss
-    //DAY8
-    Alarm.triggerOnce(tmConvert_t(2022,1,9,11,0,5), day_8); //  YYYY,  MM,  DD,  hh,  mm,  ss
-    //DAY9
-    Alarm.triggerOnce(tmConvert_t(2022,1,9,12,0,5), day_9); //  YYYY,  MM,  DD,  hh,  mm,  ss
-   
+ 
     // EVERYDAY TASK
     Alarm.timerRepeat(60, Taking_Sensor_Data);   
 
@@ -296,156 +293,211 @@ void loop() {
 
 void day_1(){ 
 Serial.println("EXECUTING DAY_1 EXP");
-/*####Day1 (Dec 9)
-#Revival Chamber to Chamber B - ?ml (done manually)
-#Start chamber A
-#open waste valve
-#enzyme to chamber A - 0.06 ml
-#buffer to chamber A - 2.94 ml (flexible)
-*/
+experimenta_log = experimenta_log + now() + "Day1,";
 
-Serial.println("start moving liquid");
-switchCollection(experimentOne, waste);
-moveLiquid (experimentOne, enzyme, chamberA, 75);
-moveLiquid (experimentOne, e_buffer, chamberA, 2925);
-Serial.println("finished moving liquid");
+//ExperimentOne - start enzyme
+Serial.println("ExperimentOne start moving liquid");
+experimenta_log = experimenta_log + now() + "ExperimentOne start,";
+
+  switchCollection(experimentOne, waste);
+  //[Manual]Revival Chamber to Chamber B - 20mL 
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentOne, e_buffer, chamberA, 2925);
+
+Serial.println("ExperimentOne finished moving liquid");
+experimenta_log = experimenta_log + now() + "ExperimentOne finished,";
+
+//ExperimentTwo
+Serial.println("ExperimentTwo start moving liquid");
+experimenta_log = experimenta_log + now() + "ExperimentTwo start,";
+
+  //microbe
+  
+  //Open waste valve
+  switchCollection(experimentTwo, waste);
+  //[Manual]Revival Chamber to Chamber B - 20mL 
+
+  //Enzyme
+   
+  //enzyme to chamber A - 0.075 ml (=3 x 25 µL)
+  moveLiquid (experimentTwo, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentTwo, e_buffer, chamberA, 2925);
+
+Serial.println("ExperimentTwo finished moving liquid");
+experimenta_log = experimenta_log + now() + "ExperimentTwo finished,";
 }
 
 void day_2(){ 
 Serial.println("EXECUTING DAY_2 EXP");
-//repeating Day1 schedule for test
+experimenta_log = experimenta_log + now() + "Day2,";
 
-Serial.println("start moving liquid");
-switchCollection(experimentOne, waste);
-moveLiquid (experimentOne, enzyme, chamberA, 50);
-moveLiquid (experimentOne, e_buffer, chamberA, 3100);
-Serial.println("finished moving liquid");
+//ExperimentOne - nothing
+
+//ExperimentTwo
+Serial.println("ExperimentTwo start moving liquid");
+experimenta_log = experimenta_log + now() + "ExperimentTwo start,";
+
+  //microbe
+  //open perversative valve MRNA1 (a CTRL)
+  switchCollection(experimentTwo, preservativeOne);
+ 
+  //move medium to chamber B - 4ml
+  //which moves chamber B to preservative MRNA1(RNA) - 4ml
+  moveLiquid (experimentTwo, media, chamberB, 4000);
+
+
+Serial.println("ExperimentTwo finished moving liquid");
+experimenta_log = experimenta_log + now() + "ExperimentTwo finished,";
+
 }
 
 void day_3(){
 Serial.println("EXECUTING DAY_3 EXP");
-/*
-#move chamber A to Chamber B - 2ml 
-#move medium to chamber B - 2ml
-#move chamber B to preservative A1(RNA) - 4ml
-#move buffer to chamber A -  1.95ml
-#move enzyme to chamber A - 0.05ml
+experimenta_log = experimenta_log + now() + "Day3,";
 
-*/
+//ExperimentOne - mix bacteria with enzyme and replenish enzyme
+Serial.println("ExperimentOne start moving liquid");
+experimenta_log = experimenta_log + now() + "ExperimentOne start,";
 
-Serial.println("start moving liquid");
-switchCollection(experimentOne, preservativeOne);
-moveLiquid (experimentOne, chamberA, chamberB, 2000);
-moveLiquid (experimentOne, media, chamberB, 2000);
-moveLiquid (experimentOne, e_buffer, chamberA, 1950);
-moveLiquid (experimentOne, enzyme, chamberA, 50);
-Serial.println("finished moving liquid");
+  //Open valve to preservative MRNA1 - CTRL (shouldn’t have BKA)
+  switchCollection(experimentOne, preservativeOne);
+  //move chamber A to Chamber B - 3ml
+  moveLiquid (experimentOne, chamberA, chamberB, 3000);
+  //move medium to chamber B - 3ml
+  moveLiquid (experimentOne, media, chamberB, 3000);
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml
+  moveLiquid (experimentOne, e_buffer, chamberA, 2925);
+
+Serial.println("ExperimentOne finished moving liquid");
+experimenta_log = experimenta_log + now() + "ExperimentOne finished,";
+
+//ExperimentTwo
+Serial.println("ExperimentTwo start moving liquid");
+experimenta_log = experimenta_log + now() + "ExperimentTwo start,";
+
+  //Enzyme
+  //move buffer to chamber A -  2.950 ml
+  moveLiquid (experimentTwo, e_buffer, waste, 2950);
+  //move enzyme to chamber A - 0.075ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75);
+
+Serial.println("ExperimentTwo finished moving liquid");
+experimenta_log = experimenta_log + now() + "ExperimentTwo finished,";
 
   }
 
 void day_4(){ 
 Serial.println("EXECUTING DAY_4 EXP");
+experimenta_log = experimenta_log + now() + "Day4,";
 
-//repeating Day1 schedule for test
+//ExperimentOne - nothing
 
-Serial.println("start moving liquid");
-switchCollection(experimentOne, waste);
-moveLiquid (experimentOne, enzyme, chamberA, 50);
-moveLiquid (experimentOne, e_buffer, chamberA, 3100);
-Serial.println("finished moving liquid");
+//ExperimentTwo
+Serial.println("ExperimentTwo start moving liquid");
+experimenta_log = experimenta_log + now() + "ExperimentTwo start,";
+
+  //Microbe
+  //move medium to chamber B - 4ml 
+  //which moves chamber B to preservative MRNA1(RNA) - 4ml
+  moveLiquid (experimentTwo, media, chamberB, 4000);
+ 
+  //[proteomics]:open perversative valve PROT1
+  switchCollection(experimentTwo, preservativeTwo);
+ 
+  //move medium to chamber B - 4ml
+  //which moves chamber B to preservative PROT1(RNA) - 4ml
+  moveLiquid (experimentTwo, media, chamberB, 4000);
+ 
+Serial.println("ExperimentTwo finished moving liquid");
+experimenta_log = experimenta_log + now() + "ExperimentTwo finished,";
+
 
 }
 
 
 void day_5(){
 Serial.println("EXECUTING DAY_5 EXP");
-/*
-#move chamber A to chamber B - 2ml
-#move medium to chamber B - 2ml
-#move buffer to chamber A -  1.95ml
-#move enzyme to chamber A - 0.05ml
-#move chamber B to preservative A1(RNA) - 4ml
-*/
+experimenta_log = experimenta_log + now() + "Day5,";
 
-Serial.println("start moving liquid");
-switchCollection(experimentOne, preservativeOne);
-moveLiquid (experimentOne, chamberA, chamberB, 2000);
-moveLiquid (experimentOne, media, chamberB, 2000);
-moveLiquid (experimentOne, e_buffer, chamberA, 1950);
-moveLiquid (experimentOne, enzyme, chamberA, 50);
-Serial.println("finished moving liquid");
+//ExperimentOne - mix bacteria with enzyme and replenish enzyme
+Serial.println("ExperimentOne start moving liquid");
+experimenta_log = experimenta_log + now() + "ExperimentOne start,";
+
+  //Open valve to preservative MRNA1 - with BKA
+  switchCollection(experimentOne, preservativeOne);
+  //move chamber A to Chamber B - 3ml
+  moveLiquid (experimentOne, chamberA, chamberB, 3000);
+  //move medium to chamber B - 3ml
+  moveLiquid (experimentOne, media, chamberB, 3000);
+  //Open valve to preservative PROT1 - with BKA
+  switchCollection(experimentOne, preservativeTwo);
+  //move medium to chamber B - 4ml
+  moveLiquid (experimentOne, media, chamberB, 4000);
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml
+  moveLiquid (experimentOne, e_buffer, chamberA, 2925);
+  
+Serial.println("ExperimentOne finished moving liquid");
+experimenta_log = experimenta_log + now() + "ExperimentOne finished,";
+
 
   }
   
 void day_6(){ 
 Serial.println("EXECUTING DAY_6 EXP");
+experimenta_log = experimenta_log + now() + "Day6,";
 
-//repeating Day1 schedule for test
+//ExperimentOne - nothing
 
-Serial.println("start moving liquid");
-switchCollection(experimentOne, waste);
-moveLiquid (experimentOne, enzyme, chamberA, 50);
-moveLiquid (experimentOne, e_buffer, chamberA, 3100);
-Serial.println("finished moving liquid");
+//ExperimentTwo
+Serial.println("ExperimentTwo start moving liquid");
+experimenta_log = experimenta_log + now() + "ExperimentTwo start,";
+
+  //open perversative valve MRNA1
+  switchCollection(experimentTwo, preservativeOne);
+ 
+  //move medium to chamber B - 4ml
+  //which moves chamber B to preservative MRNA3(RNA) - 4ml
+  moveLiquid (experimentTwo, media, chamberB, 4000);
+
+Serial.println("ExperimentTwo finished moving liquid");
+experimenta_log = experimenta_log + now() + "ExperimentTwo finished,";
+
 }
 
 void day_7(){
 Serial.println("EXECUTING DAY_7 EXP");
+experimenta_log = experimenta_log + now() + "Day7,";
 
-/*
-#move chamber A to chamber B - 2ml
-#move medium to chamber B - 2ml
-#move buffer to chamber A -  1.95ml
-#move enzyme to chamber A - 0.05ml
-#move chamber B to preservative A1(RNA) - 4ml
-*/
+//ExperimentOne - collection
+Serial.println("ExperimentOne start moving liquid");
+experimenta_log = experimenta_log + now() + "ExperimentOne start,";
 
-Serial.println("start moving liquid");
-switchCollection(experimentOne, preservativeOne);
-moveLiquid (experimentOne, chamberA, chamberB, 2000);
-moveLiquid (experimentOne, media, chamberB, 2000);
-moveLiquid (experimentOne, e_buffer, chamberA, 1950);
-moveLiquid (experimentOne, enzyme, chamberA, 50);
-Serial.println("finished moving liquid");
+  //Open valve to preservative MRNA1 - with BKA
+  switchCollection(experimentOne, preservativeOne);
+  //move chamber A to Chamber B - 3ml
+  moveLiquid (experimentOne, chamberA, chamberB, 3000);
+  //move medium to chamber B - 3ml
+  moveLiquid (experimentOne, media, chamberB, 3000);
 
-  }
-
-void day_8(){ 
-Serial.println("EXECUTING DAY_8 EXP");
-//repeating Day1 schedule for test
-
-Serial.println("start moving liquid");
-switchCollection(experimentOne, waste);
-moveLiquid (experimentOne, enzyme, chamberA, 50);
-moveLiquid (experimentOne, e_buffer, chamberA, 3100);
-Serial.println("finished moving liquid");
-}
+Serial.println("ExperimentOne finished moving liquid");
+experimenta_log = experimenta_log + now() + "ExperimentOne finished,";
 
 
-void day_9(){
-Serial.println("EXECUTING DAY_9 EXP");
-
-/*
-#move chamber A to chamber B - 2ml
-#move medium to chamber B - 2ml
-#move buffer to chamber A -  1.95ml
-#move enzyme to chamber A - 0.05ml
-#move chamber B to preservative A1(RNA) - 4ml
-*/
-
-Serial.println("start moving liquid");
-switchCollection(experimentOne, preservativeOne);
-moveLiquid (experimentOne, chamberA, chamberB, 2000);
-moveLiquid (experimentOne, media, chamberB, 2000);
-moveLiquid (experimentOne, e_buffer, chamberA, 1950);
-moveLiquid (experimentOne, enzyme, chamberA, 50);
-Serial.println("finished moving liquid");
   }
 
 
 
 void moveLiquid(int experiment, int origin, int target, float liquid_volume) 
 {
+  //experiment ONE
+  
      if (experiment == 1 && origin == 0)
      {
       switch_conn_pin(BASEBD_J10_PIN2, LOW); //Experiment 1 valveA
@@ -505,60 +557,118 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
       } 
       switch_conn_pin(BASEBD_J9_PIN2, LOW); //Reset experiment 1 valveB so chamberA is blocked  
      }
+     
+  //experimentTWO
+  
+  if (experiment == 2 && origin == 0)
+     {
+      switch_conn_pin(BASEBD_J12_PIN2, LOW); //Experiment 2 valveA
+      Serial.println("move from e_buffer");
+      experimenta_log = experimenta_log + now() + "_move from e_buffer,";
+      }
+
+     if (experiment == 2 && origin == 1)
+     {
+      switch_conn_pin(BASEBD_J12_PIN2, HIGH); //Experiment 2 valveA
+      experimenta_log = experimenta_log + now() + "_move from enzyme,";
+      Serial.println("move from Enzyme");
+      }
+
+     if (experiment == 2 && target == 2)
+     {
+      switch_conn_pin(BASEBD_J11_PIN2, LOW); //Experiment 2 valveB low, keep in the chamber A
+      int move_pulse = liquid_volume / 25; //1ml = 1000uL and the pump moves 25uL at a time
+      Serial.println("move to chamberA");
+      experimenta_log = experimenta_log + now() + "_move to chamberA," + move_pulse *25 + "uL";
+      for (int i = 0; i <= move_pulse; i++){
+      switch_conn_pin(BASEBD_J12_PIN4, HIGH); //Experiment 2 pumpA
+      digitalWrite(LED, HIGH);
+      delay(200);
+      switch_conn_pin(BASEBD_J12_PIN4, LOW); //Experiment 2 pumpA
+      digitalWrite(LED, LOW);
+      delay(200);
+       Serial.println( i * 25);
+      }
+      switch_conn_pin(BASEBD_J12_PIN2, LOW); //Reset xperiment 1 valveA so enzyme is blocked
+     }
+
+      if (experiment == 2 && target == 0)
+     {
+      switch_conn_pin(BASEBD_J11_PIN2, HIGH); //Experiment 2 valveB high, go to waste
+      int move_pulse = liquid_volume / 25; //1ml = 1000uL and the pump moves 25uL at a time
+      Serial.println("move to waste");
+      experimenta_log = experimenta_log + now() + "_move to waste," + move_pulse *25 + "uL";
+      for (int i = 0; i <= move_pulse; i++){
+      switch_conn_pin(BASEBD_J12_PIN4, HIGH); //Experiment 2 pumpA
+      digitalWrite(LED, HIGH);
+      delay(200);
+      switch_conn_pin(BASEBD_J12_PIN4, LOW); //Experiment 2 pumpA
+      digitalWrite(LED, LOW);
+      delay(200);
+       Serial.println( i * 25);
+      }
+      switch_conn_pin(BASEBD_J12_PIN2, LOW); //Reset xperiment 2 valveA so enzyme is blocked
+     }
+     
+     if (experiment == 2 && origin == 3 && target == 4) 
+     {
+      int move_pulse = liquid_volume / 25; //1ml = 1000uL and the pump moves 25uL at a time
+      Serial.println("media move to chamberB");
+      experimenta_log = experimenta_log + now() + "_move to chamberB,"+ move_pulse *25 + "uL";
+      for (int i = 0; i <= move_pulse; i++){
+      switch_conn_pin(BASEBD_J11_PIN4, HIGH); //Experiment 2 pumpB
+      digitalWrite(LED, HIGH);
+      delay(200);
+      switch_conn_pin(BASEBD_J11_PIN4, LOW); //Experiment 2 pumpB
+      digitalWrite(LED, LOW);
+      delay(200);
+      Serial.println( i * 25);
+      } 
+     }
+     
 }
 
 void switchCollection(int experiment, int bag)
 {
    if (experiment == 1 && bag == 0)
      {
-      switch_conn_pin(BASEBD_J6_PIN4, LOW); //Experiment 1 waste
+      switch_conn_pin(BASEBD_J4_PIN2, LOW); //Experiment 1 waste
       Serial.println("open waste bag");
       experimenta_log = experimenta_log + now() + "_opem waste bag,";
       }
    if (experiment == 1 && bag == 1)
      {
-      switch_conn_pin(BASEBD_J6_PIN4, HIGH); //NOT waste
-      switch_conn_pin(BASEBD_J6_PIN2, LOW); //Experiment 1 preservativeOne
+      switch_conn_pin(BASEBD_J4_PIN2, HIGH); //NOT waste
+      switch_conn_pin(BASEBD_J2_PIN4, LOW); //Experiment 1 preservativeOne
       Serial.println("open preservativeOne bag");
       experimenta_log = experimenta_log + now() + "_open preservativeOne bag,";
       }
    if (experiment == 1 && bag == 2)
      {
-      switch_conn_pin(BASEBD_J6_PIN4, HIGH); //NOT waste
-      switch_conn_pin(BASEBD_J6_PIN2, HIGH); //NOT preservativeOne
-      switch_conn_pin(BASEBD_J4_PIN4, LOW); //Experiment 1 preservativeTwo
+      switch_conn_pin(BASEBD_J4_PIN2, HIGH); //NOT waste
+      switch_conn_pin(BASEBD_J2_PIN4, HIGH); ////Experiment 1 preservativeTwo
       Serial.println("open preservativeTwo bag");
       experimenta_log = experimenta_log + now() + "_open preservativeTwo bag,";
       }
-   if (experiment == 1 && bag == 3)
+   if (experiment == 2 && bag == 0)
      {
-      switch_conn_pin(BASEBD_J6_PIN4, HIGH); //NOT waste
-      switch_conn_pin(BASEBD_J6_PIN2, HIGH); //NOT preservativeOne
-      switch_conn_pin(BASEBD_J4_PIN4, HIGH); //NOT preservativeTwo
-      switch_conn_pin(BASEBD_J4_PIN2, LOW); //Experiment 1 preservativeThree
-      Serial.println("open preservativeThree bag");
-      experimenta_log = experimenta_log + now() + "_open preservativeThree bag,";
+      switch_conn_pin(BASEBD_J3_PIN4, LOW); //Experiment 2 waste
+      Serial.println("open waste bag");
+      experimenta_log = experimenta_log + now() + "_opem waste bag,";
       }
-   if (experiment == 1 && bag == 4)
+   if (experiment == 2 && bag == 1)
      {
-      switch_conn_pin(BASEBD_J6_PIN4, HIGH); //NOT waste
-      switch_conn_pin(BASEBD_J6_PIN2, HIGH); //NOT preservativeOne
-      switch_conn_pin(BASEBD_J4_PIN4, HIGH); //NOT preservativeTwo
-      switch_conn_pin(BASEBD_J4_PIN2, HIGH); //NOT preservativeThree
-      switch_conn_pin(BASEBD_J2_PIN4, LOW); //Experiment 1 preservativeFour
-      Serial.println("open preservativeFour bag");
-      experimenta_log = experimenta_log + now() + "_open preservativeFour bag,";
+      switch_conn_pin(BASEBD_J3_PIN4, HIGH); //NOT waste
+      switch_conn_pin(BASEBD_J5_PIN2, LOW); //Experiment 2 preservativeOne
+      Serial.println("open preservativeOne bag");
+      experimenta_log = experimenta_log + now() + "_open preservativeOne bag,";
       }
-   if (experiment == 1 && bag == 5)
+   if (experiment == 2 && bag == 2)
      {
-      switch_conn_pin(BASEBD_J6_PIN4, HIGH); //NOT waste
-      switch_conn_pin(BASEBD_J6_PIN2, HIGH); //NOT preservativeOne
-      switch_conn_pin(BASEBD_J4_PIN4, HIGH); //NOT preservativeTwo
-      switch_conn_pin(BASEBD_J4_PIN2, HIGH); //NOT preservativeThree
-      switch_conn_pin(BASEBD_J2_PIN4, HIGH); //NOT  preservativeFour
-      switch_conn_pin(BASEBD_J2_PIN2, LOW); //Experiment 1 preservativeFive
-      Serial.println("open preservativeFive bag");
-      experimenta_log = experimenta_log + now() + "_open preservativeFive bag,";
+      switch_conn_pin(BASEBD_J3_PIN4, HIGH); //NOT waste
+      switch_conn_pin(BASEBD_J5_PIN2, HIGH); ////Experiment 2 preservativeTwo
+      Serial.println("open preservativeTwo bag");
+      experimenta_log = experimenta_log + now() + "_open preservativeTwo bag,";
       }     
   }
 

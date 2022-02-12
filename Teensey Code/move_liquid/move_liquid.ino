@@ -182,7 +182,7 @@ int stop_move = 0;
 }
 
 void loop() {
-  moveLiquid (experimentTwo, media, chamberB, 5000);
+  moveLiquid (experimentTwo, enzyme, chamberA, 500);
  /* 
   moveLiquid (experimentTwo, e_buffer, chamberA, 100);
   moveLiquid (experimentTwo, enzyme, chamberA, 200);
@@ -363,7 +363,7 @@ void switchCollection(int experiment, int bag)
    if (experiment == 2 && bag == 2)
      {
       switch_conn_pin(BASEBD_J3_PIN4, HIGH); //NOT waste
-      switch_conn_pin(BASEBD_J5_PIN2, HIGH); ////Experiment 1 preservativeTwo
+      switch_conn_pin(BASEBD_J5_PIN2, HIGH); ////Experiment 2 preservativeTwo
       Serial.println("open preservativeTwo bag");
       //experimenta_log = experimenta_log + now() + "_open preservativeFive bag,";
       }  
