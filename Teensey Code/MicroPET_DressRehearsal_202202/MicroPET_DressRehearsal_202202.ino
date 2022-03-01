@@ -45,10 +45,16 @@ Adafruit_BME280 bme; // I2C
 unsigned long delayTime;
 uint16_t sensorValues[AS726x_NUM_CHANNELS];
 
-
 //SD Card
 #include <SD.h>
 #include <SPI.h>
+
+typedef struct{
+  byte experimentStarted;
+  time_t epoch;
+  byte testDay;
+  byte testInterval;
+}systemStateStruct;
 
 File myFile;
 const int chipSelect = BUILTIN_SDCARD;
@@ -329,6 +335,42 @@ void loop() {
     systemState = true;
   }
 }
+
+
+
+//typedef union {
+//   systemStateStruct state;
+//   byte bytes [sizeof(systemStateStruct)];
+//}systemStateUnion;
+
+bool grabStateFromSD(systemStateStruct* input){
+   if(SD.exists("logFile.txt")){
+    File logFile = SD.open("logFile.txt", FILE_WRITE);
+    logFile.read(input, sizeof(systemStateStruct));
+    logFile.close();
+    return true;
+   }
+   else{
+    return false;
+   }
+}
+
+void saveStateToSD(systemStateStruct* input){
+  File logFile = SD.open("logFile.txt", FILE_WRITE);
+  logFile.seek(0); // overwrite existing file
+  logFile.write(input, sizeof(systemStateStruct));
+}
+
+//bool checkForSysFault(){
+//  if(SD.exists("logFile.txt")){
+//    myFile = SD.open("logFile.txt", FILE_WRITE);
+//
+//    
+//    myFile.close();
+//  }
+//  Serial.print
+//  myFile = SD.open("savefile.txt", FILE_WRITE);
+//}
 
 void shutOffDateTimers(){
 //  Alarm.disable(Alarm_Day1_ID);
