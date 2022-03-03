@@ -63,6 +63,8 @@ File myFile;
 const int chipSelect = BUILTIN_SDCARD;
 const int ledPin = 5;
 
+systemStateStruct systemStateStructVar = {0,0,0,0};
+
 //IO ports
 
 #define MCP_ADDR0 0x20  // IC5 on base board
@@ -308,6 +310,27 @@ void setup() {
     setTime(rtc.now().unixtime()); //sets time from RTC
     Serial.print("Time is now: ");
     Serial.println(now());
+
+    if(!grabStateFromSD(&systemStateStructVar)){
+        Serial.println("No log file exists so will create one!");
+        // no prior state exists so saving a new file with current rtc time
+        systemStateStructVar.experimentStarted = 0;
+        systemStateStructVar.epoch = rtc.now().unixtime();
+        saveStateToSD(&systemStateStructVar);
+    }
+    else if(systemStateStructVar.experimentStarted==0){
+      Serial.println("Previous log file exists but experiment hasn't started!");
+      // if a file exists and shows no prior experiment has started, update time
+        systemStateStructVar.experimentStarted = 0;
+        systemStateStructVar.epoch = rtc.now().unixtime();
+        saveStateToSD(&systemStateStructVar);
+    }
+    else if (systemStateStructVar.experimentStarted==1){
+      Serial.println("Power Failure Event Detected!");
+      // log file has shown that experiment has started already
+      // todo: implement schedule correction
+    }
+
 //    //DAY1
 //    Alarm_Day1_ID = Alarm.triggerOnce(tmConvert_t(2022,2,18,11,1,5), day_1); //  YYYY,  MM,  DD,  hh,  mm,  ss
 //    //DAY2
@@ -387,7 +410,7 @@ void rtcInit(){
   float drift_unit = 4.34; // use with offset mode PCF8523_TwoHours
   // float drift_unit = 4.069; //For corrections every min the drift_unit is 4.069 ppm (use with offset mode PCF8523_OneMinute)
   int offset = round(deviation_ppm / drift_unit);
-  // rtc.calibrate(PCF8523_TwoHours, offset); // Un-comment to perform calibration once drift (seconds) and observation period (seconds) are correct
+   rtc.calibrate(PCF8523_TwoHours, offset); // Un-comment to perform calibration once drift (seconds) and observation period (seconds) are correct
   // rtc.calibrate(PCF8523_TwoHours, 0); // Un-comment to cancel previous calibration
 }
 
@@ -398,8 +421,8 @@ void rtcInit(){
 
 bool grabStateFromSD(systemStateStruct* input){
    if(SD.exists("logFile.txt")){
-    File logFile = SD.open("logFile.txt", FILE_WRITE);
-    logFile.read(input, sizeof(systemStateStruct));
+    File logFile = SD.open("logFile.txt", FILE_READ);
+    logFile.read((uint8_t *)input, sizeof(systemStateStruct));
     logFile.close();
     return true;
    }
@@ -411,7 +434,8 @@ bool grabStateFromSD(systemStateStruct* input){
 void saveStateToSD(systemStateStruct* input){
   File logFile = SD.open("logFile.txt", FILE_WRITE);
   logFile.seek(0); // overwrite existing file
-  logFile.write(input, sizeof(systemStateStruct));
+  logFile.write((uint8_t *)input, sizeof(systemStateStruct));
+  logFile.close();
 }
 
 //bool checkForSysFault(){
@@ -495,6 +519,12 @@ bool checkForStartSerialCommand(){
 
 void day_1(){ 
   systemState = 1;
+
+  systemStateStructVar.experimentStarted = 1;
+  systemStateStructVar.epoch = rtc.now().unixtime();
+  systemStateStructVar.testDay = 1;
+  systemStateStructVar.testInterval = 1;
+  saveStateToSD(&systemStateStructVar);
   
 Serial.println("EXECUTING DAY_1 EXP");
 experimenta_log = experimenta_log + now() + "Day1,";
@@ -536,6 +566,13 @@ experimenta_log = experimenta_log + now() + "ExperimentTwo finished,";
 
 void day_2(){ 
 Serial.println("EXECUTING DAY_2 EXP");
+
+  systemStateStructVar.experimentStarted = 1;
+  systemStateStructVar.epoch = rtc.now().unixtime();
+  systemStateStructVar.testDay = 2;
+  systemStateStructVar.testInterval = 1;
+  saveStateToSD(&systemStateStructVar);
+  
 experimenta_log = experimenta_log + now() + "Day2,";
 
 //ExperimentOne - nothing
@@ -560,6 +597,13 @@ experimenta_log = experimenta_log + now() + "ExperimentTwo finished,";
 
 void day_3(){
 Serial.println("EXECUTING DAY_3 EXP");
+
+  systemStateStructVar.experimentStarted = 1;
+  systemStateStructVar.epoch = rtc.now().unixtime();
+  systemStateStructVar.testDay = 3;
+  systemStateStructVar.testInterval = 1;
+  saveStateToSD(&systemStateStructVar);
+  
 experimenta_log = experimenta_log + now() + "Day3,";
 
 //ExperimentOne - mix bacteria with enzyme and replenish enzyme
@@ -597,6 +641,13 @@ experimenta_log = experimenta_log + now() + "ExperimentTwo finished,";
 
 void day_4(){ 
 Serial.println("EXECUTING DAY_4 EXP");
+
+  systemStateStructVar.experimentStarted = 1;
+  systemStateStructVar.epoch = rtc.now().unixtime();
+  systemStateStructVar.testDay = 4;
+  systemStateStructVar.testInterval = 1;
+  saveStateToSD(&systemStateStructVar);
+  
 experimenta_log = experimenta_log + now() + "Day4,";
 
 //ExperimentOne - nothing
@@ -626,6 +677,13 @@ experimenta_log = experimenta_log + now() + "ExperimentTwo finished,";
 
 void day_5(){
 Serial.println("EXECUTING DAY_5 EXP");
+
+  systemStateStructVar.experimentStarted = 1;
+  systemStateStructVar.epoch = rtc.now().unixtime();
+  systemStateStructVar.testDay = 5;
+  systemStateStructVar.testInterval = 1;
+  saveStateToSD(&systemStateStructVar);
+  
 experimenta_log = experimenta_log + now() + "Day5,";
 
 //ExperimentOne - mix bacteria with enzyme and replenish enzyme
@@ -655,6 +713,13 @@ experimenta_log = experimenta_log + now() + "ExperimentOne finished,";
   
 void day_6(){ 
 Serial.println("EXECUTING DAY_6 EXP");
+
+  systemStateStructVar.experimentStarted = 1;
+  systemStateStructVar.epoch = rtc.now().unixtime();
+  systemStateStructVar.testDay = 6;
+  systemStateStructVar.testInterval = 1;
+  saveStateToSD(&systemStateStructVar);
+  
 experimenta_log = experimenta_log + now() + "Day6,";
 
 //ExperimentOne - nothing
@@ -677,6 +742,13 @@ experimenta_log = experimenta_log + now() + "ExperimentTwo finished,";
 
 void day_7(){
 Serial.println("EXECUTING DAY_7 EXP");
+
+  systemStateStructVar.experimentStarted = 1;
+  systemStateStructVar.epoch = rtc.now().unixtime();
+  systemStateStructVar.testDay = 7;
+  systemStateStructVar.testInterval = 1;
+  saveStateToSD(&systemStateStructVar);
+  
 experimenta_log = experimenta_log + now() + "Day7,";
 
 //ExperimentOne - collection
