@@ -348,8 +348,8 @@ void setup() {
 //    Alarm_Day7_ID = Alarm.triggerOnce(tmConvert_t(2022,2,18,11,13,5), day_7); //  YYYY,  MM,  DD,  hh,  mm,  ss
  
     // EVERYDAY TASK
-    Alarm.timerRepeat(60, Taking_Sensor_Data);   
-     day_0();
+    Alarm.timerRepeat(10, Taking_Sensor_Data);   
+    //day_0();
      
 }
 
@@ -1149,7 +1149,7 @@ Serial.print("Initializing SD card...");
     delay(1000);                  // wait for a second
 
     //Content
-    myFile.println("DT, Temp, Pressure, Attitude, Humidity, Temp2, Spectral_Violet, Spectral_Blue, Spectral_Green, Spectral_Yellow, Spectral_Orange, Spectral_Red, Experimental_Log");
+    myFile.println("DT, millis, Temp, Pressure, Attitude, Humidity, Temp2, Spectral_Violet, Spectral_Blue, Spectral_Green, Spectral_Yellow, Spectral_Orange, Spectral_Red, Experimental_Log");
     myFile.close();
     Serial.println("done.");
   } else {
