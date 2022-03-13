@@ -204,6 +204,7 @@ void setup() {
     
     Serial.begin(9600);
 
+
     long unsigned startup_time = millis();
     // the below code waits for a serial monitor session to be opened 
     // but times out in SERIAL_TIMEOUT milliseconds if none exist
@@ -348,7 +349,8 @@ void setup() {
  
     // EVERYDAY TASK
     Alarm.timerRepeat(60, Taking_Sensor_Data);   
-
+     day_0();
+     
 }
 
 
@@ -476,7 +478,9 @@ void forceSystemStart(){
 //  Alarm.timerOnce(SECONDS_IN_DAY*8,day_9);
 
   // start first day
-  day_1();
+  //day_1();
+  day_0();
+  
 }
 
 bool checkForStartSerialCommand(){
@@ -508,6 +512,14 @@ bool checkForStartSerialCommand(){
        //Print the message (or do other things)
        Serial.println("Start Message Received");
      }
+
+     if(strcmp(message, "S") == 0){
+       startCondition = true;
+       day_0();
+       
+       //Print the message (or do other things)
+       Serial.println("Start Message Received");
+     }
      //Reset for the next message
      message_pos = 0;
    }
@@ -516,6 +528,11 @@ bool checkForStartSerialCommand(){
  return startCondition;
 }
 
+void day_0(){ 
+Serial.println("EXECUTING TEST");
+moveLiquid (experimentTwo, e_buffer, chamberA, 4000);
+  
+}
 
 void day_1(){ 
   systemState = 1;
