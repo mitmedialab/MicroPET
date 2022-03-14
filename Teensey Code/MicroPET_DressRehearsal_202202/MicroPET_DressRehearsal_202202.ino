@@ -374,6 +374,13 @@ void rtcInit(){
       Serial.println("Couldn't find RTC");
       Serial.flush();
     }
+    else{
+      Serial.println("Found RTC");
+
+      // following line sets the RTC to the date & time this sketch was compiled
+      // Uncomment it when setting up the first time/change battery
+      //rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+      }
     
     if (! rtc.initialized() || rtc.lostPower()) {
       Serial.println("RTC is NOT initialized, let's set the time!");
@@ -967,6 +974,8 @@ void switchCollection(int experiment, int bag)
 
 void Taking_Sensor_Data(){
   Serial.println("Taking Sensor Data");
+  Serial.print("Time is now: ");
+  Serial.println(now());
   get_data();    
 }
 
