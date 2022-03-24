@@ -1028,7 +1028,7 @@ void get_data() {
               delay(5);
               rdy = ams.dataReady();
             }
-            //ams.drvOff(); //uncomment this if you want to use the driver LED for readings
+            
           
             //read the values!
             ams.readRawValues(sensorValues);
@@ -1042,6 +1042,8 @@ void get_data() {
             Serial.print(" Orange: "); Serial.print(sensorValues[AS726x_ORANGE]);
             Serial.print(" Red: "); Serial.print(sensorValues[AS726x_RED]);
             Serial.println();
+
+            ams.drvOff();
 
   //BME
             Serial.print("Temperature = ");
