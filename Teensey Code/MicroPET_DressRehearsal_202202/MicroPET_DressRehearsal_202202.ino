@@ -29,9 +29,6 @@
 
 //Teensey 4.1 - SCL 19 - yellow /SDA 18 - blue 
 
-//sensor
-
-
 #define BME_SCK 13
 #define BME_MISO 12
 #define BME_MOSI 11
@@ -204,12 +201,10 @@ void setup() {
     
     Serial.begin(9600);
 
-
     long unsigned startup_time = millis();
     // the below code waits for a serial monitor session to be opened 
     // but times out in SERIAL_TIMEOUT milliseconds if none exist
     while(!Serial){
-
       // timeout check
       if( (millis()-startup_time) > SERIAL_TIMEOUT){
         break; 
@@ -217,8 +212,8 @@ void setup() {
     }
 
     Serial.println(F("Begin Serial"));
+    
     init_card();
-
     rtcInit();
     
     pinMode(LED, OUTPUT);
@@ -287,7 +282,7 @@ void setup() {
     bme_status = bme.begin();  
     ams_status = ams.begin();  
     // You can also pass in a Wire library object like &Wire2
-
+     Serial.println("no sensors in this functional test");
     if(!ams_status){
         Serial.println("could not connect to sensor! Please check your wiring.");
      //   while(1); delay(10);
