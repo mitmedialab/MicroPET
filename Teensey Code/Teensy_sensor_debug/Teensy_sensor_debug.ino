@@ -37,7 +37,7 @@ Adafruit_BME280 bme; // I2C
 //Adafruit_BME280 bme(BME_CS, BME_MOSI, BME_MISO, BME_SCK); // software SPI
 
 uint16_t sensorValues[AS726x_NUM_CHANNELS];
-
+float calibratedLightSamples[AS726x_NUM_CHANNELS];
 
 void setup() {
     pinMode(3, OUTPUT);
@@ -63,18 +63,21 @@ void setup() {
         Serial.println("Could not find a valid BME280 sensor, check wiring, address, sensor ID!");
         while (1) delay(10);
     }
+
+
     
 }
 
 
 void loop() {  
   ams.drvOn(); //uncomment this if you want to use the driver LED for readings
-  delay(3000);
+  delay(5);
   AMSprintValues();
   BMEprintValues();
-  delay(3000);
   ams.drvOff(); 
-  delay(10000);
+
+  delay(50);
+//  delay(10000);
   
  
 }
@@ -95,17 +98,16 @@ void AMSprintValues() {
   //ams.drvOff(); //uncomment this if you want to use the driver LED for readings
 
   //read the values!
-  ams.readRawValues(sensorValues);
-  //ams.readCalibratedValues(calibratedValues);
+//  ams.readRawValues(sensorValues);
+  ams.readCalibratedValues(calibratedLightSamples);
 
   Serial.print(temp);Serial.print(","); 
-  Serial.print(sensorValues[AS726x_VIOLET]);Serial.print(","); 
-  Serial.print(sensorValues[AS726x_BLUE]);Serial.print(","); 
-  Serial.print(sensorValues[AS726x_GREEN]);Serial.print(","); 
-  Serial.print(sensorValues[AS726x_YELLOW]);Serial.print(","); 
-  Serial.print(sensorValues[AS726x_ORANGE]);Serial.print(","); 
-  Serial.print(sensorValues[AS726x_RED]);Serial.print(","); 
-  
+  Serial.print(calibratedLightSamples[AS726x_VIOLET]);Serial.print(","); 
+  Serial.print(calibratedLightSamples[AS726x_BLUE]);Serial.print(","); 
+  Serial.print(calibratedLightSamples[AS726x_GREEN]);Serial.print(","); 
+  Serial.print(calibratedLightSamples[AS726x_YELLOW]);Serial.print(","); 
+  Serial.print(calibratedLightSamples[AS726x_ORANGE]);Serial.print(","); 
+  Serial.print(calibratedLightSamples[AS726x_RED]);Serial.print(",");   
 }
 
   
