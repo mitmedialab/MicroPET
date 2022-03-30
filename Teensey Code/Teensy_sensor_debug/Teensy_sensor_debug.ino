@@ -22,7 +22,7 @@
 #include <Adafruit_BME280.h>
 #include <Adafruit_AS726x.h>
 
-//Teensey 4.1 - SCL 19 - yellow /SDA 18 - blue 
+//Teensey 4.1 - SCL 19 - yellow /SDA 18 - blue
 
 
 #define BME_SCK 13
@@ -40,82 +40,85 @@ uint16_t sensorValues[AS726x_NUM_CHANNELS];
 float calibratedLightSamples[AS726x_NUM_CHANNELS];
 
 void setup() {
-    pinMode(3, OUTPUT);
-    pinMode(4, OUTPUT);
-    
-    Serial.begin(9600);
-    while(!Serial);    // time to get serial running
-    Serial.println(F("Begin Serial"));
+  pinMode(3, OUTPUT);
+  pinMode(4, OUTPUT);
 
-    unsigned bme_status;
-    unsigned ams_status;
-    // default settings
-    bme_status = bme.begin();  
-    ams_status = ams.begin();  
-    // You can also pass in a Wire library object like &Wire2
+  Serial.begin(9600);
+  while (!Serial);   // time to get serial running
+  Serial.println(F("Begin Serial"));
 
-    if(!ams_status){
-        Serial.println("could not connect to sensor! Please check your wiring.");
-        while(1); delay(10);
-    }
-    
-    if (!bme_status) {
-        Serial.println("Could not find a valid BME280 sensor, check wiring, address, sensor ID!");
-        while (1) delay(10);
-    }
+  unsigned bme_status;
+  unsigned ams_status;
+  // default settings
+  bme_status = bme.begin();
+  ams_status = ams.begin();
+  // You can also pass in a Wire library object like &Wire2
+
+  if (!ams_status) {
+    Serial.println("could not connect to sensor! Please check your wiring.");
+    while (1); delay(10);
+  }
+
+  if (!bme_status) {
+    Serial.println("Could not find a valid BME280 sensor, check wiring, address, sensor ID!");
+    while (1) delay(10);
+  }
 
 
-    
+
 }
 
 
-void loop() {  
+void loop() {
   ams.drvOn(); //uncomment this if you want to use the driver LED for readings
   delay(5);
   AMSprintValues();
   BMEprintValues();
-  ams.drvOff(); 
+  ams.drvOff();
 
-  delay(50);
-//  delay(10000);
-  
- 
+  //delay(50);
+  delay(10000);
+
+
 }
 
 void AMSprintValues() {
   //read the device temperature
   uint8_t temp = ams.readTemperature();
-  
-  
+
+
   ams.startMeasurement(); //begin a measurement
-  
+
   //wait till data is available
   bool rdy = false;
-  while(!rdy){
+  while (!rdy) {
     delay(5);
     rdy = ams.dataReady();
   }
   //ams.drvOff(); //uncomment this if you want to use the driver LED for readings
 
   //read the values!
-//  ams.readRawValues(sensorValues);
+  //  ams.readRawValues(sensorValues);
   ams.readCalibratedValues(calibratedLightSamples);
 
-  Serial.print(temp);Serial.print(","); 
-  Serial.print(calibratedLightSamples[AS726x_VIOLET]);Serial.print(","); 
-  Serial.print(calibratedLightSamples[AS726x_BLUE]);Serial.print(","); 
-  Serial.print(calibratedLightSamples[AS726x_GREEN]);Serial.print(","); 
-  Serial.print(calibratedLightSamples[AS726x_YELLOW]);Serial.print(","); 
-  Serial.print(calibratedLightSamples[AS726x_ORANGE]);Serial.print(","); 
-  Serial.print(calibratedLightSamples[AS726x_RED]);Serial.print(",");   
+  Serial.print(temp); Serial.print(",");
+  //Serial.print(calibratedLightSamples[AS726x_VIOLET]); Serial.print(",");
+  //Serial.print(calibratedLightSamples[AS726x_BLUE]); Serial.print(",");
+  //Serial.print(calibratedLightSamples[AS726x_GREEN]); Serial.print(",");
+  //Serial.print(calibratedLightSamples[AS726x_YELLOW]); Serial.print(",");
+  Serial.print(calibratedLightSamples[AS726x_ORANGE]); Serial.print(",");
+   
+   ams.readRawValues(sensorValues);
+   Serial.print(sensorValues[AS726x_ORANGE]); Serial.print(",");
+  //Serial.print(calibratedLightSamples[AS726x_RED]); Serial.print(",");
 }
 
-  
+
 void BMEprintValues() {
 
-    //BME
-   
-    Serial.print(bme.readTemperature());
-    Serial.println();
+  //BME
+
+  Serial.print(bme.readTemperature());
+  Serial.println();
 
 }
