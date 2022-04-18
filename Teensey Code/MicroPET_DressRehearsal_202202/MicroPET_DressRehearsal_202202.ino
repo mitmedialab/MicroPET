@@ -27,7 +27,17 @@
 #include <Adafruit_MCP23X17.h>
 #include "RTClib.h"
 
-//Teensey 4.1 - SCL 19 - yellow /SDA 18 - blue 
+/* Experiment Prototypes and supporting defines */
+#define TOTAL_EXPERIMENTS 8
+void day_0();
+void day_1();
+void day_2();
+void day_3();
+void day_4();
+void day_5();
+void day_6();
+void day_7();
+void *experimentArray[TOTAL_EXPERIMENTS] = {day_0, day_1, day_2, day_3, day_4, day_5, day_6, day_7};
 
 #define BME_SCK 13
 #define BME_MISO 12
@@ -53,6 +63,7 @@ typedef struct{
   byte experimentStarted;
   time_t epoch;
   byte testDay;
+  byte testDayComplete;
   byte testInterval;
 }systemStateStruct;
 
@@ -465,6 +476,7 @@ void shutOffDateTimers(){
 //  Alarm.disable(Alarm_Day9_ID);
 }
 
+/* Function to start system */
 void forceSystemStart(){
   //disable existing timers
   shutOffDateTimers();
@@ -484,6 +496,36 @@ void forceSystemStart(){
   day_0();
   
 }
+
+/* Function for resuming system after underscheduled power loss */
+
+void recoverSystemStart(){
+
+  /* (1) check for hard faults */
+  //  (1.1) if system failed during an experiment, generate fault
+  if(systemStateStructVar.testDayComplete == 1){
+    Serial.println("System was interrupted during an experiment! No way to resume!");
+    while(1);
+  }
+  
+  //  (1.2) if system paused for longer than test day interval, generate fault
+  uint32_t timeSinceLastExperiment = rtc.now().unixtime() - systemStateStructVar.epoch;
+  if(timeSinceLastExperiment >= DELAY_SECONDS_PER_EXPERIMENT){
+    Serial.println("System was off for longer than experiment interval! No way to resume!");
+    while(1);
+  }
+
+  /* (2) setup timers */
+  uint32_t timeRemaining = DELAY_SECONDS_PER_EXPERIMENT - timeSinceLastExperiment;
+  uint16_t inc = 0;
+  for(int i=systemStateStructVar.testDay; i<TOTAL_EXPERIMENTS; i++){
+    Alarm.timerOnce(timeRemaining + inc*DELAY_SECONDS_PER_EXPERIMENT,experimentArray[i]);
+    inc++;
+  }
+
+  Serial.println("System has recovered gracefully!");
+}
+
 
 bool checkForStartSerialCommand(){
   
@@ -530,19 +572,31 @@ bool checkForStartSerialCommand(){
  return startCondition;
 }
 
+
 void day_0(){ 
-Serial.println("EXECUTING TEST");
-moveLiquid (experimentTwo, e_buffer, chamberA, 4000);
+  Serial.println("EXECUTING TEST");
+  systemState = 1;
+
+  systemStateStructVar.experimentStarted = 1;
+  systemStateStructVar.epoch = rtc.now().unixtime();
+  systemStateStructVar.testDay = 0;
+  systemStateStructVar.testInterval = 1;
+  systemStateStructVar.testDayComplete = 0;
+  saveStateToSD(&systemStateStructVar);
   
+  moveLiquid (experimentTwo, e_buffer, chamberA, 4000);
+
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
 }
 
 void day_1(){ 
-  systemState = 1;
 
   systemStateStructVar.experimentStarted = 1;
   systemStateStructVar.epoch = rtc.now().unixtime();
   systemStateStructVar.testDay = 1;
   systemStateStructVar.testInterval = 1;
+  systemStateStructVar.testDayComplete = 0;
   saveStateToSD(&systemStateStructVar);
   
 Serial.println("EXECUTING DAY_1 EXP");
@@ -581,6 +635,9 @@ experimenta_log = experimenta_log + now() + "ExperimentTwo start,";
 
 Serial.println("ExperimentTwo finished moving liquid");
 experimenta_log = experimenta_log + now() + "ExperimentTwo finished,";
+
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
 }
 
 void day_2(){ 
@@ -590,6 +647,7 @@ Serial.println("EXECUTING DAY_2 EXP");
   systemStateStructVar.epoch = rtc.now().unixtime();
   systemStateStructVar.testDay = 2;
   systemStateStructVar.testInterval = 1;
+  systemStateStructVar.testDayComplete = 0;
   saveStateToSD(&systemStateStructVar);
   
 experimenta_log = experimenta_log + now() + "Day2,";
@@ -612,6 +670,9 @@ experimenta_log = experimenta_log + now() + "ExperimentTwo start,";
 Serial.println("ExperimentTwo finished moving liquid");
 experimenta_log = experimenta_log + now() + "ExperimentTwo finished,";
 
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
+
 }
 
 void day_3(){
@@ -620,6 +681,7 @@ Serial.println("EXECUTING DAY_3 EXP");
   systemStateStructVar.experimentStarted = 1;
   systemStateStructVar.epoch = rtc.now().unixtime();
   systemStateStructVar.testDay = 3;
+  systemStateStructVar.testDayComplete = 0;
   systemStateStructVar.testInterval = 1;
   saveStateToSD(&systemStateStructVar);
   
@@ -656,6 +718,9 @@ experimenta_log = experimenta_log + now() + "ExperimentTwo start,";
 Serial.println("ExperimentTwo finished moving liquid");
 experimenta_log = experimenta_log + now() + "ExperimentTwo finished,";
 
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
+
   }
 
 void day_4(){ 
@@ -664,6 +729,7 @@ Serial.println("EXECUTING DAY_4 EXP");
   systemStateStructVar.experimentStarted = 1;
   systemStateStructVar.epoch = rtc.now().unixtime();
   systemStateStructVar.testDay = 4;
+  systemStateStructVar.testDayComplete = 0;
   systemStateStructVar.testInterval = 1;
   saveStateToSD(&systemStateStructVar);
   
@@ -690,6 +756,9 @@ experimenta_log = experimenta_log + now() + "ExperimentTwo start,";
 Serial.println("ExperimentTwo finished moving liquid");
 experimenta_log = experimenta_log + now() + "ExperimentTwo finished,";
 
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
+
 
 }
 
@@ -700,6 +769,7 @@ Serial.println("EXECUTING DAY_5 EXP");
   systemStateStructVar.experimentStarted = 1;
   systemStateStructVar.epoch = rtc.now().unixtime();
   systemStateStructVar.testDay = 5;
+  systemStateStructVar.testDayComplete = 0;
   systemStateStructVar.testInterval = 1;
   saveStateToSD(&systemStateStructVar);
   
@@ -727,6 +797,9 @@ experimenta_log = experimenta_log + now() + "ExperimentOne start,";
 Serial.println("ExperimentOne finished moving liquid");
 experimenta_log = experimenta_log + now() + "ExperimentOne finished,";
 
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
+
 
   }
   
@@ -736,6 +809,7 @@ Serial.println("EXECUTING DAY_6 EXP");
   systemStateStructVar.experimentStarted = 1;
   systemStateStructVar.epoch = rtc.now().unixtime();
   systemStateStructVar.testDay = 6;
+  systemStateStructVar.testDayComplete = 0;
   systemStateStructVar.testInterval = 1;
   saveStateToSD(&systemStateStructVar);
   
@@ -757,6 +831,9 @@ experimenta_log = experimenta_log + now() + "ExperimentTwo start,";
 Serial.println("ExperimentTwo finished moving liquid");
 experimenta_log = experimenta_log + now() + "ExperimentTwo finished,";
 
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
+
 }
 
 void day_7(){
@@ -765,6 +842,7 @@ Serial.println("EXECUTING DAY_7 EXP");
   systemStateStructVar.experimentStarted = 1;
   systemStateStructVar.epoch = rtc.now().unixtime();
   systemStateStructVar.testDay = 7;
+  systemStateStructVar.testDayComplete = 0;
   systemStateStructVar.testInterval = 1;
   saveStateToSD(&systemStateStructVar);
   
@@ -783,6 +861,9 @@ experimenta_log = experimenta_log + now() + "ExperimentOne start,";
 
 Serial.println("ExperimentOne finished moving liquid");
 experimenta_log = experimenta_log + now() + "ExperimentOne finished,";
+
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
 
 
   }
