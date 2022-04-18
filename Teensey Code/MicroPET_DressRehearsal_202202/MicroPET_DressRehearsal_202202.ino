@@ -508,6 +508,7 @@ void recoverSystemStart(){
   if(systemStateStructVar.testDayComplete == 1){
     Serial.println("System was interrupted during an experiment! No way to resume!");
     while(1);
+    return;
   }
   
   //  (1.2) if system paused for longer than test day interval, generate fault
@@ -515,12 +516,20 @@ void recoverSystemStart(){
   if(timeSinceLastExperiment >= DELAY_SECONDS_PER_EXPERIMENT){
     Serial.println("System was off for longer than experiment interval! No way to resume!");
     while(1);
+    return;
+  }
+
+  //  (1.3) check if tests had already ended
+  if(systemStateStructVar.testDay == TOTAL_EXPERIMENTS - 1){
+    Serial.println("Power failure occured after experiment finished! No reason to resume!");
+    while(1);
+    return;
   }
 
   /* (2) setup timers */
   uint32_t timeRemaining = DELAY_SECONDS_PER_EXPERIMENT - timeSinceLastExperiment;
   uint16_t inc = 0;
-  for(int i=systemStateStructVar.testDay; i<TOTAL_EXPERIMENTS; i++){
+  for(int i = 1+systemStateStructVar.testDay; i<TOTAL_EXPERIMENTS; i++){
     Alarm.timerOnce(timeRemaining + inc*DELAY_SECONDS_PER_EXPERIMENT,experimentArray[i]);
     inc++;
   }
