@@ -499,7 +499,7 @@ void forceSystemStart(){
   
 }
 
-/* Function for resuming system after underscheduled power loss */
+/* Function for resuming system after unscheduled power loss */
 
 void recoverSystemStart(){
 
