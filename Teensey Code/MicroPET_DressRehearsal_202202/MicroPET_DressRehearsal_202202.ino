@@ -336,6 +336,8 @@ void setup() {
       Serial.println("Power Failure Event Detected!");
       // log file has shown that experiment has started already
       // todo: implement schedule correction
+      systemState = true;
+      recoverSystemStart();
     }
 
 //    //DAY1
