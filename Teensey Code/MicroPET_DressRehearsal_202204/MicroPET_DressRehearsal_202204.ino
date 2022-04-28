@@ -295,7 +295,7 @@ void setup() {
     // You can also pass in a Wire library object like &Wire2
      Serial.println("no sensors in this functional test");
     if(!ams_status){
-        Serial.println("could not connect to sensor! Please check your wiring.");
+      
      //   while(1); delay(10);
     }
     
