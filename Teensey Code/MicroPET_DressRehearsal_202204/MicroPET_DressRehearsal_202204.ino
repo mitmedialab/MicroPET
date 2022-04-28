@@ -27,7 +27,6 @@
 #include <Adafruit_MCP23X17.h>
 #include "RTClib.h"
 
-<<<<<<< Updated upstream
 /* Experiment Prototypes and supporting defines */
 #define TOTAL_EXPERIMENTS 8
 void day_0();
@@ -38,10 +37,8 @@ void day_4();
 void day_5();
 void day_6();
 void day_7();
-void *experimentArray[TOTAL_EXPERIMENTS] = {day_0, day_1, day_2, day_3, day_4, day_5, day_6, day_7};
-=======
+void (*experimentArray[TOTAL_EXPERIMENTS])() = {day_0, day_1, day_2, day_3, day_4, day_5, day_6, day_7};
 //Teensey 4.1 - SCL 19 - yellow /SDA 18 - blue
->>>>>>> Stashed changes
 
 #define BME_SCK 13
 #define BME_MISO 12
@@ -275,7 +272,6 @@ void setup() {
   /*****************************************************
      Note - comment out below if only using base board
 
-<<<<<<< Updated upstream
   // IC1 on sensor board
   mcp2.pinMode(GPB0, OUTPUT);
   mcp2.pinMode(GPB1, OUTPUT);
@@ -338,11 +334,11 @@ void setup() {
       // todo: implement schedule correction
       systemState = true;
       recoverSystemStart();
-=======
+    }
+    
      if (!mcp2.begin_I2C(MCP_ADDR2)) {
       Serial.println("Error initializing chip 2.");
       while (1);
->>>>>>> Stashed changes
     }
 
     // IC1 on sensor board
@@ -354,73 +350,6 @@ void setup() {
     mcp2.pinMode(GPB5, OUTPUT);
 
     Serial.println("Looping...");
-  */
-
-  unsigned bme_status;
-  unsigned ams_status;
-  // default settings
-  bme_status = bme.begin();
-  ams_status = ams.begin();
-  // You can also pass in a Wire library object like &Wire2
-  Serial.println("no sensors in this functional test");
-  if (!ams_status) {
-    Serial.println("could not connect to sensor! Please check your wiring.");
-    //   while(1); delay(10);
-  }
-
-  if (!bme_status) {
-    Serial.println("Could not find a valid BME280 sensor, check wiring, address, sensor ID!");
-    //   while (1) delay(10);
-  }
-
-  Serial.println("-- Default Test --");
-  delayTime = 1000;
-
-  Serial.println();
-
-  // EXPERIMENTAL SETUP
-
-  //STARTING DATE
-  //    setTime(11,0,0,12,2,2022);  // hr,min,sec,day,mnth,yr
-  Serial.println("Setting time from RTC");
-  setTime(rtc.now().unixtime()); //sets time from RTC
-  Serial.print("Time is now: ");
-  Serial.println(now());
-
-  if (!grabStateFromSD(&systemStateStructVar)) {
-    Serial.println("No log file exists so will create one!");
-    // no prior state exists so saving a new file with current rtc time
-    systemStateStructVar.experimentStarted = 0;
-    systemStateStructVar.epoch = rtc.now().unixtime();
-    saveStateToSD(&systemStateStructVar);
-  }
-  else if (systemStateStructVar.experimentStarted == 0) {
-    Serial.println("Previous log file exists but experiment hasn't started!");
-    // if a file exists and shows no prior experiment has started, update time
-    systemStateStructVar.experimentStarted = 0;
-    systemStateStructVar.epoch = rtc.now().unixtime();
-    saveStateToSD(&systemStateStructVar);
-  }
-  else if (systemStateStructVar.experimentStarted == 1) {
-    Serial.println("Power Failure Event Detected!");
-    // log file has shown that experiment has started already
-    // todo: implement schedule correction
-  }
-
-  //    //DAY1
-  //    Alarm_Day1_ID = Alarm.triggerOnce(tmConvert_t(2022,2,18,11,1,5), day_1); //  YYYY,  MM,  DD,  hh,  mm,  ss
-  //    //DAY2
-  //    Alarm_Day2_ID = Alarm.triggerOnce(tmConvert_t(2022,2,18,11,3,5), day_2); //  YYYY,  MM,  DD,  hh,  mm,  ss
-  //    //DAY3
-  //    Alarm_Day3_ID = Alarm.triggerOnce(tmConvert_t(2022,2,18,11,5,5), day_3); //  YYYY,  MM,  DD,  hh,  mm,  ss
-  //    //DAY4
-  //    Alarm_Day4_ID = Alarm.triggerOnce(tmConvert_t(2022,2,18,11,7,5), day_4); //  YYYY,  MM,  DD,  hh,  mm,  ss
-  //    //DAY5
-  //    Alarm_Day5_ID = Alarm.triggerOnce(tmConvert_t(2022,2,18,11,9,5), day_5); //  YYYY,  MM,  DD,  hh,  mm,  ss
-  //    //DAY6
-  //    Alarm_Day6_ID = Alarm.triggerOnce(tmConvert_t(2022,2,18,11,11,5), day_6); //  YYYY,  MM,  DD,  hh,  mm,  ss
-  //    //DAY7
-  //    Alarm_Day7_ID = Alarm.triggerOnce(tmConvert_t(2022,2,18,11,13,5), day_7); //  YYYY,  MM,  DD,  hh,  mm,  ss
 
   // EVERYDAY TASK
   Alarm.timerRepeat(60, Taking_Sensor_Data);
@@ -429,6 +358,11 @@ void setup() {
 }
 
 
+//  for(int i = 1+systemStateStructVar.testDay; i<TOTAL_EXPERIMENTS; i++){
+//    Alarm.timerOnce(timeRemaining + inc*DELAY_SECONDS_PER_EXPERIMENT,(*experimentArray[i]));
+//    inc++;
+//  }
+  
 void loop() {
   //  digitalClockDisplay();
   Alarm.delay(1000);
@@ -545,12 +479,8 @@ void shutOffDateTimers() {
   //  Alarm.disable(Alarm_Day9_ID);
 }
 
-<<<<<<< Updated upstream
 /* Function to start system */
-void forceSystemStart(){
-=======
 void forceSystemStart() {
->>>>>>> Stashed changes
   //disable existing timers
   shutOffDateTimers();
 
@@ -570,7 +500,6 @@ void forceSystemStart() {
 
 }
 
-<<<<<<< Updated upstream
 /* Function for resuming system after unscheduled power loss */
 
 void recoverSystemStart(){
@@ -602,7 +531,7 @@ void recoverSystemStart(){
   uint32_t timeRemaining = DELAY_SECONDS_PER_EXPERIMENT - timeSinceLastExperiment;
   uint16_t inc = 0;
   for(int i = 1+systemStateStructVar.testDay; i<TOTAL_EXPERIMENTS; i++){
-    Alarm.timerOnce(timeRemaining + inc*DELAY_SECONDS_PER_EXPERIMENT,experimentArray[i]);
+    Alarm.timerOnce(timeRemaining + inc*DELAY_SECONDS_PER_EXPERIMENT,(*experimentArray[i]));
     inc++;
   }
 
@@ -610,12 +539,7 @@ void recoverSystemStart(){
 }
 
 
-bool checkForStartSerialCommand(){
-  
-=======
 bool checkForStartSerialCommand() {
-
->>>>>>> Stashed changes
   bool startCondition = false;
   while (Serial.available() > 0) {
     //Create a place to hold the incoming message
@@ -659,7 +583,6 @@ bool checkForStartSerialCommand() {
   return startCondition;
 }
 
-<<<<<<< Updated upstream
 
 void day_0(){ 
   Serial.println("EXECUTING TEST");
@@ -678,17 +601,8 @@ void day_0(){
   saveStateToSD(&systemStateStructVar);
 }
 
-void day_1(){ 
-=======
-void day_0() {
-  Serial.println("EXECUTING TEST");
-  moveLiquid (experimentTwo, e_buffer, chamberA, 4000);
-
-}
-
 void day_1() {
   systemState = 1;
->>>>>>> Stashed changes
 
   systemStateStructVar.experimentStarted = 1;
   systemStateStructVar.epoch = rtc.now().unixtime();
@@ -731,16 +645,11 @@ void day_1() {
   //buffer to chamber A - 2.925 ml (flexible)
   moveLiquid (experimentTwo, e_buffer, chamberA, 2925);
 
-<<<<<<< Updated upstream
 Serial.println("ExperimentTwo finished moving liquid");
 experimenta_log = experimenta_log + now() + "ExperimentTwo finished,";
 
   systemStateStructVar.testDayComplete = 1;
   saveStateToSD(&systemStateStructVar);
-=======
-  Serial.println("ExperimentTwo finished moving liquid");
-  experimenta_log = experimenta_log + now() + "ExperimentTwo finished,";
->>>>>>> Stashed changes
 }
 
 void day_2() {
@@ -821,14 +730,9 @@ void day_3() {
   Serial.println("ExperimentTwo finished moving liquid");
   experimenta_log = experimenta_log + now() + "ExperimentTwo finished,";
 
-<<<<<<< Updated upstream
   systemStateStructVar.testDayComplete = 1;
   saveStateToSD(&systemStateStructVar);
-
-  }
-=======
 }
->>>>>>> Stashed changes
 
 void day_4() {
   Serial.println("EXECUTING DAY_4 EXP");
@@ -901,16 +805,11 @@ void day_5() {
   //buffer to chamber A - 2.925 ml
   moveLiquid (experimentOne, e_buffer, chamberA, 2925);
 
-<<<<<<< Updated upstream
-  systemStateStructVar.testDayComplete = 1;
-  saveStateToSD(&systemStateStructVar);
-
-=======
   Serial.println("ExperimentOne finished moving liquid");
   experimenta_log = experimenta_log + now() + "ExperimentOne finished,";
->>>>>>> Stashed changes
 
-
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
 }
 
 void day_6() {
