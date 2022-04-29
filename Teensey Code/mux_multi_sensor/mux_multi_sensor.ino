@@ -15,12 +15,6 @@
 #define BME280_SENSOR1  2
 #define BME280_SENSOR2  1
 
-/*
-Adafruit_BME280 bme1;
-Adafruit_BME280 bme2;
-Adafruit_AS726x ams1;
-Adafruit_AS726x ams2;
-*/
 Adafruit_BME280 bme;
 Adafruit_AS726x ams;
 
@@ -56,7 +50,7 @@ void tcaselect(uint8_t sensor_addr) {
 
 void setup() {
   // put your setup code here, to run once:
-  unsigned status;
+  //unsigned status;
   Serial.begin(9600);
   while(!Serial);    // time to get serial running
   Serial.println(F("Begin Serial"));
