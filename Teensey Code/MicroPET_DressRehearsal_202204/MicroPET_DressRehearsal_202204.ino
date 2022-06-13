@@ -315,6 +315,7 @@ void setup() {
 
   Serial.println("Looping...");
 */
+  
 
 // Set up the sensors
   unsigned bme_status;
@@ -406,10 +407,24 @@ void setup() {
     mcp2.pinMode(PUMP3_B, OUTPUT);
 
     // halt both motors upon initialization
+    
+    //motorSensorBrdCtrl(1, halt);
+    //motorSensorBrdCtrl(3, halt);
+    //20000ms -> 25ml
+    //18000ms -> 21ml
+
+    //Move to Day2
+    motorSensorBrdCtrl(1, forward);
+    delay(18000);
     motorSensorBrdCtrl(1, halt);
+    delay(18000);
+    motorSensorBrdCtrl(3, forward);
+    delay(18000);
     motorSensorBrdCtrl(3, halt);
 
+    
     Serial.println("Looping...");
+    
 
   // EVERYDAY TASK
   Alarm.timerRepeat(60, Taking_Sensor_Data);
@@ -424,6 +439,7 @@ void setup() {
 //  }
   
 void loop() {
+  
   //  digitalClockDisplay();
   Alarm.delay(1000);
 
@@ -666,11 +682,14 @@ void day_0(){
 
   systemStateStructVar.testDayComplete = 1;
   saveStateToSD(&systemStateStructVar);
+
+  //motorSensorBrdCtrl(1, forward);
 }
 
 void day_1() {
-  systemState = 1;
 
+  systemState = 1;
+  
   systemStateStructVar.experimentStarted = 1;
   systemStateStructVar.epoch = rtc.now().unixtime();
   systemStateStructVar.testDay = 1;
@@ -679,6 +698,8 @@ void day_1() {
   saveStateToSD(&systemStateStructVar);
 
   Serial.println("EXECUTING DAY_1 EXP");
+
+  
   experimenta_log = experimenta_log + now() + "Day1,";
 
   //ExperimentOne
@@ -1630,4 +1651,5 @@ void motorSensorBrdCtrl(uint8_t motor_num, motion dir){
       mcp2.digitalWrite(PUMP3_B, LOW);
     }
   }
+  delay (1000);
 }
