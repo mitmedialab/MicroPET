@@ -183,19 +183,23 @@ int stop_move = 0;
 
 void loop() {
 //  moveLiquid (experimentOne, enzyme, chamberA, 500);
-moveLiquid (experimentTwo, media, chamberB, 200);
+//moveLiquid (experimentTwo, media, chamberB, 200);
 //  moveLiquid (experimentOne, e_buffer, chamberA, 100);
  /* moveLiquid (experimentTwo, enzyme, chamberA, 200);
    moveLiquid (experimentTwo, media, chamberB, 200);
   moveLiquid (experimentOne, chamberA, chamberB, 200);
    */
  
- // switch_conn_pin(BASEBD_J2_PIN4, HIGH); ////Experiment 1 preservativeTwo
- // Serial.println("high");
- // delay(5000);
- // switch_conn_pin(BASEBD_J2_PIN4, LOW); ////Experiment 1 preservativeTwo
-//  Serial.println("low");
- // delay(5000);
+  switch_conn_pin(BASEBD_J2_PIN4, HIGH); 
+  Serial.println("high");
+  switch_conn_pin(BASEBD_J2_PIN2, HIGH); 
+  Serial.println("high");
+  delay(5000);
+  switch_conn_pin(BASEBD_J2_PIN4, LOW); 
+  Serial.println("low");
+  switch_conn_pin(BASEBD_J2_PIN2, LOW); 
+  Serial.println("low");
+  delay(5000);
 //  switchCollection(experimentOne, preservativeTwo);
  // delay(5000);
   

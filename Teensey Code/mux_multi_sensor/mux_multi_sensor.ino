@@ -79,7 +79,7 @@ if (!bme_status) {
     }
 
   //Start the sensors line　2
-  tcaselect(BME280_SENSOR1);
+  tcaselect(BME280_SENSOR2);
   delay(1000);
   // start the sensor
   bme_status = bme.begin();  
