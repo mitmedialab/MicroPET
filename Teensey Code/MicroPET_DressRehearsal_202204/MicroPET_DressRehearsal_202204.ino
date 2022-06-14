@@ -414,16 +414,21 @@ void setup() {
     //18000ms -> 21ml
 
     //Move to Day2
+    Serial.println("Pump1...");
     motorSensorBrdCtrl(1, forward);
-    delay(18000);
+    delay(17000);
     motorSensorBrdCtrl(1, halt);
-    delay(18000);
+    Serial.println("Pump1...is done");
+    delay(10000);
+   
+    Serial.println("Pump3...");
     motorSensorBrdCtrl(3, forward);
-    delay(18000);
+    delay(17000);
     motorSensorBrdCtrl(3, halt);
-
+    Serial.println("Pump3...is done");
     
     Serial.println("Looping...");
+    
     
 
   // EVERYDAY TASK
