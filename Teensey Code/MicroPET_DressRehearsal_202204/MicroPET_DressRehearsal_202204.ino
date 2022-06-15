@@ -1149,7 +1149,7 @@ void day_12() {
   systemStateStructVar.testInterval = 1;
   saveStateToSD(&systemStateStructVar);
 
-  experimenta_log = experimenta_log + now() + "Day10,";
+  experimenta_log = experimenta_log + now() + "Day12,";
   
   //ExperimentOne
   Serial.println("ExperimentOne nothing");
@@ -1174,7 +1174,7 @@ void day_13(){
   systemStateStructVar.testInterval = 1;
   saveStateToSD(&systemStateStructVar);
 
-  experimenta_log = experimenta_log + now() + "Day11,";
+  experimenta_log = experimenta_log + now() + "Day13,";
 
   //ExperimentOne 
   Serial.println("ExperimentOne start moving liquid");
