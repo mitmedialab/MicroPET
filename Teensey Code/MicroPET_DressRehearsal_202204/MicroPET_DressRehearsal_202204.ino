@@ -1301,7 +1301,7 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
     switch_conn_pin(BASEBD_J9_PIN2, LOW); //Reset experiment 1 valveB so chamberA is blocked
   }
 
-  //experimentTWO
+  //experimentTWO, Enzyme
 
   if (experiment == 2 && origin == 0)
   {
@@ -1353,6 +1353,8 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
     switch_conn_pin(BASEBD_J12_PIN2, LOW); //Reset xperiment 2 valveA so enzyme is blocked
   }
 
+  //experimentTWO, Microbe
+  
   if (experiment == 2 && origin == 3 && target == 4) 
    {
       int move_pulse = liquid_volume / 25; //1ml = 1000uL and the pump moves 35uL at a time

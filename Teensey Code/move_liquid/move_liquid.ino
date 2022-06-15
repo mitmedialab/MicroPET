@@ -182,32 +182,22 @@ int stop_move = 0;
 }
 
 void loop() {
-//  moveLiquid (experimentOne, enzyme, chamberA, 500);
-//moveLiquid (experimentTwo, media, chamberB, 200);
-//  moveLiquid (experimentOne, e_buffer, chamberA, 100);
- /* moveLiquid (experimentTwo, enzyme, chamberA, 200);
-   moveLiquid (experimentTwo, media, chamberB, 200);
-  moveLiquid (experimentOne, chamberA, chamberB, 200);
-   */
- 
-  switch_conn_pin(BASEBD_J2_PIN4, HIGH); 
-  Serial.println("high");
-  switch_conn_pin(BASEBD_J2_PIN2, HIGH); 
-  Serial.println("high");
-  delay(5000);
-  switch_conn_pin(BASEBD_J2_PIN4, LOW); 
-  Serial.println("low");
-  switch_conn_pin(BASEBD_J2_PIN2, LOW); 
-  Serial.println("low");
-  delay(5000);
-//  switchCollection(experimentOne, preservativeTwo);
- // delay(5000);
-  
-  //delay(5000);
-  ///switchCollection(experimentTwo, preservativeOne);
-  //delay(5000);
-  ///switchCollection(experimentTwo, preservativeTwo);
+  moveLiquid (experimentTwo, media, chamberB, 500);
+// moveLiquid (experimentTwo, e_buffer, waste, 200);
+ //moveLiquid (experimentTwo, enzyme, waste, 200);
 
+ /*
+  switchCollection(experimentOne, waste);
+  delay(5000);
+  switchCollection(experimentOne, preservativeOne);
+  delay(5000);
+  switchCollection(experimentOne, preservativeTwo);
+  delay(5000);
+  switchCollection(experimentOne, preservativeThree);
+  delay(5000);
+  switchCollection(experimentOne, preservativeFour);
+  delay(5000);
+  */
  // stop_move = 1;
  
 
@@ -332,44 +322,89 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
 void switchCollection(int experiment, int bag)
 {
   if (stop_move == 0){
+
+    //experiment one collection
    if (experiment == 1 && bag == 0)
   {
-    switch_conn_pin(BASEBD_J4_PIN2, LOW); //Experiment 1 waste
+    switch_conn_pin(BASEBD_J5_PIN4, LOW); //Experiment 1 waste V6
     Serial.println("open waste bag");
  //   experimenta_log = experimenta_log + now() + "_opem waste bag,";
   }
   if (experiment == 1 && bag == 1)
   {
-    switch_conn_pin(BASEBD_J4_PIN2, HIGH); //NOT waste
-    switch_conn_pin(BASEBD_J2_PIN4, LOW); //Experiment 1 preservativeOne
+    switch_conn_pin(BASEBD_J5_PIN4, HIGH); //NOT V6
+    switch_conn_pin(BASEBD_J5_PIN2, LOW); //Experiment 1 preservativeOne V5
     Serial.println("open preservativeOne bag");
   //  experimenta_log = experimenta_log + now() + "_open preservativeOne bag,";
   }
   if (experiment == 1 && bag == 2)
   {
-    switch_conn_pin(BASEBD_J4_PIN2, HIGH); //NOT waste
-    switch_conn_pin(BASEBD_J2_PIN4, HIGH); ////Experiment 1 preservativeTwo
+    switch_conn_pin(BASEBD_J5_PIN4, HIGH); //NOT V6
+    switch_conn_pin(BASEBD_J5_PIN2, HIGH); //NOT V5
+    switch_conn_pin(BASEBD_J3_PIN4, LOW); ////Experiment 1 preservativeTwo V4
     Serial.println("open preservativeTwo bag");
  //   experimenta_log = experimenta_log + now() + "_open preservativeTwo bag,";
   }
-  if (experiment == 2 && bag == 0)
+    if (experiment == 1 && bag == 3)
   {
-    switch_conn_pin(BASEBD_J3_PIN4, LOW); //Experiment 2 waste
+    switch_conn_pin(BASEBD_J5_PIN4, HIGH); //NOT V6
+    switch_conn_pin(BASEBD_J5_PIN2, HIGH); //NOT V5
+    switch_conn_pin(BASEBD_J3_PIN4, HIGH); //NOT V4
+    switch_conn_pin(BASEBD_J3_PIN2, LOW); //Experiment 1 preservativeThree V3
+    Serial.println("open preservativeThree bag");
+ //   experimenta_log = experimenta_log + now() + "_open preservativeTwo bag,";
+  }
+    if (experiment == 1 && bag == 4)
+  {
+    switch_conn_pin(BASEBD_J5_PIN4, HIGH); //NOT V6
+    switch_conn_pin(BASEBD_J5_PIN2, HIGH); //NOT V5
+    switch_conn_pin(BASEBD_J3_PIN4, HIGH); //NOT V4
+    switch_conn_pin(BASEBD_J3_PIN2, HIGH); //NOT V3
+    switch_conn_pin(BASEBD_J1_PIN4, LOW); //Experiment 1 preservativeFour V2
+    Serial.println("open preservativeFour bag");
+ //   experimenta_log = experimenta_log + now() + "_open preservativeTwo bag,";
+  }
+  
+  //experiment two collection
+  
+if (experiment == 2 && bag == 0)
+  {
+    switch_conn_pin(BASEBD_J2_PIN2, LOW); //Experiment 2 waste V7 
     Serial.println("open waste bag");
-  //  experimenta_log = experimenta_log + now() + "_opem waste bag,";
+   // experimenta_log = experimenta_log + now() + "_opem waste bag,";
   }
   if (experiment == 2 && bag == 1)
   {
-    switch_conn_pin(BASEBD_J3_PIN4, HIGH); //NOT waste
-    switch_conn_pin(BASEBD_J5_PIN2, LOW); //Experiment 2 preservativeOne
+    switch_conn_pin(BASEBD_J2_PIN2, HIGH); //NOT V7
+    switch_conn_pin(BASEBD_J2_PIN4, LOW); //Experiment 2 preservativeOne V8
     Serial.println("open preservativeOne bag");
-  //  experimenta_log = experimenta_log + now() + "_open preservativeOne bag,";
+   // experimenta_log = experimenta_log + now() + "_open preservativeOne bag,";
   }
   if (experiment == 2 && bag == 2)
   {
-    switch_conn_pin(BASEBD_J3_PIN4, HIGH); //NOT waste
-    switch_conn_pin(BASEBD_J5_PIN2, HIGH); ////Experiment 2 preservativeTwo
+    switch_conn_pin(BASEBD_J2_PIN2, HIGH); //NOT V7
+    switch_conn_pin(BASEBD_J2_PIN4, HIGH); //NOT V8
+    switch_conn_pin(BASEBD_J4_PIN2, LOW); ////Experiment 2 preservativeTwo V9
     Serial.println("open preservativeTwo bag");
+  //  experimenta_log = experimenta_log + now() + "_open preservativeTwo bag,";
+  }
+  if (experiment == 2 && bag == 3)
+  {
+    switch_conn_pin(BASEBD_J2_PIN2, HIGH); //NOT V7
+    switch_conn_pin(BASEBD_J2_PIN4, HIGH); //NOT V8
+    switch_conn_pin(BASEBD_J4_PIN2, HIGH); //NOT V9
+    switch_conn_pin(BASEBD_J4_PIN4, LOW); //Experiment 2 preservativeThree V10
+    Serial.println("open preservativeThree bag");
+  //  experimenta_log = experimenta_log + now() + "_open preservativeTwo bag,";
+  }
+  if (experiment == 2 && bag == 4)
+  {
+    switch_conn_pin(BASEBD_J2_PIN2, HIGH); //NOT V7
+    switch_conn_pin(BASEBD_J2_PIN4, HIGH); //NOT V8
+    switch_conn_pin(BASEBD_J4_PIN2, HIGH); //NOT V9
+    switch_conn_pin(BASEBD_J4_PIN4, HIGH); //NOT V10
+    switch_conn_pin(BASEBD_J6_PIN2, LOW); //Experiment 2 preservativeFour V11
+    Serial.println("open preservativeThree bag");
   //  experimenta_log = experimenta_log + now() + "_open preservativeTwo bag,";
   }
   }   
