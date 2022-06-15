@@ -408,24 +408,9 @@ void setup() {
 
     // halt both motors upon initialization
     
-    //motorSensorBrdCtrl(1, halt);
-    //motorSensorBrdCtrl(3, halt);
-    //20000ms -> 25ml
-    //18000ms -> 21ml
-
-    //Move to Day2
-    Serial.println("Pump1...");
-    motorSensorBrdCtrl(1, forward);
-    delay(17000);
     motorSensorBrdCtrl(1, halt);
-    Serial.println("Pump1...is done");
-    delay(10000);
-   
-    Serial.println("Pump3...");
-    motorSensorBrdCtrl(3, forward);
-    delay(17000);
     motorSensorBrdCtrl(3, halt);
-    Serial.println("Pump3...is done");
+    
     
     Serial.println("Looping...");
     
@@ -707,13 +692,34 @@ void day_1() {
   
   experimenta_log = experimenta_log + now() + "Day1,";
 
-  //ExperimentOne
-  Serial.println("ExperimentOne start moving liquid");
-  experimenta_log = experimenta_log + now() + "ExperimentOne start,";
-
+  
   //microbe
   switchCollection(experimentOne, waste);
   //[Manual]Revival Chamber to Chamber B - 20mL
+  
+    
+  //Volume: 20000ms -> 25ml
+  //Volume: 18000ms -> 21ml
+
+    //Move to Day2
+    Serial.println("Pump1...");
+    motorSensorBrdCtrl(1, forward);
+    delay(17000);
+    motorSensorBrdCtrl(1, halt);
+    Serial.println("Pump1...is done");
+    delay(10000);
+   
+    Serial.println("Pump3...");
+    motorSensorBrdCtrl(3, forward);
+    delay(17000);
+    motorSensorBrdCtrl(3, halt);
+    Serial.println("Pump3...is done");
+    
+    
+    
+	//ExperimentOne
+  Serial.println("ExperimentOne start moving liquid");
+  experimenta_log = experimenta_log + now() + "ExperimentOne start,";
 
     //Enzyme
   //enzyme to chamber A - 0.075 ml
@@ -728,18 +734,16 @@ void day_1() {
   Serial.println("ExperimentTwo start moving liquid");
   experimenta_log = experimenta_log + now() + "ExperimentTwo start,";
 
-  //microbe
-
-  //Open waste valve
-  switchCollection(experimentTwo, waste);
-  //[Manual]Revival Chamber to Chamber B - 20mL
-
+  
   //Enzyme
 
   //enzyme to chamber A - 0.075 ml (=3 x 25 µL)
   moveLiquid (experimentTwo, enzyme, chamberA, 75);
   //buffer to chamber A - 2.925 ml (flexible)
   moveLiquid (experimentTwo, e_buffer, chamberA, 2925);
+  
+    
+    
 
 Serial.println("ExperimentTwo finished moving liquid");
 experimenta_log = experimenta_log + now() + "ExperimentTwo finished,";
@@ -969,7 +973,7 @@ void day_7() {
 }
 
 void day_8() {
-  Serial.println("EXECUTING DAY_6 EXP");
+  Serial.println("EXECUTING DAY_8 EXP");
 
   systemStateStructVar.experimentStarted = 1;
   systemStateStructVar.epoch = rtc.now().unixtime();
@@ -994,7 +998,7 @@ void day_8() {
 }
 
 void day_9(){
-    Serial.println("EXECUTING DAY_6 EXP");
+    Serial.println("EXECUTING DAY_9 EXP");
 
   systemStateStructVar.experimentStarted = 1;
   systemStateStructVar.epoch = rtc.now().unixtime();
@@ -1052,7 +1056,7 @@ void day_9(){
   }
 
 void day_10() {
-  Serial.println("EXECUTING DAY_6 EXP");
+  Serial.println("EXECUTING DAY_10 EXP");
 
   systemStateStructVar.experimentStarted = 1;
   systemStateStructVar.epoch = rtc.now().unixtime();
@@ -1078,7 +1082,7 @@ void day_10() {
 
 
 void day_11(){
-    Serial.println("EXECUTING DAY_6 EXP");
+    Serial.println("EXECUTING DAY_11 EXP");
 
   systemStateStructVar.experimentStarted = 1;
   systemStateStructVar.epoch = rtc.now().unixtime();
@@ -1136,7 +1140,7 @@ void day_11(){
   }
 
 void day_12() {
-  Serial.println("EXECUTING DAY_6 EXP");
+  Serial.println("EXECUTING DAY_12 EXP");
 
   systemStateStructVar.experimentStarted = 1;
   systemStateStructVar.epoch = rtc.now().unixtime();
@@ -1161,7 +1165,7 @@ void day_12() {
 }
 
 void day_13(){
-    Serial.println("EXECUTING DAY_6 EXP");
+    Serial.println("EXECUTING DAY_13 EXP");
 
   systemStateStructVar.experimentStarted = 1;
   systemStateStructVar.epoch = rtc.now().unixtime();
