@@ -692,29 +692,6 @@ void day_1() {
   
   experimenta_log = experimenta_log + now() + "Day1,";
 
-  
-  //microbe
-  switchCollection(experimentOne, waste);
-  //[Manual]Revival Chamber to Chamber B - 20mL
-  
-    
-  //Volume: 20000ms -> 25ml
-  //Volume: 18000ms -> 21ml
-
-    //Move to Day2
-    Serial.println("Pump1...");
-    motorSensorBrdCtrl(1, forward);
-    delay(17000);
-    motorSensorBrdCtrl(1, halt);
-    Serial.println("Pump1...is done");
-    delay(10000);
-   
-    Serial.println("Pump3...");
-    motorSensorBrdCtrl(3, forward);
-    delay(17000);
-    motorSensorBrdCtrl(3, halt);
-    Serial.println("Pump3...is done");
-    
     
     
 	//ExperimentOne
