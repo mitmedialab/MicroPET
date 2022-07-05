@@ -182,7 +182,9 @@ int stop_move = 0;
 }
 
 void loop() {
-  moveLiquid (experimentTwo, media, chamberB, 500);
+  switchCollection(experimentTwo, preservativeFour);
+ //switch_conn_pin(BASEBD_J2_PIN2, HIGH); //NOT V7
+ // moveLiquid (experimentOne, media, chamberB, 500);
 // moveLiquid (experimentTwo, e_buffer, waste, 200);
  //moveLiquid (experimentTwo, enzyme, waste, 200);
 
@@ -352,7 +354,7 @@ void switchCollection(int experiment, int bag)
     switch_conn_pin(BASEBD_J3_PIN4, HIGH); //NOT V4
     switch_conn_pin(BASEBD_J3_PIN2, LOW); //Experiment 1 preservativeThree V3
     Serial.println("open preservativeThree bag");
- //   experimenta_log = experimenta_log + now() + "_open preservativeTwo bag,";
+ //   experimenta_log = experimenta_log + now() + "_open preservativeThree bag,";
   }
     if (experiment == 1 && bag == 4)
   {
@@ -362,7 +364,7 @@ void switchCollection(int experiment, int bag)
     switch_conn_pin(BASEBD_J3_PIN2, HIGH); //NOT V3
     switch_conn_pin(BASEBD_J1_PIN4, LOW); //Experiment 1 preservativeFour V2
     Serial.println("open preservativeFour bag");
- //   experimenta_log = experimenta_log + now() + "_open preservativeTwo bag,";
+ //   experimenta_log = experimenta_log + now() + "_open preservativeFour bag,";
   }
   
   //experiment two collection
@@ -395,7 +397,7 @@ if (experiment == 2 && bag == 0)
     switch_conn_pin(BASEBD_J4_PIN2, HIGH); //NOT V9
     switch_conn_pin(BASEBD_J4_PIN4, LOW); //Experiment 2 preservativeThree V10
     Serial.println("open preservativeThree bag");
-  //  experimenta_log = experimenta_log + now() + "_open preservativeTwo bag,";
+  //  experimenta_log = experimenta_log + now() + "_open preservativeThree bag,";
   }
   if (experiment == 2 && bag == 4)
   {
@@ -404,8 +406,8 @@ if (experiment == 2 && bag == 0)
     switch_conn_pin(BASEBD_J4_PIN2, HIGH); //NOT V9
     switch_conn_pin(BASEBD_J4_PIN4, HIGH); //NOT V10
     switch_conn_pin(BASEBD_J6_PIN2, LOW); //Experiment 2 preservativeFour V11
-    Serial.println("open preservativeThree bag");
-  //  experimenta_log = experimenta_log + now() + "_open preservativeTwo bag,";
+    Serial.println("open preservativeFour bag");
+  //  experimenta_log = experimenta_log + now() + "_open preservativeFour bag,";
   }
   }   
   }
