@@ -182,25 +182,51 @@ int stop_move = 0;
 }
 
 void loop() {
-  switchCollection(experimentTwo, preservativeFour);
+
+/*
+ // switchCollection(experimentTwo, preservativeFour);
  //switch_conn_pin(BASEBD_J2_PIN2, HIGH); //NOT V7
  // moveLiquid (experimentOne, media, chamberB, 500);
-// moveLiquid (experimentTwo, e_buffer, waste, 200);
- //moveLiquid (experimentTwo, enzyme, waste, 200);
+ // moveLiquid (experimentTwo, e_buffer, waste, 200);
+ // moveLiquid (experimentTwo, enzyme, waste, 200);
 
- /*
+ */
   switchCollection(experimentOne, waste);
+  
+  stop_move = 1;
+  /*
+   * 
+   * moveLiquid (experimentOne, media, chamberB, 5000);
+   switchCollection(experimentOne, preservativeOne);
+  moveLiquid (experimentOne, media, chamberB, 5000);
+   switchCollection(experimentOne, preservativeTwo);
+  moveLiquid (experimentOne, media, chamberB, 5000);
+  switchCollection(experimentOne, preservativeThree);
+  moveLiquid (experimentOne, media, chamberB, 5000);
+  switchCollection(experimentOne, preservativeFour);
+  moveLiquid (experimentOne, media, chamberB, 5000);
+
+
+  
+  switchCollection(experimentOne, waste);
+  moveLiquid (experimentOne, media, chamberB, 5000);
+  
   delay(5000);
   switchCollection(experimentOne, preservativeOne);
+  moveLiquid (experimentOne, media, chamberB, 5000);
   delay(5000);
   switchCollection(experimentOne, preservativeTwo);
+  moveLiquid (experimentOne, media, chamberB, 5000);
   delay(5000);
   switchCollection(experimentOne, preservativeThree);
+  moveLiquid (experimentOne, media, chamberB, 5000);
   delay(5000);
   switchCollection(experimentOne, preservativeFour);
+  moveLiquid (experimentOne, media, chamberB, 5000);
   delay(5000);
-  */
- // stop_move = 1;
+ 
+ stop_move = 1;
+ */
  
 
 }

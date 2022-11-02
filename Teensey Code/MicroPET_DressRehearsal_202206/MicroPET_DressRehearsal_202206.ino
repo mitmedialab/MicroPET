@@ -399,6 +399,7 @@ void setup() {
     }
 
     // IC1 on sensor board
+    Serial.println("revival pumping...");
     mcp2.pinMode(PUMP1_A, OUTPUT);
     mcp2.pinMode(PUMP1_B, OUTPUT);
     //    mcp.pinMode(PUMP2_A, OUTPUT);
@@ -673,7 +674,8 @@ void day_0(){
   systemStateStructVar.testDayComplete = 1;
   saveStateToSD(&systemStateStructVar);
 
-  //motorSensorBrdCtrl(1, forward);
+
+  motorSensorBrdCtrl(1, forward);
 }
 
 void day_1() {
