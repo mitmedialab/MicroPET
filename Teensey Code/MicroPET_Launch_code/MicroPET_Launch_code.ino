@@ -18,7 +18,7 @@
 #include "RTClib.h"
 
 /* Experiment Prototypes and supporting defines */
-#define TOTAL_EXPERIMENTS 14
+#define TOTAL_EXPERIMENTS 32
 void day_0();
 void day_1();
 void day_2();
@@ -33,7 +33,26 @@ void day_10();
 void day_11();
 void day_12();
 void day_13();
-void (*experimentArray[TOTAL_EXPERIMENTS])() = {day_0, day_1, day_2, day_3, day_4, day_5, day_6, day_7, day_8, day_9, day_10, day_11, day_12, day_13 };
+void day_14();
+void day_15();
+void day_16();
+void day_17();
+void day_18();
+void day_19();
+void day_20();
+void day_21();
+void day_22();
+void day_23();
+void day_24();
+void day_25();
+void day_26();
+void day_27();
+void day_28();
+void day_29();
+void day_30();
+void day_31();
+
+void (*experimentArray[TOTAL_EXPERIMENTS])() = {day_0, day_1, day_2, day_3, day_4, day_5, day_6, day_7, day_8, day_9, day_10, day_11, day_12, day_13, day_14, day_15, day_16, day_17, day_18, day_19, day_20, day_21, day_22, day_23, day_24, day_25, day_26, day_27, day_28, day_29, day_30, day_31 };
 //Teensey 4.1 - SCL 19 - yellow /SDA 18 - blue
 
 #define BME_SCK 13
@@ -213,15 +232,15 @@ unsigned int whichsensor = 0;
 const unsigned int MAX_MESSAGE_LENGTH = 12;
 bool systemState = 0;
 
-AlarmID_t Alarm_Day1_ID;
-AlarmID_t Alarm_Day2_ID;
-AlarmID_t Alarm_Day3_ID;
-AlarmID_t Alarm_Day4_ID;
-AlarmID_t Alarm_Day5_ID;
-AlarmID_t Alarm_Day6_ID;
-AlarmID_t Alarm_Day7_ID;
-AlarmID_t Alarm_Day8_ID;
-AlarmID_t Alarm_Day9_ID;
+//AlarmID_t Alarm_Day1_ID;
+//AlarmID_t Alarm_Day2_ID;
+//AlarmID_t Alarm_Day3_ID;
+//AlarmID_t Alarm_Day4_ID;
+//AlarmID_t Alarm_Day5_ID;
+//AlarmID_t Alarm_Day6_ID;
+//AlarmID_t Alarm_Day7_ID;
+//AlarmID_t Alarm_Day8_ID;
+//AlarmID_t Alarm_Day9_ID;
 
 // Function to select a sensor
 void tcaselect(uint8_t sensor_addr) {
@@ -390,20 +409,6 @@ void setup() {
       Serial.println("Error initializing chip 2.");
     }
 
-    // IC1 on sensor board
-    Serial.println("revival pumping...");
-    mcp2.pinMode(PUMP1_A, OUTPUT);
-    mcp2.pinMode(PUMP1_B, OUTPUT);
-    //    mcp.pinMode(PUMP2_A, OUTPUT);
-    //    mcp.pinMode(PUMP2_B, OUTPUT);
-    mcp2.pinMode(PUMP3_A, OUTPUT);
-    mcp2.pinMode(PUMP3_B, OUTPUT);
-
-    // halt both motors upon initialization
-    
-    motorSensorBrdCtrl(1, halt);
-    motorSensorBrdCtrl(3, halt);
-    
     
     Serial.println("Looping...");
     
@@ -515,34 +520,11 @@ void saveStateToSD(systemStateStruct* input) {
   logFile.close();
 }
 
-//bool checkForSysFault(){
-//  if(SD.exists("logFile.txt")){
-//    myFile = SD.open("logFile.txt", FILE_WRITE);
-//
-//
-//    myFile.close();
-//  }
-//  Serial.print
-//  myFile = SD.open("savefile.txt", FILE_WRITE);
-//}
 
-void shutOffDateTimers() {
-  //  Alarm.disable(Alarm_Day1_ID);
-  //  Alarm.disable(Alarm_Day2_ID);
-  //  Alarm.disable(Alarm_Day3_ID);
-  //  Alarm.disable(Alarm_Day4_ID);
-  //  Alarm.disable(Alarm_Day5_ID);
-  //  Alarm.disable(Alarm_Day6_ID);
-  //  Alarm.disable(Alarm_Day7_ID);
-  //  Alarm.disable(Alarm_Day8_ID);
-  //  Alarm.disable(Alarm_Day9_ID);
-}
 
 /* Function to start system */
 void forceSystemStart() {
   //disable existing timers
-  shutOffDateTimers();
-
   // start new timers for days 2-9
   Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT, day_2);
   Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 2, day_3);
@@ -556,6 +538,24 @@ void forceSystemStart() {
   Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 10, day_11);
   Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 11, day_12);
   Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 12, day_13);
+  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 13, day_14);
+  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 14, day_15);
+  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 15, day_16);
+  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 16, day_17);
+  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 17, day_18);
+  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 18, day_19);
+  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 19, day_20);
+  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 20, day_21);
+  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 21, day_22);
+  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 22, day_23);
+  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 23, day_24);
+  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 24, day_25);
+  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 25, day_26);
+  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 26, day_27);
+  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 27, day_28);
+  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 28, day_29);
+  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 29, day_30);
+  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 30, day_31);
   //  Alarm.timerOnce(SECONDS_IN_DAY*7,day_8);
   //  Alarm.timerOnce(SECONDS_IN_DAY*8,day_9);
 
@@ -702,7 +702,7 @@ void day_1() {
 
     //Enzyme
   //enzyme to chamber A - 0.075 ml
-  moveLiquid (experimentOne, enzyme, chamberA, 75);
+  moveLiquid (experimentOne,  , chamberA, 75);
   //buffer to chamber A - 2.925 ml (flexible)
   moveLiquid (experimentOne, e_buffer, chamberA, 2925);
 
@@ -820,7 +820,6 @@ void day_4() {
 
 
 }
-
 
 void day_5() {
   Serial.println("EXECUTING DAY_5 EXP");
@@ -1056,7 +1055,6 @@ void day_10() {
   
 }
 
-
 void day_11(){
     Serial.println("EXECUTING DAY_11 EXP");
 
@@ -1197,6 +1195,1053 @@ void day_13(){
   systemStateStructVar.testDayComplete = 1;
   saveStateToSD(&systemStateStructVar);
   }
+  
+void day_14(){
+    Serial.println("EXECUTING DAY_13 EXP");
+
+  systemStateStructVar.experimentStarted = 1;
+  systemStateStructVar.epoch = rtc.now().unixtime();
+  systemStateStructVar.testDay = 13;
+  systemStateStructVar.testDayComplete = 0;
+  systemStateStructVar.testInterval = 1;
+  saveStateToSD(&systemStateStructVar);
+
+  saveExperimentalLog("Day13"); 
+
+  //ExperimentOne 
+  Serial.println("ExperimentOne start moving liquid");
+  saveExperimentalLog("ExperimentOne start"); 
+
+  //microbe
+  //Open valve to preservative Four
+  switchCollection(experimentOne, preservativeFour);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentOne, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentOne, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentOne, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentOne finished moving liquid");
+  saveExperimentalLog("ExperimentOne finished"); 
+
+  //ExperimentTwo 
+  Serial.println("ExperimentTwo start moving liquid");
+  saveExperimentalLog("ExperimentTwo start"); 
+
+  //microbe
+  //Open valve to preservative Two
+  switchCollection(experimentTwo, preservativeThree);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentTwo, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentTwo, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentTwo, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentTwo finished moving liquid");
+  saveExperimentalLog("ExperimentTwo finished"); 
+
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
+  }
+  
+void day_15(){
+    Serial.println("EXECUTING DAY_13 EXP");
+
+  systemStateStructVar.experimentStarted = 1;
+  systemStateStructVar.epoch = rtc.now().unixtime();
+  systemStateStructVar.testDay = 13;
+  systemStateStructVar.testDayComplete = 0;
+  systemStateStructVar.testInterval = 1;
+  saveStateToSD(&systemStateStructVar);
+
+  saveExperimentalLog("Day13"); 
+
+  //ExperimentOne 
+  Serial.println("ExperimentOne start moving liquid");
+  saveExperimentalLog("ExperimentOne start"); 
+
+  //microbe
+  //Open valve to preservative Four
+  switchCollection(experimentOne, preservativeFour);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentOne, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentOne, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentOne, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentOne finished moving liquid");
+  saveExperimentalLog("ExperimentOne finished"); 
+
+  //ExperimentTwo 
+  Serial.println("ExperimentTwo start moving liquid");
+  saveExperimentalLog("ExperimentTwo start"); 
+
+  //microbe
+  //Open valve to preservative Two
+  switchCollection(experimentTwo, preservativeThree);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentTwo, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentTwo, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentTwo, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentTwo finished moving liquid");
+  saveExperimentalLog("ExperimentTwo finished"); 
+
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
+  }
+  
+void day_16(){
+    Serial.println("EXECUTING DAY_13 EXP");
+
+  systemStateStructVar.experimentStarted = 1;
+  systemStateStructVar.epoch = rtc.now().unixtime();
+  systemStateStructVar.testDay = 13;
+  systemStateStructVar.testDayComplete = 0;
+  systemStateStructVar.testInterval = 1;
+  saveStateToSD(&systemStateStructVar);
+
+  saveExperimentalLog("Day13"); 
+
+  //ExperimentOne 
+  Serial.println("ExperimentOne start moving liquid");
+  saveExperimentalLog("ExperimentOne start"); 
+
+  //microbe
+  //Open valve to preservative Four
+  switchCollection(experimentOne, preservativeFour);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentOne, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentOne, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentOne, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentOne finished moving liquid");
+  saveExperimentalLog("ExperimentOne finished"); 
+
+  //ExperimentTwo 
+  Serial.println("ExperimentTwo start moving liquid");
+  saveExperimentalLog("ExperimentTwo start"); 
+
+  //microbe
+  //Open valve to preservative Two
+  switchCollection(experimentTwo, preservativeThree);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentTwo, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentTwo, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentTwo, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentTwo finished moving liquid");
+  saveExperimentalLog("ExperimentTwo finished"); 
+
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
+  }
+  
+void day_17(){
+    Serial.println("EXECUTING DAY_13 EXP");
+
+  systemStateStructVar.experimentStarted = 1;
+  systemStateStructVar.epoch = rtc.now().unixtime();
+  systemStateStructVar.testDay = 13;
+  systemStateStructVar.testDayComplete = 0;
+  systemStateStructVar.testInterval = 1;
+  saveStateToSD(&systemStateStructVar);
+
+  saveExperimentalLog("Day13"); 
+
+  //ExperimentOne 
+  Serial.println("ExperimentOne start moving liquid");
+  saveExperimentalLog("ExperimentOne start"); 
+
+  //microbe
+  //Open valve to preservative Four
+  switchCollection(experimentOne, preservativeFour);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentOne, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentOne, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentOne, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentOne finished moving liquid");
+  saveExperimentalLog("ExperimentOne finished"); 
+
+  //ExperimentTwo 
+  Serial.println("ExperimentTwo start moving liquid");
+  saveExperimentalLog("ExperimentTwo start"); 
+
+  //microbe
+  //Open valve to preservative Two
+  switchCollection(experimentTwo, preservativeThree);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentTwo, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentTwo, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentTwo, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentTwo finished moving liquid");
+  saveExperimentalLog("ExperimentTwo finished"); 
+
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
+  }
+  
+void day_18(){
+    Serial.println("EXECUTING DAY_13 EXP");
+
+  systemStateStructVar.experimentStarted = 1;
+  systemStateStructVar.epoch = rtc.now().unixtime();
+  systemStateStructVar.testDay = 13;
+  systemStateStructVar.testDayComplete = 0;
+  systemStateStructVar.testInterval = 1;
+  saveStateToSD(&systemStateStructVar);
+
+  saveExperimentalLog("Day13"); 
+
+  //ExperimentOne 
+  Serial.println("ExperimentOne start moving liquid");
+  saveExperimentalLog("ExperimentOne start"); 
+
+  //microbe
+  //Open valve to preservative Four
+  switchCollection(experimentOne, preservativeFour);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentOne, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentOne, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentOne, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentOne finished moving liquid");
+  saveExperimentalLog("ExperimentOne finished"); 
+
+  //ExperimentTwo 
+  Serial.println("ExperimentTwo start moving liquid");
+  saveExperimentalLog("ExperimentTwo start"); 
+
+  //microbe
+  //Open valve to preservative Two
+  switchCollection(experimentTwo, preservativeThree);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentTwo, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentTwo, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentTwo, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentTwo finished moving liquid");
+  saveExperimentalLog("ExperimentTwo finished"); 
+
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
+  }
+  
+void day_19(){
+Serial.println("EXECUTING DAY_13 EXP");
+
+  systemStateStructVar.experimentStarted = 1;
+  systemStateStructVar.epoch = rtc.now().unixtime();
+  systemStateStructVar.testDay = 13;
+  systemStateStructVar.testDayComplete = 0;
+  systemStateStructVar.testInterval = 1;
+  saveStateToSD(&systemStateStructVar);
+
+  saveExperimentalLog("Day13"); 
+
+  //ExperimentOne 
+  Serial.println("ExperimentOne start moving liquid");
+  saveExperimentalLog("ExperimentOne start"); 
+
+  //microbe
+  //Open valve to preservative Four
+  switchCollection(experimentOne, preservativeFour);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentOne, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentOne, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentOne, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentOne finished moving liquid");
+  saveExperimentalLog("ExperimentOne finished"); 
+
+  //ExperimentTwo 
+  Serial.println("ExperimentTwo start moving liquid");
+  saveExperimentalLog("ExperimentTwo start"); 
+
+  //microbe
+  //Open valve to preservative Two
+  switchCollection(experimentTwo, preservativeThree);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentTwo, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentTwo, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentTwo, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentTwo finished moving liquid");
+  saveExperimentalLog("ExperimentTwo finished"); 
+
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
+  }
+  
+void day_20(){
+    Serial.println("EXECUTING DAY_13 EXP");
+
+  systemStateStructVar.experimentStarted = 1;
+  systemStateStructVar.epoch = rtc.now().unixtime();
+  systemStateStructVar.testDay = 13;
+  systemStateStructVar.testDayComplete = 0;
+  systemStateStructVar.testInterval = 1;
+  saveStateToSD(&systemStateStructVar);
+
+  saveExperimentalLog("Day13"); 
+
+  //ExperimentOne 
+  Serial.println("ExperimentOne start moving liquid");
+  saveExperimentalLog("ExperimentOne start"); 
+
+  //microbe
+  //Open valve to preservative Four
+  switchCollection(experimentOne, preservativeFour);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentOne, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentOne, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentOne, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentOne finished moving liquid");
+  saveExperimentalLog("ExperimentOne finished"); 
+
+  //ExperimentTwo 
+  Serial.println("ExperimentTwo start moving liquid");
+  saveExperimentalLog("ExperimentTwo start"); 
+
+  //microbe
+  //Open valve to preservative Two
+  switchCollection(experimentTwo, preservativeThree);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentTwo, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentTwo, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentTwo, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentTwo finished moving liquid");
+  saveExperimentalLog("ExperimentTwo finished"); 
+
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
+  }  
+  
+void day_21(){
+    Serial.println("EXECUTING DAY_13 EXP");
+
+  systemStateStructVar.experimentStarted = 1;
+  systemStateStructVar.epoch = rtc.now().unixtime();
+  systemStateStructVar.testDay = 13;
+  systemStateStructVar.testDayComplete = 0;
+  systemStateStructVar.testInterval = 1;
+  saveStateToSD(&systemStateStructVar);
+
+  saveExperimentalLog("Day13"); 
+
+  //ExperimentOne 
+  Serial.println("ExperimentOne start moving liquid");
+  saveExperimentalLog("ExperimentOne start"); 
+
+  //microbe
+  //Open valve to preservative Four
+  switchCollection(experimentOne, preservativeFour);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentOne, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentOne, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentOne, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentOne finished moving liquid");
+  saveExperimentalLog("ExperimentOne finished"); 
+
+  //ExperimentTwo 
+  Serial.println("ExperimentTwo start moving liquid");
+  saveExperimentalLog("ExperimentTwo start"); 
+
+  //microbe
+  //Open valve to preservative Two
+  switchCollection(experimentTwo, preservativeThree);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentTwo, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentTwo, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentTwo, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentTwo finished moving liquid");
+  saveExperimentalLog("ExperimentTwo finished"); 
+
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
+  }
+  
+void day_22(){
+    Serial.println("EXECUTING DAY_13 EXP");
+
+  systemStateStructVar.experimentStarted = 1;
+  systemStateStructVar.epoch = rtc.now().unixtime();
+  systemStateStructVar.testDay = 13;
+  systemStateStructVar.testDayComplete = 0;
+  systemStateStructVar.testInterval = 1;
+  saveStateToSD(&systemStateStructVar);
+
+  saveExperimentalLog("Day13"); 
+
+  //ExperimentOne 
+  Serial.println("ExperimentOne start moving liquid");
+  saveExperimentalLog("ExperimentOne start"); 
+
+  //microbe
+  //Open valve to preservative Four
+  switchCollection(experimentOne, preservativeFour);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentOne, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentOne, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentOne, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentOne finished moving liquid");
+  saveExperimentalLog("ExperimentOne finished"); 
+
+  //ExperimentTwo 
+  Serial.println("ExperimentTwo start moving liquid");
+  saveExperimentalLog("ExperimentTwo start"); 
+
+  //microbe
+  //Open valve to preservative Two
+  switchCollection(experimentTwo, preservativeThree);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentTwo, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentTwo, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentTwo, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentTwo finished moving liquid");
+  saveExperimentalLog("ExperimentTwo finished"); 
+
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
+  }
+  
+void day_23(){
+Serial.println("EXECUTING DAY_13 EXP");
+
+  systemStateStructVar.experimentStarted = 1;
+  systemStateStructVar.epoch = rtc.now().unixtime();
+  systemStateStructVar.testDay = 13;
+  systemStateStructVar.testDayComplete = 0;
+  systemStateStructVar.testInterval = 1;
+  saveStateToSD(&systemStateStructVar);
+
+  saveExperimentalLog("Day13"); 
+
+  //ExperimentOne 
+  Serial.println("ExperimentOne start moving liquid");
+  saveExperimentalLog("ExperimentOne start"); 
+
+  //microbe
+  //Open valve to preservative Four
+  switchCollection(experimentOne, preservativeFour);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentOne, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentOne, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentOne, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentOne finished moving liquid");
+  saveExperimentalLog("ExperimentOne finished"); 
+
+  //ExperimentTwo 
+  Serial.println("ExperimentTwo start moving liquid");
+  saveExperimentalLog("ExperimentTwo start"); 
+
+  //microbe
+  //Open valve to preservative Two
+  switchCollection(experimentTwo, preservativeThree);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentTwo, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentTwo, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentTwo, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentTwo finished moving liquid");
+  saveExperimentalLog("ExperimentTwo finished"); 
+
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
+  }
+  
+void day_24(){
+Serial.println("EXECUTING DAY_13 EXP");
+
+  systemStateStructVar.experimentStarted = 1;
+  systemStateStructVar.epoch = rtc.now().unixtime();
+  systemStateStructVar.testDay = 13;
+  systemStateStructVar.testDayComplete = 0;
+  systemStateStructVar.testInterval = 1;
+  saveStateToSD(&systemStateStructVar);
+
+  saveExperimentalLog("Day13"); 
+
+  //ExperimentOne 
+  Serial.println("ExperimentOne start moving liquid");
+  saveExperimentalLog("ExperimentOne start"); 
+
+  //microbe
+  //Open valve to preservative Four
+  switchCollection(experimentOne, preservativeFour);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentOne, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentOne, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentOne, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentOne finished moving liquid");
+  saveExperimentalLog("ExperimentOne finished"); 
+
+  //ExperimentTwo 
+  Serial.println("ExperimentTwo start moving liquid");
+  saveExperimentalLog("ExperimentTwo start"); 
+
+  //microbe
+  //Open valve to preservative Two
+  switchCollection(experimentTwo, preservativeThree);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentTwo, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentTwo, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentTwo, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentTwo finished moving liquid");
+  saveExperimentalLog("ExperimentTwo finished"); 
+
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
+  }
+  
+void day_25(){
+    Serial.println("EXECUTING DAY_13 EXP");
+
+  systemStateStructVar.experimentStarted = 1;
+  systemStateStructVar.epoch = rtc.now().unixtime();
+  systemStateStructVar.testDay = 13;
+  systemStateStructVar.testDayComplete = 0;
+  systemStateStructVar.testInterval = 1;
+  saveStateToSD(&systemStateStructVar);
+
+  saveExperimentalLog("Day13"); 
+
+  //ExperimentOne 
+  Serial.println("ExperimentOne start moving liquid");
+  saveExperimentalLog("ExperimentOne start"); 
+
+  //microbe
+  //Open valve to preservative Four
+  switchCollection(experimentOne, preservativeFour);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentOne, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentOne, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentOne, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentOne finished moving liquid");
+  saveExperimentalLog("ExperimentOne finished"); 
+
+  //ExperimentTwo 
+  Serial.println("ExperimentTwo start moving liquid");
+  saveExperimentalLog("ExperimentTwo start"); 
+
+  //microbe
+  //Open valve to preservative Two
+  switchCollection(experimentTwo, preservativeThree);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentTwo, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentTwo, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentTwo, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentTwo finished moving liquid");
+  saveExperimentalLog("ExperimentTwo finished"); 
+
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
+  }
+  
+void day_26(){
+    Serial.println("EXECUTING DAY_13 EXP");
+
+  systemStateStructVar.experimentStarted = 1;
+  systemStateStructVar.epoch = rtc.now().unixtime();
+  systemStateStructVar.testDay = 13;
+  systemStateStructVar.testDayComplete = 0;
+  systemStateStructVar.testInterval = 1;
+  saveStateToSD(&systemStateStructVar);
+
+  saveExperimentalLog("Day13"); 
+
+  //ExperimentOne 
+  Serial.println("ExperimentOne start moving liquid");
+  saveExperimentalLog("ExperimentOne start"); 
+
+  //microbe
+  //Open valve to preservative Four
+  switchCollection(experimentOne, preservativeFour);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentOne, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentOne, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentOne, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentOne finished moving liquid");
+  saveExperimentalLog("ExperimentOne finished"); 
+
+  //ExperimentTwo 
+  Serial.println("ExperimentTwo start moving liquid");
+  saveExperimentalLog("ExperimentTwo start"); 
+
+  //microbe
+  //Open valve to preservative Two
+  switchCollection(experimentTwo, preservativeThree);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentTwo, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentTwo, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentTwo, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentTwo finished moving liquid");
+  saveExperimentalLog("ExperimentTwo finished"); 
+
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
+  }
+  
+void day_27(){
+    Serial.println("EXECUTING DAY_13 EXP");
+
+  systemStateStructVar.experimentStarted = 1;
+  systemStateStructVar.epoch = rtc.now().unixtime();
+  systemStateStructVar.testDay = 13;
+  systemStateStructVar.testDayComplete = 0;
+  systemStateStructVar.testInterval = 1;
+  saveStateToSD(&systemStateStructVar);
+
+  saveExperimentalLog("Day13"); 
+
+  //ExperimentOne 
+  Serial.println("ExperimentOne start moving liquid");
+  saveExperimentalLog("ExperimentOne start"); 
+
+  //microbe
+  //Open valve to preservative Four
+  switchCollection(experimentOne, preservativeFour);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentOne, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentOne, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentOne, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentOne finished moving liquid");
+  saveExperimentalLog("ExperimentOne finished"); 
+
+  //ExperimentTwo 
+  Serial.println("ExperimentTwo start moving liquid");
+  saveExperimentalLog("ExperimentTwo start"); 
+
+  //microbe
+  //Open valve to preservative Two
+  switchCollection(experimentTwo, preservativeThree);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentTwo, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentTwo, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentTwo, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentTwo finished moving liquid");
+  saveExperimentalLog("ExperimentTwo finished"); 
+
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
+  }
+  
+void day_28(){
+    Serial.println("EXECUTING DAY_13 EXP");
+
+  systemStateStructVar.experimentStarted = 1;
+  systemStateStructVar.epoch = rtc.now().unixtime();
+  systemStateStructVar.testDay = 13;
+  systemStateStructVar.testDayComplete = 0;
+  systemStateStructVar.testInterval = 1;
+  saveStateToSD(&systemStateStructVar);
+
+  saveExperimentalLog("Day13"); 
+
+  //ExperimentOne 
+  Serial.println("ExperimentOne start moving liquid");
+  saveExperimentalLog("ExperimentOne start"); 
+
+  //microbe
+  //Open valve to preservative Four
+  switchCollection(experimentOne, preservativeFour);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentOne, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentOne, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentOne, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentOne finished moving liquid");
+  saveExperimentalLog("ExperimentOne finished"); 
+
+  //ExperimentTwo 
+  Serial.println("ExperimentTwo start moving liquid");
+  saveExperimentalLog("ExperimentTwo start"); 
+
+  //microbe
+  //Open valve to preservative Two
+  switchCollection(experimentTwo, preservativeThree);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentTwo, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentTwo, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentTwo, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentTwo finished moving liquid");
+  saveExperimentalLog("ExperimentTwo finished"); 
+
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
+  }
+  
+void day_29(){
+    Serial.println("EXECUTING DAY_13 EXP");
+
+  systemStateStructVar.experimentStarted = 1;
+  systemStateStructVar.epoch = rtc.now().unixtime();
+  systemStateStructVar.testDay = 13;
+  systemStateStructVar.testDayComplete = 0;
+  systemStateStructVar.testInterval = 1;
+  saveStateToSD(&systemStateStructVar);
+
+  saveExperimentalLog("Day13"); 
+
+  //ExperimentOne 
+  Serial.println("ExperimentOne start moving liquid");
+  saveExperimentalLog("ExperimentOne start"); 
+
+  //microbe
+  //Open valve to preservative Four
+  switchCollection(experimentOne, preservativeFour);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentOne, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentOne, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentOne, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentOne finished moving liquid");
+  saveExperimentalLog("ExperimentOne finished"); 
+
+  //ExperimentTwo 
+  Serial.println("ExperimentTwo start moving liquid");
+  saveExperimentalLog("ExperimentTwo start"); 
+
+  //microbe
+  //Open valve to preservative Two
+  switchCollection(experimentTwo, preservativeThree);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentTwo, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentTwo, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentTwo, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentTwo finished moving liquid");
+  saveExperimentalLog("ExperimentTwo finished"); 
+
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
+  }
+  
+void day_30(){
+    Serial.println("EXECUTING DAY_13 EXP");
+
+  systemStateStructVar.experimentStarted = 1;
+  systemStateStructVar.epoch = rtc.now().unixtime();
+  systemStateStructVar.testDay = 13;
+  systemStateStructVar.testDayComplete = 0;
+  systemStateStructVar.testInterval = 1;
+  saveStateToSD(&systemStateStructVar);
+
+  saveExperimentalLog("Day13"); 
+
+  //ExperimentOne 
+  Serial.println("ExperimentOne start moving liquid");
+  saveExperimentalLog("ExperimentOne start"); 
+
+  //microbe
+  //Open valve to preservative Four
+  switchCollection(experimentOne, preservativeFour);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentOne, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentOne, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentOne, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentOne finished moving liquid");
+  saveExperimentalLog("ExperimentOne finished"); 
+
+  //ExperimentTwo 
+  Serial.println("ExperimentTwo start moving liquid");
+  saveExperimentalLog("ExperimentTwo start"); 
+
+  //microbe
+  //Open valve to preservative Two
+  switchCollection(experimentTwo, preservativeThree);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentTwo, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentTwo, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentTwo, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentTwo finished moving liquid");
+  saveExperimentalLog("ExperimentTwo finished"); 
+
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
+  }
+  
+void day_31(){
+  Serial.println("EXECUTING DAY_13 EXP");
+
+  systemStateStructVar.experimentStarted = 1;
+  systemStateStructVar.epoch = rtc.now().unixtime();
+  systemStateStructVar.testDay = 13;
+  systemStateStructVar.testDayComplete = 0;
+  systemStateStructVar.testInterval = 1;
+  saveStateToSD(&systemStateStructVar);
+
+  saveExperimentalLog("Day13"); 
+
+  //ExperimentOne 
+  Serial.println("ExperimentOne start moving liquid");
+  saveExperimentalLog("ExperimentOne start"); 
+
+  //microbe
+  //Open valve to preservative Four
+  switchCollection(experimentOne, preservativeFour);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentOne, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentOne, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentOne, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentOne finished moving liquid");
+  saveExperimentalLog("ExperimentOne finished"); 
+
+  //ExperimentTwo 
+  Serial.println("ExperimentTwo start moving liquid");
+  saveExperimentalLog("ExperimentTwo start"); 
+
+  //microbe
+  //Open valve to preservative Two
+  switchCollection(experimentTwo, preservativeThree);
+   //move medium to chamber B - 6ml
+  moveLiquid (experimentTwo, media, chamberB, 6000);
+  //back to waste bag
+  switchCollection(experimentTwo, waste);
+
+  //Enzyme
+  //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75);
+  //buffer to chamber A - 2.925 ml (flexible)
+  moveLiquid (experimentTwo, e_buffer, waste, 2925);
+
+  Serial.println("ExperimentTwo finished moving liquid");
+  saveExperimentalLog("ExperimentTwo finished"); 
+
+  systemStateStructVar.testDayComplete = 1;
+  saveStateToSD(&systemStateStructVar);
+  }
+  
+  
+   
 
 void moveLiquid(int experiment, int origin, int target, float liquid_volume)
 {
