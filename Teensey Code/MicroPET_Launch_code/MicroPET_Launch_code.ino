@@ -18,8 +18,7 @@
 #include "RTClib.h"
 
 /* Experiment Prototypes and supporting defines */
-#define TOTAL_EXPERIMENTS 32
-void day_0();
+#define TOTAL_EXPERIMENTS 26
 void day_1();
 void day_2();
 void day_3();
@@ -47,7 +46,7 @@ void day_24();
 void day_25();
 void day_26();
 
-void (*experimentArray[TOTAL_EXPERIMENTS])() = {day_0, day_1, day_2, day_3, day_4, day_5, day_6, day_7, day_8, day_9, day_10, day_11, day_12, day_13, day_14, day_15, day_16, day_17, day_18, day_19, day_20, day_21, day_22, day_23, day_24, day_25, day_26};
+void (*experimentArray[TOTAL_EXPERIMENTS])() = {day_1, day_2, day_3, day_4, day_5, day_6, day_7, day_8, day_9, day_10, day_11, day_12, day_13, day_14, day_15, day_16, day_17, day_18, day_19, day_20, day_21, day_22, day_23, day_24, day_25, day_26};
 //Teensey 4.1 - SCL 19 - yellow /SDA 18 - blue
 
 #define BME_SCK 13
@@ -411,7 +410,7 @@ void setup() {
 
   // EVERYDAY TASK
   Alarm.timerRepeat(60, Taking_Sensor_Data);
-  //day_0(); //debug mode
+  
 
 }
 
@@ -552,7 +551,7 @@ void forceSystemStart() {
 
   // start first day
   day_1();
-  //day_0();
+  
 
 }
 
@@ -624,13 +623,6 @@ bool checkForStartSerialCommand() {
         Serial.println("Start Message Received");
       }
 
-      if (strcmp(message, "S") == 0) {
-        startCondition = true;
-        day_0();
-
-        //Print the message (or do other things)
-        Serial.println("Start Message Received");
-      }
 
       if (strcmp(message, "TEST") == 0) {
         //Print the message (or do other things)
@@ -651,25 +643,6 @@ void day_functionTest(){
   
 }
 
-void day_0(){ 
-  //Testing
-  Serial.println("EXECUTING TEST");
-  systemState = 1;
-
-  systemStateStructVar.experimentStarted = 1;
-  systemStateStructVar.epoch = rtc.now().unixtime();
-  systemStateStructVar.testDay = 0;
-  systemStateStructVar.testInterval = 1;
-  systemStateStructVar.testDayComplete = 0;
-  saveStateToSD(&systemStateStructVar);
-  
- // moveLiquid (experimentTwo, e_buffer, chamberA, 4000);
-
-  systemStateStructVar.testDayComplete = 1;
-  saveStateToSD(&systemStateStructVar);
-
-
-}
 
 void day_1() {
 //==================================================
