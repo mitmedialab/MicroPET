@@ -694,10 +694,10 @@ void day_1() {
  // =============== ENZYME EXP ===================== 
  
   //EXP1
-  moveLiquid (experimentOne,  , chamberA, 75); //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75); //enzyme to chamber A - 0.075 ml
   moveLiquid (experimentOne, e_buffer, chamberA, 2525);  //buffer to chamber A - 2.925 ml (flexible)
   //EXP2
-  moveLiquid (experimentTwo  , chamberA, 75); //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75); //enzyme to chamber A - 0.075 ml
   moveLiquid (experimentTwo, e_buffer, chamberA, 2525);  //buffer to chamber A - 2.925 ml (flexible)
   
  
@@ -803,10 +803,10 @@ void day_4() {
  // =============== ENZYME EXP ===================== 
  
   //EXP1
-  moveLiquid (experimentOne,  , chamberA, 75); //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75); //enzyme to chamber A - 0.075 ml
   moveLiquid (experimentOne, e_buffer, chamberA, 2525);  //buffer to chamber A - 2.925 ml (flexible)
   //EXP2
-  moveLiquid (experimentTwo  , chamberA, 75); //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75); //enzyme to chamber A - 0.075 ml
   moveLiquid (experimentTwo, e_buffer, chamberA, 2525);  //buffer to chamber A - 2.925 ml (flexible)
   
  
@@ -922,10 +922,10 @@ void day_7() {
  // =============== ENZYME EXP ===================== 
  
  //EXP1
-  moveLiquid (experimentOne,  , chamberA, 75); //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75); //enzyme to chamber A - 0.075 ml
   moveLiquid (experimentOne, e_buffer, chamberA, 2525);  //buffer to chamber A - 2.925 ml (flexible)
   //EXP2
-  moveLiquid (experimentTwo  , chamberA, 75); //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75); //enzyme to chamber A - 0.075 ml
   moveLiquid (experimentTwo, e_buffer, chamberA, 2525);  //buffer to chamber A - 2.925 ml (flexible)
   
  
@@ -1042,10 +1042,10 @@ void day_10() {
  // =============== ENZYME EXP ===================== 
  
  //EXP1
-  moveLiquid (experimentOne,  , chamberA, 75); //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75); //enzyme to chamber A - 0.075 ml
   moveLiquid (experimentOne, e_buffer, chamberA, 2525);  //buffer to chamber A - 2.925 ml (flexible)
   //EXP2
-  moveLiquid (experimentTwo  , chamberA, 75); //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75); //enzyme to chamber A - 0.075 ml
   moveLiquid (experimentTwo, e_buffer, chamberA, 2525);  //buffer to chamber A - 2.925 ml (flexible)
   
  
@@ -1153,10 +1153,10 @@ void day_13() {
  // =============== ENZYME EXP ===================== 
  
  //EXP1
-  moveLiquid (experimentOne,  , chamberA, 75); //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75); //enzyme to chamber A - 0.075 ml
   moveLiquid (experimentOne, e_buffer, chamberA, 2525);  //buffer to chamber A - 2.925 ml (flexible)
   //EXP2
-  moveLiquid (experimentTwo  , chamberA, 75); //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75); //enzyme to chamber A - 0.075 ml
   moveLiquid (experimentTwo, e_buffer, chamberA, 2525);  //buffer to chamber A - 2.925 ml (flexible)
   
  
@@ -1272,10 +1272,10 @@ void day_16() {
  // =============== ENZYME EXP ===================== 
  
  //EXP1
-  moveLiquid (experimentOne,  , chamberA, 75); //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75); //enzyme to chamber A - 0.075 ml
   moveLiquid (experimentOne, e_buffer, chamberA, 2525);  //buffer to chamber A - 2.925 ml (flexible)
   //EXP2
-  moveLiquid (experimentTwo  , chamberA, 75); //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75); //enzyme to chamber A - 0.075 ml
   moveLiquid (experimentTwo, e_buffer, chamberA, 2525);  //buffer to chamber A - 2.925 ml (flexible)
   
  
@@ -1391,10 +1391,10 @@ void day_19() {
  // =============== ENZYME EXP ===================== 
  
  //EXP1
-  moveLiquid (experimentOne,  , chamberA, 75); //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75); //enzyme to chamber A - 0.075 ml
   moveLiquid (experimentOne, e_buffer, chamberA, 2525);  //buffer to chamber A - 2.925 ml (flexible)
   //EXP2
-  moveLiquid (experimentTwo  , chamberA, 75); //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75); //enzyme to chamber A - 0.075 ml
   moveLiquid (experimentTwo, e_buffer, chamberA, 2525);  //buffer to chamber A - 2.925 ml (flexible)
   
  
@@ -1480,7 +1480,7 @@ void day_21() {
   
 }
 
-void day_22()) {
+void day_22() {
 
 // =============== UPDATE === STATUS ===============
   
@@ -1511,10 +1511,10 @@ void day_22()) {
  // =============== ENZYME EXP ===================== 
  
  //EXP1
-  moveLiquid (experimentOne,  , chamberA, 75); //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75); //enzyme to chamber A - 0.075 ml
   moveLiquid (experimentOne, e_buffer, chamberA, 2525);  //buffer to chamber A - 2.925 ml (flexible)
   //EXP2
-  moveLiquid (experimentTwo  , chamberA, 75); //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75); //enzyme to chamber A - 0.075 ml
   moveLiquid (experimentTwo, e_buffer, chamberA, 2525);  //buffer to chamber A - 2.925 ml (flexible)
   
  
@@ -1622,10 +1622,10 @@ void day_25() {
  // =============== ENZYME EXP ===================== 
  
  //EXP1
-  moveLiquid (experimentOne,  , chamberA, 75); //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, enzyme, chamberA, 75); //enzyme to chamber A - 0.075 ml
   moveLiquid (experimentOne, e_buffer, chamberA, 2525);  //buffer to chamber A - 2.925 ml (flexible)
   //EXP2
-  moveLiquid (experimentTwo  , chamberA, 75); //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, enzyme, chamberA, 75); //enzyme to chamber A - 0.075 ml
   moveLiquid (experimentTwo, e_buffer, chamberA, 2525);  //buffer to chamber A - 2.925 ml (flexible)
   
  
@@ -1735,7 +1735,7 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
   {
     int move_pulse = liquid_volume / 25; //1ml = 1000uL and the pump moves 25uL at a time
     Serial.println("move to chamberA");
-    saveExperimentalLog("_move to chamberA " + move_pulse * 25 + "uL");
+    saveExperimentalLog("_move to chamberA" + String(move_pulse * 25) + "uL");
     for (int i = 0; i <= move_pulse; i++) {
       switch_conn_pin(BASEBD_J10_PIN4, HIGH); //Experiment 1 pumpA
       digitalWrite(LED, HIGH);
@@ -1753,7 +1753,7 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
     switch_conn_pin(BASEBD_J9_PIN2, HIGH); //Experiment 2 valveB high, go to waste
     int move_pulse = liquid_volume / 25; //1ml = 1000uL and the pump moves 25uL at a time
     Serial.println("move to waste");
-    saveExperimentalLog("_move to waste " + move_pulse * 25 + "uL");
+    saveExperimentalLog("_move to waste " + String(move_pulse * 25) + "uL");
     for (int i = 0; i <= move_pulse; i++) {
       switch_conn_pin(BASEBD_J10_PIN4, HIGH); //Experiment 2 pumpA
       digitalWrite(LED, HIGH);
@@ -1783,7 +1783,7 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
   {
     int move_pulse = liquid_volume / 25; //1ml = 1000uL and the pump moves 25uL at a time
     Serial.println("move to chamberB");
-    saveExperimentalLog("_move to chamberB " + move_pulse * 25 + "uL");
+    saveExperimentalLog("_move to chamberB " + String(move_pulse * 25) + "uL");
     for (int i = 0; i <= move_pulse; i++) {
       switch_conn_pin(BASEBD_J9_PIN4, HIGH); //Experiment 1 pumpB
       digitalWrite(LED, HIGH);
@@ -1817,7 +1817,7 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
     switch_conn_pin(BASEBD_J11_PIN2, LOW); //Experiment 2 valveB low, keep in the chamber A
     int move_pulse = liquid_volume / 25; //1ml = 1000uL and the pump moves 25uL at a time
     Serial.println("move to chamberA");
-    saveExperimentalLog("_move to chamberA " + move_pulse * 25 + "uL");
+    saveExperimentalLog("_move to chamberA " + String(move_pulse * 25) + "uL");
     for (int i = 0; i <= move_pulse; i++) {
       switch_conn_pin(BASEBD_J12_PIN4, HIGH); //Experiment 2 pumpA
       digitalWrite(LED, HIGH);
@@ -1835,7 +1835,7 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
     switch_conn_pin(BASEBD_J11_PIN2, HIGH); //Experiment 2 valveB high, go to waste
     int move_pulse = liquid_volume / 25; //1ml = 1000uL and the pump moves 25uL at a time
     Serial.println("move to waste");
-    saveExperimentalLog("_move to waste " + move_pulse * 25 + "uL");
+    saveExperimentalLog("_move to waste " + String(move_pulse * 25) + "uL");
     for (int i = 0; i <= move_pulse; i++) {
       switch_conn_pin(BASEBD_J12_PIN4, HIGH); //Experiment 2 pumpA
       digitalWrite(LED, HIGH);
@@ -2095,7 +2095,7 @@ void get_data() {
 
 }
 
-void saveExperimentalLog(char *logmessage){
+void saveExperimentalLog(String logmessage){
   expLogFile = SD.open("explog.csv", FILE_WRITE);
   if(expLogFile){
      expLogFile.print(now());
