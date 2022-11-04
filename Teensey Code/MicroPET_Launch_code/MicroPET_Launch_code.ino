@@ -1031,13 +1031,25 @@ void day_10() {
  //EXP1
   switchCollection(experimentOne, preservativeOne);//Open valve to preservative MRNA1 - with BKA
   moveLiquid (experimentOne, media, chamberB, 5000);//move medium to chamber B - 6ml
+  Serial.println("Exp1_SDS collection");
+  saveExperimentalLog("Exp1_SDS collection"); 
+  
+  switchCollection(experimentOne, preservativeFour);//Open valve to preservative MRNA1 - with BKA
+  moveLiquid (experimentOne, media, chamberB, 10000);//move medium to chamber B - 6ml
   switchCollection(experimentOne, waste);//back to waste bag
+  
+  
   
  //EXP2
   switchCollection(experimentTwo, preservativeOne);//Open valve to preservative MRNA1 - with BKA
   moveLiquid (experimentTwo, media, chamberB, 5000);//move medium to chamber B - 6ml
+  Serial.println("Exp2_SDS collection");
+  saveExperimentalLog("Exp2_SDS collection"); 
+  
+  switchCollection(experimentTwo, preservativeFour);//Open valve to preservative MRNA1 - with BKA
+  moveLiquid (experimentTwo, media, chamberB, 10000);//move medium to chamber B - 6ml
   switchCollection(experimentTwo, waste);//back to waste bag
- 
+  
  
  // =============== ENZYME EXP ===================== 
  
@@ -1663,35 +1675,11 @@ void day_26() {
   moveLiquid (experimentOne, media, chamberB, 5000);//move medium to chamber B - 6ml
   switchCollection(experimentOne, waste);//back to waste bag
   
-  
-  Serial.println("SDS collection");
-  saveExperimentalLog("SDS collection"); 
-  
-  switchCollection(experimentOne, preservativeFour);//back to waste bag
-  motorSensorBrdCtrl(1, forward);
-  delay (500);// NEED TO BE 10 ML
-  motorSensorBrdCtrl(1, halt);
-  switchCollection(experimentOne, waste);//back to waste bag
-  
- 
- 
-  
  //EXP2
   switchCollection(experimentTwo, preservativeThree);//Open valve to preservative MRNA1 - with BKA
   moveLiquid (experimentTwo, media, chamberB, 5000);//move medium to chamber B - 6ml
   switchCollection(experimentTwo, waste);//back to waste bag
   
-  Serial.println("SDS collection");
-  saveExperimentalLog("SDS collection"); 
-  
-  switchCollection(experimentTwo, preservativeFour);//back to waste bag
-  motorSensorBrdCtrl(3, forward);
-  delay (500);// NEED TO BE 10 ML
-  motorSensorBrdCtrl(3, halt);
-  switchCollection(experimentOne, waste);//back to waste bag
-  
-  
-  /////SDS CODE////
  
  // =============== ENZYME EXP ===================== 
  
