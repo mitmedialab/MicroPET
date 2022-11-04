@@ -547,10 +547,6 @@ void forceSystemStart() {
   Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 24, day_25);
   Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 25, day_26);
   Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 26, day_27);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 27, day_28);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 28, day_29);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 29, day_30);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 30, day_31);
   //  Alarm.timerOnce(SECONDS_IN_DAY*7,day_8);
   //  Alarm.timerOnce(SECONDS_IN_DAY*8,day_9);
 
