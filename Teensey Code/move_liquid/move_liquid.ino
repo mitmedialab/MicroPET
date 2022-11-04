@@ -5,6 +5,15 @@
 #define MCP_ADDR1 0x21  // IC4 on base board
 #define MCP_ADDR2 0x22  // IC1 on sensor board
 
+//revivial pump
+enum motion { forward, reverse, halt };
+#define PUMP1_A 8
+#define PUMP1_B 9
+#define PUMP2_A 10
+#define PUMP2_B 11
+#define PUMP3_A 12
+#define PUMP3_B 13
+
 #define LED 13
 
 // Double check these pin assignments
@@ -177,6 +186,21 @@ void setup() {
   Serial.println("Looping...");
 */
 
+ //Revial 
+    Serial.println("revival pumping...");
+    mcp2.pinMode(PUMP1_A, OUTPUT);
+    mcp2.pinMode(PUMP1_B, OUTPUT);
+    //    mcp.pinMode(PUMP2_A, OUTPUT);
+    //    mcp.pinMode(PUMP2_B, OUTPUT);
+    mcp2.pinMode(PUMP3_A, OUTPUT);
+    mcp2.pinMode(PUMP3_B, OUTPUT);
+
+    // halt both motors upon initialization
+    
+    motorSensorBrdCtrl(1, halt);
+    motorSensorBrdCtrl(3, halt);
+    Serial.println("revival pumping halted");
+    
 int stop_move = 0;
 
 }
@@ -189,10 +213,11 @@ void loop() {
  // moveLiquid (experimentOne, media, chamberB, 500);
  // moveLiquid (experimentTwo, e_buffer, waste, 200);
  // moveLiquid (experimentTwo, enzyme, waste, 200);
+ switchCollection(experimentOne, waste);
 
  */
-  switchCollection(experimentOne, waste);
-  
+
+  motorSensorBrdCtrl(1, forward);
   stop_move = 1;
   /*
    * 
@@ -205,9 +230,6 @@ void loop() {
   moveLiquid (experimentOne, media, chamberB, 5000);
   switchCollection(experimentOne, preservativeFour);
   moveLiquid (experimentOne, media, chamberB, 5000);
-
-
-  
   switchCollection(experimentOne, waste);
   moveLiquid (experimentOne, media, chamberB, 5000);
   
@@ -230,6 +252,38 @@ void loop() {
  
 
 }
+
+/* Function to control motors on sensor board */
+/* Input: (1) motor_num is either 1 or 3
+ *        (2) dir is either forward, reverse, or halt
+ */
+void motorSensorBrdCtrl(uint8_t motor_num, motion dir){
+  if(motor_num == 1){
+    if(dir == forward){
+      mcp2.digitalWrite(PUMP1_A, HIGH);
+      mcp2.digitalWrite(PUMP1_B, LOW);
+    }else if(dir == reverse){
+      mcp2.digitalWrite(PUMP1_A, LOW);
+      mcp2.digitalWrite(PUMP1_B, HIGH);
+    }else if(dir == halt){
+      mcp2.digitalWrite(PUMP1_A, LOW);
+      mcp2.digitalWrite(PUMP1_B, LOW);
+    }
+  }else if(motor_num == 3){
+    if(dir == forward){
+      mcp2.digitalWrite(PUMP3_A, HIGH);
+      mcp2.digitalWrite(PUMP3_B, LOW);
+    }else if(dir == reverse){
+      mcp2.digitalWrite(PUMP3_A, LOW);
+      mcp2.digitalWrite(PUMP3_B, HIGH);
+    }else if(dir == halt){
+      mcp2.digitalWrite(PUMP3_A, LOW);
+      mcp2.digitalWrite(PUMP3_B, LOW);
+    }
+  }
+  delay (1000);
+}
+
 
 void moveLiquid(int experiment, int origin, int target, float liquid_volume) 
 {
