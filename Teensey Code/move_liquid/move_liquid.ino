@@ -123,19 +123,19 @@ int stop_move;
 void setup() {
    Serial.begin(9600);
  // while (!Serial);
-  Serial.println("MCP23xxx Blink Test!");
+ // Serial.println("MCP23xxx Blink Test!");
 
   pinMode(LED, OUTPUT);
 
   // uncomment appropriate mcp.begin
   if (!mcp0.begin_I2C(MCP_ADDR0)) {
     Serial.println("Error initializing chip 0.");
-    while (1);
+   // while (1);
   }
 
   if (!mcp1.begin_I2C(MCP_ADDR1)) {
     Serial.println("Error initializing chip 1.");
-    while (1);
+    //while (1);
   }
 
   // IC5 on base board
@@ -171,7 +171,7 @@ void setup() {
  
    if (!mcp2.begin_I2C(MCP_ADDR2)) {
     Serial.println("Error initializing chip 2.");
-    while (1);
+ //   while (1);
   }
 /*
   // IC1 on sensor board
@@ -202,16 +202,17 @@ void setup() {
     
 int stop_move = 0;
 
-  Serial.println("revival pumping...");
-  motorSensorBrdCtrl(1, forward);
-  delay (5000);
-  motorSensorBrdCtrl(1, halt);
+
 
 }
 
 void loop() {
 
-
+  Serial.println("revival pumping...");
+  motorSensorBrdCtrl(1, forward);
+  delay (5000);
+  motorSensorBrdCtrl(1, halt);
+  
 //Experiment1 liquid system cleaning
 // moveLiquid (experimentOne, e_buffer, chamberA, 50);
 // moveLiquid (experimentOne, enzyme, chamberA, 5000);

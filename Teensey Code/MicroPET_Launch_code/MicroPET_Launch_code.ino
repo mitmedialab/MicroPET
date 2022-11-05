@@ -220,7 +220,7 @@ unsigned int whichsensor = 0;
 
 #define SECONDS_IN_DAY 86400
 //#define DELAY_SECONDS_PER_EXPERIMENT SECONDS_IN_DAY
-#define DELAY_SECONDS_PER_EXPERIMENT 120 // 1 mins for the functional testing
+#define DELAY_SECONDS_PER_EXPERIMENT 120 // 2 mins for the functional testing
 #define SERIAL_TIMEOUT 10000 //milliseconds
 
 const unsigned int MAX_MESSAGE_LENGTH = 12;
@@ -351,7 +351,7 @@ void setup() {
     }
 
   //Start the sensors line　2
-  tcaselect(BME280_SENSOR1);
+  tcaselect(BME280_SENSOR2);
   delay(1000);
   // start the sensor
   bme_status = bme.begin();
