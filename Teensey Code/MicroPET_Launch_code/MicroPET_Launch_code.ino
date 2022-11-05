@@ -57,6 +57,7 @@ void (*experimentArray[TOTAL_EXPERIMENTS])() = {day_1, day_2, day_3, day_4, day_
 
 RTC_PCF8523 rtc;
 
+uint16_t experimentIndex = 0;
 
 // Native I2C address of the mux
 #define MUX_ADDR    0x70
@@ -428,7 +429,7 @@ void loop() {
   if (!systemState && checkForStartSerialCommand()) {
 
     // system has been commanded to start
-    forceSystemStart();
+    day_1();
 
     // set system state
     systemState = true;
@@ -513,53 +514,13 @@ void saveStateToSD(systemStateStruct* input) {
   logFile.close();
 }
 
-
-
-/* Function to start system */
-void forceSystemStart() {
-  //disable existing timers
-  // start new timers for days 2-9
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT, day_2);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 2, day_3);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 3, day_4);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 4, day_5);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 5, day_6);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 6, day_7);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 7, day_8);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 8, day_9);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 9, day_10);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 10, day_11);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 11, day_12);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 12, day_13);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 13, day_14);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 14, day_15);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 15, day_16);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 16, day_17);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 17, day_18);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 18, day_19);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 19, day_20);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 20, day_21);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 21, day_22);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 22, day_23);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 23, day_24);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 24, day_25);
-  Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT * 25, day_26);
-  //  Alarm.timerOnce(SECONDS_IN_DAY*7,day_8);
-  //  Alarm.timerOnce(SECONDS_IN_DAY*8,day_9);
-
-  // start first day
-  day_1();
-
-
-}
-
 /* Function for resuming system after unscheduled power loss */
 
 void recoverSystemStart(){
 
   /* (1) check for hard faults */
   //  (1.1) if system failed during an experiment, generate fault
-  if(systemStateStructVar.testDayComplete == 1){
+  if(systemStateStructVar.testDayComplete != 1){
     Serial.println("System was interrupted during an experiment! No way to resume!");
     while(1);
     return;
@@ -582,11 +543,14 @@ void recoverSystemStart(){
 
   /* (2) setup timers */
   uint32_t timeRemaining = DELAY_SECONDS_PER_EXPERIMENT - timeSinceLastExperiment;
-  uint16_t inc = 0;
-  for(int i = 1+systemStateStructVar.testDay; i<TOTAL_EXPERIMENTS; i++){
-    Alarm.timerOnce(timeRemaining + inc*DELAY_SECONDS_PER_EXPERIMENT,(*experimentArray[i]));
-    inc++;
-  }
+  experimentIndex = systemStateStructVar.testDay;
+  Alarm.timerOnce(timeRemaining,(*experimentArray[experimentIndex]));
+
+//  uint16_t inc = 0;
+//  for(int i = 1+systemStateStructVar.testDay; i<TOTAL_EXPERIMENTS; i++){
+//    Alarm.timerOnce(timeRemaining + inc*DELAY_SECONDS_PER_EXPERIMENT,(*experimentArray[i]));
+//    inc++;
+//  }
 
   Serial.println("System has recovered gracefully!");
 }
@@ -655,6 +619,10 @@ motorSensorBrdCtrl(1, halt);
 
 
 void day_1() {
+  // =============== SET == NEXT == ALARM ============ 
+  setNextAlarm();
+
+
 //==================================================
 //==================================================
 //==================================================
@@ -721,6 +689,9 @@ void day_1() {
 }
 
 void day_2() {
+  // =============== SET == NEXT == ALARM ============ 
+  setNextAlarm();
+
 
 // =============== UPDATE === STATUS ===============
 
@@ -757,6 +728,9 @@ void day_2() {
 }
 
 void day_3() {
+  // =============== SET == NEXT == ALARM ============ 
+  setNextAlarm();
+
 
 // =============== UPDATE === STATUS ===============
 
@@ -793,6 +767,9 @@ void day_3() {
 }
 
 void day_4() {
+  // =============== SET == NEXT == ALARM ============ 
+  setNextAlarm();
+
 
 // =============== UPDATE === STATUS ===============
 
@@ -834,6 +811,9 @@ void day_4() {
 }
 
 void day_5() {
+  // =============== SET == NEXT == ALARM ============ 
+  setNextAlarm();
+
 
 // =============== UPDATE === STATUS ===============
 
@@ -869,6 +849,9 @@ void day_5() {
 }
 
 void day_6() {
+  // =============== SET == NEXT == ALARM ============ 
+  setNextAlarm();
+
 
 // =============== UPDATE === STATUS ===============
 
@@ -912,6 +895,9 @@ void day_6() {
 }
 
 void day_7() {
+  // =============== SET == NEXT == ALARM ============ 
+  setNextAlarm();
+
 
 // =============== UPDATE === STATUS ===============
 
@@ -953,6 +939,9 @@ void day_7() {
 }
 
 void day_8() {
+  // =============== SET == NEXT == ALARM ============ 
+  setNextAlarm();
+
 
 // =============== UPDATE === STATUS ===============
 
@@ -988,6 +977,9 @@ void day_8() {
 }
 
 void day_9() {
+  // =============== SET == NEXT == ALARM ============ 
+  setNextAlarm();
+
 
 // =============== UPDATE === STATUS ===============
 
@@ -1023,6 +1015,9 @@ void day_9() {
 }
 
 void day_10() {
+  // =============== SET == NEXT == ALARM ============ 
+  setNextAlarm();
+
 
 // =============== UPDATE === STATUS ===============
 
@@ -1085,6 +1080,9 @@ void day_10() {
 }
 
 void day_11() {
+  // =============== SET == NEXT == ALARM ============ 
+  setNextAlarm();
+
 
 // =============== UPDATE === STATUS ===============
 
@@ -1120,6 +1118,9 @@ void day_11() {
 }
 
 void day_12() {
+  // =============== SET == NEXT == ALARM ============ 
+  setNextAlarm();
+
 
 // =============== UPDATE === STATUS ===============
 
@@ -1155,6 +1156,9 @@ void day_12() {
 }
 
 void day_13() {
+  // =============== SET == NEXT == ALARM ============ 
+  setNextAlarm();
+
 
 // =============== UPDATE === STATUS ===============
 
@@ -1196,6 +1200,9 @@ void day_13() {
 }
 
 void day_14() {
+  // =============== SET == NEXT == ALARM ============ 
+  setNextAlarm();
+
 
 // =============== UPDATE === STATUS ===============
 
@@ -1239,6 +1246,9 @@ void day_14() {
 }
 
 void day_15() {
+  // =============== SET == NEXT == ALARM ============ 
+  setNextAlarm();
+
 
 // =============== UPDATE === STATUS ===============
 
@@ -1274,6 +1284,9 @@ void day_15() {
 }
 
 void day_16() {
+  // =============== SET == NEXT == ALARM ============ 
+  setNextAlarm();
+
 
 // =============== UPDATE === STATUS ===============
 
@@ -1315,6 +1328,9 @@ void day_16() {
 }
 
 void day_17() {
+  // =============== SET == NEXT == ALARM ============ 
+  setNextAlarm();
+
 
 // =============== UPDATE === STATUS ===============
 
@@ -1350,6 +1366,9 @@ void day_17() {
 }
 
 void day_18() {
+  // =============== SET == NEXT == ALARM ============ 
+  setNextAlarm();
+
 
 // =============== UPDATE === STATUS ===============
 
@@ -1393,6 +1412,9 @@ void day_18() {
 }
 
 void day_19() {
+  // =============== SET == NEXT == ALARM ============ 
+  setNextAlarm();
+
 
 // =============== UPDATE === STATUS ===============
 
@@ -1434,6 +1456,9 @@ void day_19() {
 }
 
 void day_20() {
+  // =============== SET == NEXT == ALARM ============ 
+  setNextAlarm();
+
 
 // =============== UPDATE === STATUS ===============
 
@@ -1469,6 +1494,9 @@ void day_20() {
 }
 
 void day_21() {
+  // =============== SET == NEXT == ALARM ============ 
+  setNextAlarm();
+
 
 // =============== UPDATE === STATUS ===============
 
@@ -1504,6 +1532,9 @@ void day_21() {
 }
 
 void day_22() {
+  // =============== SET == NEXT == ALARM ============ 
+  setNextAlarm();
+
 
 // =============== UPDATE === STATUS ===============
 
@@ -1554,6 +1585,9 @@ void day_22() {
 }
 
 void day_23() {
+  // =============== SET == NEXT == ALARM ============ 
+  setNextAlarm();
+
 
 // =============== UPDATE === STATUS ===============
 
@@ -1589,6 +1623,9 @@ void day_23() {
 }
 
 void day_24() {
+  // =============== SET == NEXT == ALARM ============ 
+  setNextAlarm();
+
 
 // =============== UPDATE === STATUS ===============
 
@@ -1624,6 +1661,9 @@ void day_24() {
 }
 
 void day_25() {
+  // =============== SET == NEXT == ALARM ============ 
+  setNextAlarm();
+
 
 // =============== UPDATE === STATUS ===============
 
@@ -1665,6 +1705,9 @@ void day_25() {
 }
 
 void day_26() {
+  // =============== SET == NEXT == ALARM ============ 
+  setNextAlarm();
+
 
 // =============== UPDATE === STATUS ===============
 
@@ -1709,7 +1752,12 @@ void day_26() {
 }
 
 
-
+void setNextAlarm(){
+  experimentIndex++;
+  if(experimentIndex < TOTAL_EXPERIMENTS){
+    Alarm.timerOnce(DELAY_SECONDS_PER_EXPERIMENT, (*experimentArray[experimentIndex]));
+  }
+}
 
 
 void moveLiquid(int experiment, int origin, int target, float liquid_volume)
