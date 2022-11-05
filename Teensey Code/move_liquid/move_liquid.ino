@@ -208,15 +208,25 @@ void loop() {
 
 
 //Experiment1 liquid system cleaning
+<<<<<<< Updated upstream
 // moveLiquid (experimentOne, e_buffer, chamberA, 50);
 // moveLiquid (experimentOne, enzyme, chamberA, 5000);
  //  moveLiquid (experimentOne, media, chamberB, 5000);
+=======
+ //moveLiquid (experimentOne, e_buffer, chamberA, 5000);
+// moveLiquid (experimentOne, enzyme, chamberA, 5000);
+//  moveLiquid (experimentOne, media, chamberB, 5000);
+>>>>>>> Stashed changes
 //  switchCollection(experimentOne, preservativeThree);
 
 //Experiment2 liquid system cleaning
  // moveLiquid (experimentTwo, e_buffer, chamberA, 5000);
  // moveLiquid (experimentTwo, enzyme, waste, 5000);
+<<<<<<< Updated upstream
 // moveLiquid (experimentTwo, media, chamberB, 5000);
+=======
+ moveLiquid (experimentTwo, media, chamberB, 5000);
+>>>>>>> Stashed changes
 //  switchCollection(experimentTwo, preservativeThree);
 
 //Experiment2 collection 
@@ -228,6 +238,7 @@ delay (3000);
 switchCollection(experimentTwo, preservativeFour);
 delay (3000);
 */
+<<<<<<< Updated upstream
   Serial.println("revival pumping...");
   motorSensorBrdCtrl(1, forward);
   delay (500);
@@ -237,6 +248,15 @@ delay (3000);
   motorSensorBrdCtrl(3, forward);
   delay (500); //8-9 times for a 10ML revival from the big media bag
   motorSensorBrdCtrl(3, halt);
+=======
+ // motorSensorBrdCtrl(1, forward);
+ // delay (500);
+//  motorSensorBrdCtrl(1, halt);
+    
+ // motorSensorBrdCtrl(3, forward);
+  //delay (500);
+ // motorSensorBrdCtrl(3, halt);
+>>>>>>> Stashed changes
 // stop_move = 1;
   
   /*
