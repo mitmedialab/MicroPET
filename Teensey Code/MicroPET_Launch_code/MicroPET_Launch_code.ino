@@ -523,6 +523,7 @@ void recoverSystemStart(){
   if(systemStateStructVar.testDayComplete != 1){
     Serial.print("System was interrupted during experiment: ");
     Serial.println(systemStateStructVar.testDay);
+    saveExperimentalLog("System was interrupted during experiment: " + String(systemStateStructVar.testDay));
   }
 
   //  (1.2) if system paused for longer than test day interval, generate fault
@@ -536,6 +537,8 @@ void recoverSystemStart(){
       systemStateStructVar.testDay++;
       Serial.print(" Skipping day: ");
       Serial.println(systemStateStructVar.testDay);
+
+      saveExperimentalLog(" Skipping day: " + String(systemStateStructVar.testDay));
     }
   }
 
@@ -543,6 +546,9 @@ void recoverSystemStart(){
   //  (1.3) check if tests had already ended
   if(systemStateStructVar.testDay == TOTAL_EXPERIMENTS - 1){
     Serial.println("Power failure occured after experiment finished! No reason to resume!");
+
+    saveExperimentalLog("Power failure occured after experiment finished! No reason to resume!");
+
     while(1);
     return;
   }
