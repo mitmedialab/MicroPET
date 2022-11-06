@@ -521,19 +521,25 @@ void recoverSystemStart(){
   /* (1) check for hard faults */
   //  (1.1) if system failed during an experiment, generate fault
   if(systemStateStructVar.testDayComplete != 1){
-    Serial.println("System was interrupted during an experiment! No way to resume!");
-    while(1);
-    return;
+    Serial.print("System was interrupted during experiment: ");
+    Serial.println(systemStateStructVar.testDay);
   }
 
   //  (1.2) if system paused for longer than test day interval, generate fault
   uint32_t timeSinceLastExperiment = rtc.now().unixtime() - systemStateStructVar.epoch;
+  uint16_t skipDays;
   if(timeSinceLastExperiment >= DELAY_SECONDS_PER_EXPERIMENT){
-    Serial.println("System was off for longer than experiment interval! No way to resume!");
-    while(1);
-    return;
+    Serial.println("System was off for longer than experiment interval!");
+
+    skipDays = int( timeSinceLastExperiment / DELAY_SECONDS_PER_EXPERIMENT );
+    for(int i = 0; i < skipDays; i++){
+      systemStateStructVar.testDay++;
+      Serial.print(" Skipping day: ");
+      Serial.println(systemStateStructVar.testDay);
+    }
   }
 
+  timeSinceLastExperiment = int( timeSinceLastExperiment % DELAY_SECONDS_PER_EXPERIMENT );
   //  (1.3) check if tests had already ended
   if(systemStateStructVar.testDay == TOTAL_EXPERIMENTS - 1){
     Serial.println("Power failure occured after experiment finished! No reason to resume!");
