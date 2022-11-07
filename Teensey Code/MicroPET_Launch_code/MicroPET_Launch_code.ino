@@ -529,6 +529,7 @@ void recoverSystemStart(){
       Serial.print("Restarting entire experiment since lost power on day 1");
       saveExperimentalLog("Restarting entire experiment since lost power on day 1");
       day_1();
+      systemState = true;
       return;
     }
   }
@@ -572,6 +573,8 @@ void recoverSystemStart(){
 //  }
 
   Serial.println("System has recovered gracefully!");
+
+  systemState = true;
 }
 
 
