@@ -524,6 +524,13 @@ void recoverSystemStart(){
     Serial.print("System was interrupted during experiment: ");
     Serial.println(systemStateStructVar.testDay);
     saveExperimentalLog("System was interrupted during experiment: " + String(systemStateStructVar.testDay));
+
+    if(systemStateStructVar.testDay == 1){
+      Serial.print("Restarting entire experiment since lost power on day 1");
+      saveExperimentalLog("Restarting entire experiment since lost power on day 1");
+      day_1();
+      return;
+    }
   }
 
   //  (1.2) if system paused for longer than test day interval, generate fault
