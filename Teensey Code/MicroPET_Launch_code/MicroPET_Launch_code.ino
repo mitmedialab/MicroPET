@@ -664,13 +664,20 @@ void day_1() {
   saveExperimentalLog("Executing Day 1");
 
 
- // =============== SAFETY MECHANISM ================
-  // DUMMY TASK
+ // =============== ENZYME EXP =====================
 
-  //EXP1
-  moveLiquid (experimentOne, e_buffer, chamberA, 2000);  //buffer to chamber A - 2 ml (flexible)
-  //EXP2
-  moveLiquid (experimentTwo, e_buffer, chamberA, 2000);  //buffer to chamber A - 2 ml (flexible)
+  //DUMMY CODE
+  moveLiquid (experimentOne, e_buffer, chamberA, 1000);  //buffer to chamber A - 1 ml (flexible)
+  moveLiquid (experimentTwo, e_buffer, chamberA, 1000);  //buffer to chamber A - 1 ml (flexible)
+  Serial.println("finish the summy code...");
+  saveExperimentalLog("Finish dummy code!");
+
+  //EXP1 - liquid in dummy code
+  moveLiquid (experimentOne, enzyme, chamberA, 75); //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentOne, e_buffer, chamberA, 1525);  //buffer to chamber A - 1.525 ml (flexible)
+  //EXP2 - liquid in dummy code
+  moveLiquid (experimentTwo, enzyme, chamberA, 75); //enzyme to chamber A - 0.075 ml
+  moveLiquid (experimentTwo, e_buffer, chamberA, 1525);  //buffer to chamber A - 1.525 ml (flexible)
 
 
  // =============== MICROBE EXP =====================
@@ -690,16 +697,6 @@ void day_1() {
   motorSensorBrdCtrl(3, forward);
   delay (5000); //~10ML
   motorSensorBrdCtrl(3, halt);
-
-
- // =============== ENZYME EXP =====================
-
-  //EXP1
-  moveLiquid (experimentOne, enzyme, chamberA, 75); //enzyme to chamber A - 0.075 ml
-  moveLiquid (experimentOne, e_buffer, chamberA, 2525);  //buffer to chamber A - 2.925 ml (flexible)
-  //EXP2
-  moveLiquid (experimentTwo, enzyme, chamberA, 75); //enzyme to chamber A - 0.075 ml
-  moveLiquid (experimentTwo, e_buffer, chamberA, 2525);  //buffer to chamber A - 2.925 ml (flexible)
 
 
  // =============== UPDATE STATUS ===================
