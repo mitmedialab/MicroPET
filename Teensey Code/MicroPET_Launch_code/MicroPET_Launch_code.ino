@@ -627,14 +627,12 @@ bool checkForStartSerialCommand() {
 
 void day_functionTest(){
   
-  //EXP2
-  Serial.println("EXP2 revival pumping...");
-  saveExperimentalLog("EXP2 revived");
-  switchCollection(experimentTwo, waste);//back to waste bag
-  motorSensorBrdCtrl(1, forward);
-  delay (5000); //~10ML
-  motorSensorBrdCtrl(1, halt);
-
+  /////DAYFUNCTION
+  
+  /////DAYFUNCTION
+  
+  /////DAYFUNCTION
+  
 }
 
 
