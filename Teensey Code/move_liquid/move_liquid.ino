@@ -202,16 +202,58 @@ void setup() {
     
 int stop_move = 0;
 
+//CHAM A
+
+//moveLiquid (experimentOne, enzyme, chamberA, 10000);
+//moveLiquid (experimentOne, e_buffer, chamberA, 10000);
+//moveLiquid (experimentTwo, enzyme, chamberA, 10000);
+//moveLiquid (experimentTwo, e_buffer, chamberA, 10000);
+
+//CHAM B EXP 1
+
+//switchCollection(experimentOne, waste);
+//moveLiquid (experimentOne, media, chamberB, 10000);
+
+//switchCollection(experimentOne, preservativeOne);
+//moveLiquid (experimentOne, media, chamberB, 10000);
+
+//switchCollection(experimentOne, preservativeTwo);
+//moveLiquid (experimentOne, media, chamberB, 10000);
+
+
+//switchCollection(experimentOne, preservativeThree);
+//moveLiquid (experimentOne, media, chamberB, 10000);
+
+//switchCollection(experimentOne, preservativeFour);
+//moveLiquid (experimentOne, media, chamberB, 10000);
+
+//CHAM B EXP 2
+
+//switchCollection(experimentTwo, waste);
+//moveLiquid (experimentTwo, media, chamberB, 10000);
+
+//switchCollection(experimentTwo, preservativeOne);
+//moveLiquid (experimentTwo, media, chamberB, 10000);
+
+//switchCollection(experimentTwo, preservativeTwo);
+//moveLiquid (experimentTwo, media, chamberB, 10000);
+
+//switchCollection(experimentTwo, preservativeThree);
+//moveLiquid (experimentTwo, media, chamberB, 10000);
+
+switchCollection(experimentTwo, preservativeFour);
+moveLiquid (experimentTwo, media, chamberB, 10000);
 
 
 }
 
 void loop() {
+//moveLiquid (experimentTwo, enzyme, chamberA, 5000);
 
-  Serial.println("revival pumping...");
-  motorSensorBrdCtrl(1, forward);
-  delay (5000);
-  motorSensorBrdCtrl(1, halt);
+//  Serial.println("revival pumping...");
+//  motorSensorBrdCtrl(1, forward);
+//  delay (5000);
+//  motorSensorBrdCtrl(1, halt);
   
 //Experiment1 liquid system cleaning
 // moveLiquid (experimentOne, e_buffer, chamberA, 50);

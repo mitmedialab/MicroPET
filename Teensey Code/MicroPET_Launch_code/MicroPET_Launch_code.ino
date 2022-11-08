@@ -612,6 +612,8 @@ bool checkForStartSerialCommand() {
         //Print the message (or do other things)
         Serial.println("Executing Test Script");
 
+
+
         day_functionTest();
       }
 
@@ -624,18 +626,14 @@ bool checkForStartSerialCommand() {
 }
 
 void day_functionTest(){
-
-  // DUMMY TASK
-
-  //EXP1
-  moveLiquid (experimentOne, e_buffer, chamberA, 2000);  //buffer to chamber A - 2 ml (flexible)
+  
   //EXP2
-  moveLiquid (experimentTwo, e_buffer, chamberA, 2000);  //buffer to chamber A - 2 ml (flexible)
-
-Serial.println("revival pumping...");
-motorSensorBrdCtrl(1, forward);
-delay (5000);
-motorSensorBrdCtrl(1, halt);
+  Serial.println("EXP2 revival pumping...");
+  saveExperimentalLog("EXP2 revived");
+  switchCollection(experimentTwo, waste);//back to waste bag
+  motorSensorBrdCtrl(1, forward);
+  delay (5000); //~10ML
+  motorSensorBrdCtrl(1, halt);
 
 }
 
@@ -669,7 +667,7 @@ void day_1() {
   //DUMMY CODE
   moveLiquid (experimentOne, e_buffer, chamberA, 1000);  //buffer to chamber A - 1 ml (flexible)
   moveLiquid (experimentTwo, e_buffer, chamberA, 1000);  //buffer to chamber A - 1 ml (flexible)
-  Serial.println("finish the summy code...");
+  Serial.println("finish the dummy code...");
   saveExperimentalLog("Finish dummy code!");
 
   //EXP1 - liquid in dummy code
@@ -1786,15 +1784,15 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
   if (experiment == 1 && origin == 0)
   {
     switch_conn_pin(BASEBD_J10_PIN2, LOW); //Experiment 1 valveA
-    Serial.println("_E1_exp1 move from e_buffer");
-    saveExperimentalLog("_E1_move from e_buffer");
+    Serial.println("E1_exp1 move from e_buffer");
+    saveExperimentalLog("E1_move from e_buffer");
   }
 
   if (experiment == 1 && origin == 1)
   {
     switch_conn_pin(BASEBD_J10_PIN2, HIGH); //Experiment 1 valveA
-    Serial.println("_E1 move from enzyme");
-    saveExperimentalLog("_E1_move from enzyme");
+    Serial.println("E1 move from enzyme");
+    saveExperimentalLog("E1_move from enzyme");
   }
 
   if (experiment == 1 && target == 2)
@@ -1802,7 +1800,7 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
     switch_conn_pin(BASEBD_J9_PIN2, HIGH); //Experiment 1 valveB high, waste line open
     int move_pulse = liquid_volume / 25; //1ml = 1000uL and the pump moves 25uL at a time
     Serial.println("move to chamberA");
-    saveExperimentalLog("exp1_move to chamberA" + String(move_pulse * 25) + "uL");
+    saveExperimentalLog("E1_move to chamberA" + String(move_pulse * 25) + "uL");
     for (int i = 0; i <= move_pulse; i++) {
       switch_conn_pin(BASEBD_J10_PIN4, HIGH); //Experiment 1 pumpA
       digitalWrite(LED, HIGH);
@@ -1811,6 +1809,7 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
       digitalWrite(LED, LOW);
       delay(200);
       Serial.println( i * 25); //print out the moving volume
+      saveExperimentalLog("STEP_exp1_move to chamberA" + String(i * 25) + "uL");
     }
     switch_conn_pin(BASEBD_J10_PIN2, LOW); //Reset eperiment 1 valveA so enzyme is blocked
   }
@@ -1840,8 +1839,8 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
   if (experiment == 1 && origin == 3 && target == 4)
   {
     int move_pulse = liquid_volume / 25; //1ml = 1000uL and the pump moves 25uL at a time
-    Serial.println("_E1 move to chamberB");
-    saveExperimentalLog("_E1_move to chamberB " + String(move_pulse * 25) + "uL");
+    Serial.println("E1 move to chamberB");
+    saveExperimentalLog("E1_move to chamberB " + String(move_pulse * 25) + "uL");
     for (int i = 0; i <= move_pulse; i++) {
       switch_conn_pin(BASEBD_J9_PIN4, HIGH); //Experiment 1 pumpB
       digitalWrite(LED, HIGH);
@@ -1850,6 +1849,7 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
       digitalWrite(LED, LOW);
       delay(200);
       Serial.println( i * 25); //print out the moving volume
+      saveExperimentalLog("STEP_E1_move to chamberB " + String(i * 25) + "uL");
     }
   //  switch_conn_pin(BASEBD_J9_PIN2, LOW); //Reset experiment 1 valveB so chamberA is blocked
   }
@@ -1859,23 +1859,23 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
   if (experiment == 2 && origin == 0)
   {
     switch_conn_pin(BASEBD_J12_PIN2, LOW); //Experiment 2 valveA
-    Serial.println("_E2 move from e_buffer");
-    saveExperimentalLog("_E2_move from e_buffer");
+    Serial.println("E2 move from e_buffer");
+    saveExperimentalLog("E2_move from e_buffer");
   }
 
   if (experiment == 2 && origin == 1)
   {
     switch_conn_pin(BASEBD_J12_PIN2, HIGH); //Experiment 2 valveA
-    saveExperimentalLog("_E2_move from enzyme");
-    Serial.println("_E2 move from Enzyme");
+    saveExperimentalLog("E2_move from enzyme");
+    Serial.println("E2 move from Enzyme");
   }
 
   if (experiment == 2 && target == 2)
   {
     switch_conn_pin(BASEBD_J11_PIN2, HIGH); //Experiment 2 valveB high, waste line open
     int move_pulse = liquid_volume / 25; //1ml = 1000uL and the pump moves 25uL at a time
-    Serial.println("_E2 move to chamberA");
-    saveExperimentalLog("_E2_move to chamberA " + String(move_pulse * 25) + "uL");
+    Serial.println("E2 move to chamberA");
+    saveExperimentalLog("E2_move to chamberA " + String(move_pulse * 25) + "uL");
     for (int i = 0; i <= move_pulse; i++) {
       switch_conn_pin(BASEBD_J12_PIN4, HIGH); //Experiment 2 pumpA
       digitalWrite(LED, HIGH);
@@ -1884,6 +1884,7 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
       digitalWrite(LED, LOW);
       delay(200);
       Serial.println( i * 25);
+      saveExperimentalLog("STEP_E2_move to chamberA " + String(i * 25) + "uL");
     }
     switch_conn_pin(BASEBD_J12_PIN2, LOW); //Reset xperiment 1 valveA so enzyme is blocked
   }
@@ -1914,8 +1915,8 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
   if (experiment == 2 && origin == 3 && target == 4)
    {
       int move_pulse = liquid_volume / 25; //1ml = 1000uL and the pump moves 35uL at a time
-      Serial.println("_E2 media move to chamberB");
-      saveExperimentalLog("_E2_media_move to chamberB " + String(move_pulse * 25) + "uL");
+      Serial.println("E2 media move to chamberB");
+      saveExperimentalLog("E2_media_move to chamberB " + String(move_pulse * 25) + "uL");
       for (int i = 0; i <= move_pulse; i++){
       switch_conn_pin(BASEBD_J11_PIN4, HIGH); //Experiment 2 pumpB
       digitalWrite(LED, HIGH);
@@ -1924,6 +1925,7 @@ void moveLiquid(int experiment, int origin, int target, float liquid_volume)
       digitalWrite(LED, LOW);
       delay(200);
       Serial.println( i * 25);
+      saveExperimentalLog("STEP_E2_media_move to chamberB " + String(i * 25) + "uL");
       }
     }
 }
@@ -1933,23 +1935,23 @@ void switchCollection(int experiment, int bag)
   if (experiment == 1 && bag == 0)
   {
     switch_conn_pin(BASEBD_J5_PIN4, LOW); //Experiment 1 waste V6
-    Serial.println("exp1 open waste bag");
-    saveExperimentalLog("exp1_opem waste bag");
+    Serial.println("E1 open waste bag");
+    saveExperimentalLog("E1_opem waste bag");
   }
   if (experiment == 1 && bag == 1)
   {
     switch_conn_pin(BASEBD_J5_PIN4, HIGH); //NOT V6
     switch_conn_pin(BASEBD_J5_PIN2, LOW); //Experiment 1 preservativeOne V5
-    Serial.println("exp1 open preservativeOne bag");
-    saveExperimentalLog("exp1_open preservativeOne bag");
+    Serial.println("E1 open preservativeOne bag");
+    saveExperimentalLog("E1_open preservativeOne bag");
   }
   if (experiment == 1 && bag == 2)
   {
     switch_conn_pin(BASEBD_J5_PIN4, HIGH); //NOT V6
     switch_conn_pin(BASEBD_J5_PIN2, HIGH); //NOT V5
     switch_conn_pin(BASEBD_J3_PIN4, LOW); ////Experiment 1 preservativeTwo V4
-    Serial.println("exp1 open preservativeTwo bag");
-    saveExperimentalLog("exp1_open preservativeTwo bag");
+    Serial.println("E1 open preservativeTwo bag");
+    saveExperimentalLog("E1_open preservativeTwo bag");
   }
   if (experiment == 1 && bag == 3)
   {
@@ -1958,7 +1960,7 @@ void switchCollection(int experiment, int bag)
     switch_conn_pin(BASEBD_J3_PIN4, HIGH); //NOT V4
     switch_conn_pin(BASEBD_J3_PIN2, LOW); //Experiment 1 preservativeThree V3
     Serial.println("open preservativeThree bag");
-    saveExperimentalLog("exp1_open preservativeThree bag");
+    saveExperimentalLog("E1_open preservativeThree bag");
   }
     if (experiment == 1 && bag == 4)
   {
@@ -1967,7 +1969,7 @@ void switchCollection(int experiment, int bag)
     switch_conn_pin(BASEBD_J3_PIN4, HIGH); //NOT V4
     switch_conn_pin(BASEBD_J3_PIN2, HIGH); //NOT V3
     switch_conn_pin(BASEBD_J1_PIN4, LOW); //Experiment 1 preservativeFour V2
-    Serial.println("open preservativeFour bag");
+    Serial.println("E1_open preservativeFour bag");
     }
 
   //experiment two collection
@@ -1975,23 +1977,23 @@ void switchCollection(int experiment, int bag)
   if (experiment == 2 && bag == 0)
   {
     switch_conn_pin(BASEBD_J2_PIN2, LOW); //Experiment 2 waste V7
-    Serial.println("exp2 open waste bag");
-    saveExperimentalLog("exp2_opem waste bag");
+    Serial.println("E2 open waste bag");
+    saveExperimentalLog("E2_opem waste bag");
   }
   if (experiment == 2 && bag == 1)
   {
     switch_conn_pin(BASEBD_J2_PIN2, HIGH); //NOT V7
     switch_conn_pin(BASEBD_J2_PIN4, LOW); //Experiment 2 preservativeOne V8
-    Serial.println("exp2 open preservativeOne bag");
-    saveExperimentalLog("exp2_open preservativeOne bag");
+    Serial.println("E2 open preservativeOne bag");
+    saveExperimentalLog("E2_open preservativeOne bag");
   }
   if (experiment == 2 && bag == 2)
   {
     switch_conn_pin(BASEBD_J2_PIN2, HIGH); //NOT V7
     switch_conn_pin(BASEBD_J2_PIN4, HIGH); //NOT V8
     switch_conn_pin(BASEBD_J4_PIN2, LOW); ////Experiment 2 preservativeTwo V9
-    Serial.println("exp2 open preservativeTwo bag");
-    saveExperimentalLog("exp2_open preservativeTwo bag");
+    Serial.println("E2 open preservativeTwo bag");
+    saveExperimentalLog("E2_open preservativeTwo bag");
   }
   if (experiment == 2 && bag == 3)
   {
@@ -1999,8 +2001,8 @@ void switchCollection(int experiment, int bag)
   switch_conn_pin(BASEBD_J2_PIN4, HIGH); //NOT V8
   switch_conn_pin(BASEBD_J4_PIN2, HIGH); //NOT V9
   switch_conn_pin(BASEBD_J4_PIN4, LOW); //Experiment 2 preservativeThree V10
-  Serial.println("open preservativeThree bag");
-  saveExperimentalLog("exp2_open preservativeThree bag");
+  Serial.println("E2_open preservativeThree bag");
+  saveExperimentalLog("E2_open preservativeThree bag");
   }
 if (experiment == 2 && bag == 4)
 {
@@ -2009,8 +2011,8 @@ if (experiment == 2 && bag == 4)
   switch_conn_pin(BASEBD_J4_PIN2, HIGH); //NOT V9
   switch_conn_pin(BASEBD_J4_PIN4, HIGH); //NOT V10
   switch_conn_pin(BASEBD_J6_PIN2, LOW); //Experiment 2 preservativeFour V11
-  Serial.println("open preservativeFour bag");
-  saveExperimentalLog("exp2_open preservativeFour bag");
+  Serial.println("E2_open preservativeFour bag");
+  saveExperimentalLog("E2_open preservativeFour bag");
 }
 }
 
