@@ -220,8 +220,8 @@ String experimenta_log = "";
 unsigned int whichsensor = 0;
 
 #define SECONDS_IN_DAY 86400
-//#define DELAY_SECONDS_PER_EXPERIMENT SECONDS_IN_DAY
-#define DELAY_SECONDS_PER_EXPERIMENT 120 // 2 mins for the functional testing
+#define DELAY_SECONDS_PER_EXPERIMENT SECONDS_IN_DAY
+//#define DELAY_SECONDS_PER_EXPERIMENT 120 // 2 mins for the functional testing
 #define SERIAL_TIMEOUT 10000 //milliseconds
 
 const unsigned int MAX_MESSAGE_LENGTH = 12;
