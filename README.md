@@ -1,7 +1,7 @@
 # MicroPET
 ###  From Development and flight-testing of a modular autonomous cultivation system for biological plastics upcycling aboard the International Space Station
 
-Xin Liu1,*, Pat Pataranutaporn1,*, Benjamin Fram2, Allison Z. Werner3,*, Sunanda Sharma5, Nicholas P. Gauthier4, Erika Erickson3, Patrick Chwalek1, Kelsey J. Ramirez3, Morgan A. Ingraham3, Natasha P. Murphy3, Krista A Ryon6, Braden T Tierney6, Gregg T. Beckham3, Christopher E. Mason7, Ariel Ekblaw1
+Xin Liu1*, Pat Pataranutaporn1*, Benjamin Fram2, Allison Z. Werner3*, Sunanda Sharma5, Nicholas P. Gauthier4, Erika Erickson3, Patrick Chwalek1, Kelsey J. Ramirez3, Morgan A. Ingraham3, Natasha P. Murphy3, Krista A Ryon6, Braden T Tierney6, Gregg T. Beckham3, Christopher E. Mason7, Ariel Ekblaw1
 
 [1] MIT Media Lab	, Massachusetts Institute of Technology, Cambridge, MA 
 [2] Harvard Medical School, Department of Systems Biology, Boston, MA 
