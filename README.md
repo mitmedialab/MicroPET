@@ -24,6 +24,24 @@ In-situ resource utilization, plastics upcycling, biomanufacturing
 - Simulation: simulating liquid operation for MicroPET payload
 
 # Teensy Launch Code
+The code provided is for a MicroPET payload using a Teensyduino microcontroller. The code includes several libraries and defines multiple functions and variables for controlling and managing the payload's experiments and sensors.
+
+The code starts by including various libraries such as TimeLib, TimeAlarms, Wire, SPI, Adafruit_Sensor, Adafruit_BME280, Adafruit_AS726x, Adafruit_MCP23X17, and RTClib. These libraries are used to interface with different sensors and modules.
+
+Next, there are function prototypes for 26 different experiment days, numbered from day_1 to day_26. These functions are used to execute specific experiments on each day of the payload's operation.
+
+The experimentArray is an array of function pointers that stores the addresses of each experiment function. This allows the code to easily access and execute the desired experiment based on the current day.
+
+The code then defines various pin mappings and addresses for different components connected to the Teensyduino, such as the base board connectors and MCP23X17 GPIO expanders.
+
+Further in the code, there are implementations of functions for controlling motors, switching IO ports, moving liquids between different chambers, switching collection bags, taking sensor data, initializing the SD card, and saving data to files.
+
+The loop function of the code waits for a serial start command from the user to begin the payload's experiments. Once the command is received, the code calls the day_1 function to start the first day's experiment. After each experiment, the code sets the next alarm to schedule the next experiment based on the defined delay between experiments.
+
+There is also a function for recovering the system after an unscheduled power loss. This function checks if the system was interrupted during an experiment or if it was off for a longer time than the experiment interval. If it can resume the experiment, it sets the next alarm and continues from where it left off.
+
+The rest of the code includes functions for reading data from sensors, saving sensor data to a file, and initializing the SD card and experimental log file. Overall, the code provides the functionality for controlling and managing the MicroPET payload, executing different experiments, collecting sensor data, and saving data to files.
+
 ### Base Board Connection
 The base board connections are as follows:
 - E1VA + E1PA - J10
@@ -45,8 +63,8 @@ The code depends on the following libraries:
 - RTClib.h
 - SD.h
 
-### Experiment Prototypes
-The code defines the following experiment prototypes:
+### Experiment Protocols
+The code defines the following experiment protocols:
 - day_1()
 - day_2()
 - day_3()
