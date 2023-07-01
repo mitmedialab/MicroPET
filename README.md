@@ -19,4 +19,70 @@ Cultivation of microorganisms in space has enormous potential to enable in-situ 
 ### Keywords
 In-situ resource utilization, plastics upcycling, biomanufacturing
 
-### Code Instruction
+### Repository
+- Teensy Launch Code: Teensyduino code to operate MicroPET payload
+- Simulation: simulating liquid operation for MicroPET payload
+
+### Teensy Launch Code
+#### Base Board Connection
+The base board connections are as follows:
+- E1VA + E1PA - J10
+- E1VB + E1PB - J09
+- E2VA + E2PA - J12
+- E2VB + E2PB - J11
+- The valve board connector J1-6 are the same on the base board
+
+#### Dependencies
+The code depends on the following libraries:
+- TimeLib.h
+- TimeAlarms.h
+- Wire.h
+- SPI.h
+- Adafruit_Sensor.h
+- Adafruit_BME280.h
+- Adafruit_AS726x.h
+- Adafruit_MCP23X17.h
+- RTClib.h
+- SD.h
+
+#### Experiment Prototypes
+The code defines the following experiment prototypes:
+- day_1()
+- day_2()
+- day_3()
+- day_4()
+- ...
+- day_26()
+
+The experiment functions are stored in an array called `experimentArray`, which is of size `TOTAL_EXPERIMENTS`.
+
+#### Global Variables
+- `rtc`: RTC_PCF8523 object to interface with the RTC module.
+- `experimentIndex`: uint16_t variable to keep track of the current experiment index.
+- `delayTime`: unsigned long variable to store the delay time between experiments.
+- `sensorValues`: uint16_t array to store the sensor values read from the AS726x sensor.
+- `myFile`: File object to store data in a file.
+- `expLogFile`: File object to store experimental log data in a file.
+- `systemStateStructVar`: systemStateStruct object to store the system state.
+
+#### Main Functions
+- `setup()`: Initializes the program by initializing variables, setting up the RTC, SD card, and IO ports, and setting the first alarm.
+- `loop()`: Loops indefinitely, checking for a start command via serial communication and executing the corresponding experiment.
+- `rtcInit()`: Initializes the RTC module by checking for RTC availability, adjusting the time if necessary, and calibrating the RTC.
+- `grabStateFromSD()`: Reads the system state from the SD card if it exists, and returns true if successful.
+- `saveStateToSD()`: Saves the system state to the SD card.
+- `checkForStartSerialCommand()`: Checks for a start command via serial communication and returns true if it is received.
+- `recoverSystemStart()`: Resumes system operation after an unscheduled power loss by checking for hard faults and setting up timers.
+- `setNextAlarm()`: Sets the next alarm based on the current experiment index.
+- `moveLiquid()`: Moves liquid from one location to another based on the experiment, origin, target, and liquid volume.
+- `switchCollection()`: Switches the collection bag for a particular experiment.
+- `Taking_Sensor_Data()`: Takes sensor data by reading temperature and spectral values from the BME280 and AS726x sensors.
+- `saveExperimentalLog()`: Saves an experimental log message to the experiment log file.
+- `init_card()`: Initializes the SD card by checking for availability, opening the save file, and writing the header if necessary.
+- `initExpLogFile()`: Initializes the experiment log file by opening it and writing the header.
+- `motorSensorBrdCtrl()`: Controls the motors on the sensor board based on the motor number and direction.
+
+#### Helper Functions
+- `digitalClockDisplay()`: Displays the current time on the serial monitor.
+- `printDigits()`: Prints digits with leading zeroes if necessary.
+- `tmConvert_t()`: Converts a specified date and time to a time_t format.
