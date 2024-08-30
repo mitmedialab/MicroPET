@@ -20,8 +20,13 @@ Cultivation of microorganisms in space has enormous potential to enable in-situ 
 In-situ resource utilization, plastics upcycling, biomanufacturing
 
 ### Repository
+All code and resources for the MOBP (Modular Open Biological Platform) are available in this GitHub repository. This includes:
 - Teensy Launch Code: Teensyduino code to operate MicroPET payload
 - Simulation: simulating liquid operation for MicroPET payload
+- 3D printing files for the MOBP hardware
+- Electronic files for the MOBP
+
+You can access and download all these resources directly from this repository.
 
 # Teensy Launch Code
 The code provided is for a MicroPET payload using a Teensyduino microcontroller. The code includes several libraries and defines multiple functions and variables for controlling and managing the payload's experiments and sensors.
@@ -104,3 +109,6 @@ The experiment functions are stored in an array called `experimentArray`, which 
 - `digitalClockDisplay()`: Displays the current time on the serial monitor.
 - `printDigits()`: Prints digits with leading zeroes if necessary.
 - `tmConvert_t()`: Converts a specified date and time to a time_t format.
+
+### Contact
+For questions or further information, please contact the corresponding authors listed above.
